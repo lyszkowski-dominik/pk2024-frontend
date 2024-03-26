@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { LoginCheck } from "../utils/LoginCheck";
+import { useQuery } from "@tanstack/react-query"
+import { LoginCheck } from "../utils/LoginCheck"
 
 export type LoginCheckData = {
   username: string;
@@ -31,7 +31,7 @@ export type LoginCheckData = {
  */
 export const useGetToken = ({
                               username,
-                              password,
+                              password
 
                             }: LoginCheckData) => {
 
@@ -40,11 +40,11 @@ export const useGetToken = ({
     queryFn: () =>
       LoginCheck({
         username,
-        password,
+        password
 
       }),
     retry: false,
     enabled: false,
     gcTime: 1000
-  });
-};
+  })
+}
