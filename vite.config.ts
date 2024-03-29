@@ -14,6 +14,6 @@ export default defineConfig({
     mockReset: true,
   },
   define: {
-    __APP_ENV__: process.env.VITE_APP_API_URL,
+    __APP_ENV__: JSON.stringify(process.env.VITE_APP_API_URL)
   },
 })
