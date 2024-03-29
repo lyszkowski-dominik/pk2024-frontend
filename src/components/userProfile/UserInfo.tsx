@@ -8,7 +8,7 @@ const UserInfo = () => {
           <h2>Informacje o użytkowniku</h2>
           <p>Imię: Jan</p>
           <p>Nazwisko: Kowalski</p>
-          <p>Email:
+          <p>Email: @
           </p>
         </div>
 
