@@ -1,23 +1,37 @@
+import type React from "react"
 import { useState } from "react"
 import { Button, CircularProgress } from "@mui/material"
 import styles from "./LoginForm.module.scss"
+import { useGetToken } from "../../hooks/useGetToken"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { selectLogInStatus, logIn } from "./loginFormSlice"
 
 const LoginForm = () => {
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector(selectLogInStatus)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [isFetching, setIsFetching] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const { data, refetch, isError, isFetching } = useGetToken({
+    username,
+    password
+  })
+  const handleGetToken = async () => {
+    await refetch()
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsFetching(true)
-    console.log("doing something")
-    setIsFetching(false)
+    console.log(username, password)
+    handleGetToken()
   }
 
-  const handleGetToken = () => {
-    console.log("getting token")
+  if (data !== undefined) {
+    console.log(data)
+    dispatch(logIn())
   }
-
+  console.log(isLoggedIn)
   const changePasswordHandler = () => {
     console.log("changing password")
   }
@@ -45,6 +59,8 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
+          {/*ADD MODAL ERROR WINDOW*/}
+          {isError && <p>Wystąpił błąd</p>}
           <Button
             disabled={isFetching}
             variant="contained"

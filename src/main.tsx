@@ -6,7 +6,6 @@ import { store } from "./app/store"
 import "./index.css"
 import { BrowserRouter } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-
 const queryClient = new QueryClient()
 
 const container = document.getElementById("root")
@@ -17,11 +16,13 @@ if (container) {
   root.render(
     <React.StrictMode>
       <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
+
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
             <App />
-          </Provider>
-        </QueryClientProvider>
+          </QueryClientProvider>
+        </Provider>
+
       </BrowserRouter>
     </React.StrictMode>
   )

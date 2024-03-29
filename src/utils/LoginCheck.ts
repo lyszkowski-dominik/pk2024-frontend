@@ -25,7 +25,7 @@ export const LoginCheck = async ({ username, password }: LoginCheckData) => {
 
   try {
     const { data } = await axios.post(
-      `${process.env.REACT_APP_GET_TOKEN_URL}`,
+      `${import.meta.env.VITE_APP_API_URL}/auth/token`,
       axios.toFormData({ username, password }),
       {
         headers: {
@@ -35,7 +35,6 @@ export const LoginCheck = async ({ username, password }: LoginCheckData) => {
       }
     );
     const tokenData: { user: number; iat: number } = jwtDecode(data.token);
-
     return { user_id: tokenData.user, token: data.token };
   } catch (err: any) {
     throw new Error(`${err.response.data.message}`);
