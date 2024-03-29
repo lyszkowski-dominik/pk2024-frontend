@@ -13,4 +13,7 @@ export default defineConfig({
     setupFiles: "src/setupTests",
     mockReset: true,
   },
+  define: {
+    __APP_ENV__: process.env.VITE_APP_API_URL,
+  },
 })
