@@ -1,5 +1,4 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 
 export type LoginCheckData = {
   username: string;
@@ -22,11 +21,10 @@ export type LoginCheckData = {
  */
 
 export const LoginCheck = async ({ username, password }: LoginCheckData) => {
-
   try {
     const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/auth/token/`,
-      axios.toFormData({ username, password }),
+      `${import.meta.env.VITE_APP_API_URL}/auth/login/`,
+      axios.toFormData({ email:username, password }),
       {
         headers: {
           "Content-Type": "application/json",
@@ -34,8 +32,7 @@ export const LoginCheck = async ({ username, password }: LoginCheckData) => {
         },
       }
     );
-    const tokenData: { user: number; iat: number } = jwtDecode(data.token);
-    return { user_id: tokenData.user, token: data.token };
+    return data;
   } catch (err: any) {
     throw new Error(`${err.response.data.message}`);
   }

@@ -1,10 +1,12 @@
-import type React from "react"
+import type React from "react";
+import { useEffect } from "react"
 import { useState } from "react"
 import { Button, CircularProgress } from "@mui/material"
 import styles from "./LoginForm.module.scss"
 import { useGetToken } from "../../hooks/useGetToken"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { selectLogInStatus, logIn } from "./loginFormSlice"
+import { useNavigate } from "react-router"
 
 const LoginForm = () => {
   const dispatch = useAppDispatch()
@@ -12,6 +14,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
+  const navigate = useNavigate()
 
   const { data, refetch, isError, isFetching } = useGetToken({
     username,
@@ -21,16 +24,24 @@ const LoginForm = () => {
     await refetch()
   }
 
+  useEffect(() => {
+    if (data !== undefined && data.refresh !== undefined && data.access !== undefined) {
+      dispatch(logIn(data))
+    }
+  }, [data, dispatch])
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/", { replace: true })
+    }
+  }, [navigate,isLoggedIn])
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(username, password)
     handleGetToken()
   }
 
-  if (data !== undefined) {
-    console.log(data)
-    dispatch(logIn())
-  }
+
   console.log(isLoggedIn)
   const changePasswordHandler = () => {
     console.log("changing password")
