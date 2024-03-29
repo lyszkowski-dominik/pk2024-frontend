@@ -29,14 +29,15 @@ const Menu = () => {
       <div className={styles.menu}>
         {isLoggedIn && (
           <>
-            <Link to={"/"}>Home</Link>
-            <Button onClick={() => setLogout(true)}>Log out</Button></>
+            <Link to={"/"}>Start</Link>
+            <Link to={"/user-profile"}>Mój profil</Link>
+            <Button onClick={() => setLogout(true)}>Wyloguj</Button></>
         )}
         {!isLoggedIn && (
           <>
-            <Link to={"/"}>Home</Link>
-            <Link to={"/login"}>Login</Link>
-            <Link to={"/register"}>Register</Link>
+            <Link to={"/"}>Start</Link>
+            <Link to={"/login"}>Zaloguj</Link>
+            <Link to={"/register"}>Zarejestruj się</Link>
           </>
         )}
 

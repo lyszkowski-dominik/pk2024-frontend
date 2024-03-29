@@ -1,0 +1,13 @@
+.mainContent {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fefefe;
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+}
