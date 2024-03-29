@@ -25,7 +25,7 @@ export const LoginCheck = async ({ username, password }: LoginCheckData) => {
 
   try {
     const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/auth/token`,
+      `${import.meta.env.VITE_APP_API_URL}/auth/token/`,
       axios.toFormData({ username, password }),
       {
         headers: {
