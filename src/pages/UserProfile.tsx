@@ -10,6 +10,7 @@ const UserProfile = () => {
   const navigate = useNavigate()
   const isLoggedIn = useAppSelector(selectLogInStatus)
 
+
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/login", { replace: true })

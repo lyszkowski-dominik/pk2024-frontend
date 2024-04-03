@@ -42,7 +42,6 @@ const LoginForm = () => {
   }
 
 
-  console.log(isLoggedIn)
   const changePasswordHandler = () => {
     console.log("changing password")
   }
