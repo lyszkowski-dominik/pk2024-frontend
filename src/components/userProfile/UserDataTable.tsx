@@ -19,8 +19,10 @@ const UserDataTable = () => {
   }, [navigate, isLoggedIn])
 
   useEffect(() => {
-    dispatch(getCurrentUserData(null))
-  }, [dispatch])
+    if(isLoggedIn) {
+      dispatch(getCurrentUserData(null))
+    }
+  }, [dispatch, isLoggedIn])
 
   return <div className={styles.info}>
     <h2>Informacje o użytkowniku</h2>
