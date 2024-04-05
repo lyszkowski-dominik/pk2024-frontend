@@ -18,14 +18,12 @@ const Menu = () => {
       setLogout(false)
       navigate("/login", { replace: true })
     }
-  }, [navigate,logout, dispatch])
+  }, [navigate, logout, dispatch])
 
   return (
 
     <div className={styles.container}>
-      <div className={styles.logo}>
-        Logo
-      </div>
+      <div className={styles.logo_icon}><img src="../../../icons/house-icon.svg" alt="house icon" /></div>
       <div className={styles.menu}>
         {isLoggedIn && (
           <>

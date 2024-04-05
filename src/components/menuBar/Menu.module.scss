@@ -13,11 +13,21 @@
   background-color: #aaa;
   border-bottom: 1px solid #e0e0e0;
   transition: all 0.3s;
+
+  .menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .logo_icon {
+    height: 100px;
+
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
 }
 
-.menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-}
