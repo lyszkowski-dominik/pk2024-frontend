@@ -9,6 +9,7 @@ export type UserData = {
   id: number;
   access_token:string;
   refresh_token:string;
+  expires: number;
 }
 
 export type Token = {

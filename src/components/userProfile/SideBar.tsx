@@ -1,12 +1,12 @@
 import styles from "./SideBar.module.scss"
-import {useAppSelector} from "../../app/hooks"
-import { selectUserData } from "../loginForm/loginFormSlice"
+import { useGetUserDataQuery } from "./userDataApiSlice"
+
 
 const SideBar = () => {
-  const userData = useAppSelector(selectUserData)
+  const { data: userData, isError, isLoading, isSuccess } = useGetUserDataQuery()
   return (
     <div className={styles.sideBar}>
-      <h3>Zalogowano jako {userData?.name} {userData?.surname}</h3>
+      <h3>Zalogowano jako {userData?.first_name} {userData?.last_name}</h3>
       <h2>Menu</h2>
       <ul>
         <li>Moje dane</li>

@@ -1,15 +1,18 @@
 import { createAppSlice } from "../../app/createAppSlice"
-import type { LogInPayload, Token, UserData } from "../../types/loginFormTypes"
+import type { LogInPayload, Token } from "../../types/loginFormTypes"
 import { jwtDecode } from "jwt-decode"
+import { validateToken } from "../../utils/ValidateToken"
 
 export interface LoginSliceState {
   isLoggedIn: boolean,
-  userData: UserData | null
+
+  tokenData: Token | null
 }
 
 const initialState: LoginSliceState = {
-  isLoggedIn: false,
-  userData: null
+  isLoggedIn: validateToken(),
+
+  tokenData: localStorage.getItem("accessToken") ? jwtDecode(localStorage.getItem("accessToken") as string) : null
 }
 
 export const loginFormSlice = createAppSlice({
@@ -17,26 +20,22 @@ export const loginFormSlice = createAppSlice({
   initialState,
   reducers: create => ({
     logIn: create.reducer((state, action: { payload: LogInPayload }) => {
-      const token: Token = jwtDecode(action.payload.access)
-      state.userData = {
-        name: token.first_name,
-        surname: token.last_name,
-        id: token.user_id,
-        access_token: action.payload.access,
-        refresh_token: action.payload.refresh
-      }
+      localStorage.setItem("accessToken", action.payload.access)
+      localStorage.setItem("refreshToken", action.payload.refresh)
+
       state.isLoggedIn = true
     }),
     logOut: create.reducer(state => {
       state.isLoggedIn = false
+      localStorage.removeItem("accessToken")
+      localStorage.removeItem("refreshToken")
     })
   }),
   selectors: {
     selectLogInStatus: login => login.isLoggedIn,
-    selectUserData: login => login.userData
   }
 })
 export const { logIn, logOut } =
   loginFormSlice.actions
 
-export const { selectLogInStatus, selectUserData } = loginFormSlice.selectors
+export const { selectLogInStatus } = loginFormSlice.selectors

@@ -1,6 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import type { RootState } from "../../app/store"
-
 
 interface UserDataApiResponse {
   first_name: string
@@ -12,7 +10,7 @@ interface UserDataApiResponse {
 export const userDataApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_APP_API_URL}`, prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).login.userData?.access_token
+      const token = localStorage.getItem("accessToken")
       // If we have a token set in state, let's assume that we should be passing it.
       if (token) {
         headers.set("authorization", `Bearer ${token}`)
@@ -21,7 +19,7 @@ export const userDataApiSlice = createApi({
       return headers
     }
   }),
-  reducerPath: "quotesApi",
+  reducerPath: "UserDataApi",
   // Tag types are used for caching and invalidation.
   tagTypes: ["UserData"],
   endpoints: build => ({
