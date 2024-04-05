@@ -7,6 +7,8 @@ export type UserData = {
   name: string;
   surname: string;
   id: number;
+  access_token:string;
+  refresh_token:string;
 }
 
 export type Token = {

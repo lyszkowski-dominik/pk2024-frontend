@@ -17,20 +17,18 @@ export const loginFormSlice = createAppSlice({
   initialState,
   reducers: create => ({
     logIn: create.reducer((state, action: { payload: LogInPayload }) => {
-      localStorage.setItem("refreshToken", action.payload.refresh)
-      localStorage.setItem("accessToken", action.payload.access)
       const token: Token = jwtDecode(action.payload.access)
       state.userData = {
         name: token.first_name,
         surname: token.last_name,
-        id: token.user_id
+        id: token.user_id,
+        access_token: action.payload.access,
+        refresh_token: action.payload.refresh
       }
       state.isLoggedIn = true
     }),
     logOut: create.reducer(state => {
       state.isLoggedIn = false
-      localStorage.removeItem("refreshToken")
-      localStorage.removeItem("accessToken")
     })
   }),
   selectors: {

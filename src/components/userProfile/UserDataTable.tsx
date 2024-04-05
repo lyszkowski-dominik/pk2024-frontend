@@ -1,16 +1,14 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { getCurrentUserData, selectCurrentUserData, selectStatus } from "./userProfileSlice"
+import { useAppSelector } from "../../app/hooks"
 import { useEffect } from "react"
 import styles from "./UserDataTable.module.scss"
 import { useNavigate } from "react-router"
 import { selectLogInStatus } from "../loginForm/loginFormSlice"
+import { useGetUserDataQuery } from "./userDataApiSlice"
 
 const UserDataTable = () => {
-  const detailedData = useAppSelector(selectCurrentUserData)
-  const status = useAppSelector(selectStatus)
   const isLoggedIn = useAppSelector(selectLogInStatus)
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { data: detailedData, isError, isLoading, isSuccess } = useGetUserDataQuery()
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -18,18 +16,13 @@ const UserDataTable = () => {
     }
   }, [navigate, isLoggedIn])
 
-  useEffect(() => {
-    if(isLoggedIn) {
-      dispatch(getCurrentUserData(null))
-    }
-  }, [dispatch, isLoggedIn])
 
   return <div className={styles.info}>
     <h2>Informacje o użytkowniku</h2>
-    {status === "loading" && <div>Ładowanie danych...</div>}
-    {status === "failed" && <div>Wystąpił błąd podczas ładowania danych</div>}
-    {status === "idle" && !detailedData && <div>Brak danych</div>}
-    {status === "idle" && detailedData && (
+    {isLoading && <div>Ładowanie danych...</div>}
+    {isError && <div>Wystąpił błąd podczas ładowania danych</div>}
+    {isSuccess && !detailedData && <div>Brak danych</div>}
+    {detailedData && (
       <table>
         <tbody>
         <tr>
