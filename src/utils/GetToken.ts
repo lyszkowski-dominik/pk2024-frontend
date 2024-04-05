@@ -4,6 +4,6 @@
  * string and returned. If the token does not exist, null is returned.
  */
 export const GetToken = () => {
-  const rawToken = localStorage.getItem("token")
-  return rawToken ? JSON.parse(rawToken).token : null
+  const rawToken = localStorage.getItem("accessToken")
+  return rawToken ? rawToken : null
 }
