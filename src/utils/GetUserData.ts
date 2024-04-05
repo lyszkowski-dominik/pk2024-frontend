@@ -13,7 +13,6 @@ export const GetUserData = async () => {
         }
       }
     )
-    console.log(data)
     return data
   } catch (err: any) {
     console.log(err)
