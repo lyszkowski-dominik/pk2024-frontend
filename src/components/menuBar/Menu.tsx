@@ -2,7 +2,6 @@ import styles from "./Menu.module.scss"
 import { Link } from "react-router-dom"
 import { selectLogInStatus, logOut } from "../loginForm/loginFormSlice"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { Button } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 
@@ -29,7 +28,8 @@ const Menu = () => {
           <>
             <Link to={"/"}>Start</Link>
             <Link to={"/user-profile"}>Mój profil</Link>
-            <Button onClick={() => setLogout(true)}>Wyloguj</Button></>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a href="#" onClick={() => setLogout(true)}>Wyloguj</a></>
         )}
         {!isLoggedIn && (
           <>
