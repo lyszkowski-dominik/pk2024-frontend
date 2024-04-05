@@ -22,7 +22,7 @@ const Menu = () => {
   return (
 
     <div className={styles.container}>
-      <div className={styles.logo_icon}><img src="../../../icons/house-icon.svg" alt="house icon" /></div>
+      <div className={styles.logo_icon}><img src="../../icons/house-icon.svg" alt="house icon" /></div>
       <div className={styles.menu}>
         {isLoggedIn && (
           <>
