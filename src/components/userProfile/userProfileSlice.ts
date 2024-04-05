@@ -30,7 +30,6 @@ export const userProfileSlice = createAppSlice({
         },
         fulfilled: (state, action) => {
           state.status = "idle"
-          console.log(action.payload, "action.payload")
           state.userData = action.payload
         },
         rejected: state => {

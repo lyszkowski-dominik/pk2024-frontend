@@ -2,11 +2,21 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { getCurrentUserData, selectCurrentUserData, selectStatus } from "./userProfileSlice"
 import { useEffect } from "react"
 import styles from "./UserDataTable.module.scss"
+import { useNavigate } from "react-router"
+import { selectLogInStatus } from "../loginForm/loginFormSlice"
 
 const UserDataTable = () => {
   const detailedData = useAppSelector(selectCurrentUserData)
   const status = useAppSelector(selectStatus)
+  const isLoggedIn = useAppSelector(selectLogInStatus)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login", { replace: true })
+    }
+  }, [navigate, isLoggedIn])
 
   useEffect(() => {
     dispatch(getCurrentUserData(null))
