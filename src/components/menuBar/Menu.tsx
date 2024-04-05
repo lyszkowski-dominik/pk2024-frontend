@@ -4,6 +4,7 @@ import { selectLogInStatus, logOut } from "../loginForm/loginFormSlice"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
+import icon from "../../icons/house-icon.svg"
 
 const Menu = () => {
   const isLoggedIn = useAppSelector(selectLogInStatus)
@@ -22,7 +23,7 @@ const Menu = () => {
   return (
 
     <div className={styles.container}>
-      <div className={styles.logo_icon}><img src="../../icons/house-icon.svg" alt="house icon" /></div>
+      <div className={styles.logo_icon}><img src={icon} alt="Logo icon"/></div>
       <div className={styles.menu}>
         {isLoggedIn && (
           <>
