@@ -1,4 +1,4 @@
-import { useGetUserDataQuery } from "../components/userProfile/userDataApiSlice"
+import { useGetUserDataQuery } from '../components/userProfile/userDataApiSlice'
 
 
 const HomePage = () => {
@@ -9,8 +9,7 @@ const HomePage = () => {
       {!userData && <h1>Witaj w aplikacji E-Wspólnota</h1>}
       {isLoading && <div>Ładowanie danych...</div>}
       {userData && <h1>Witaj {userData.first_name} {userData.last_name}</h1>}
-    </div>
-  )
+    </div>)
 }
 
 export default HomePage

@@ -1,5 +1,5 @@
-import styles from "./SideBar.module.scss"
-import { useGetUserDataQuery } from "./userDataApiSlice"
+import styles from './SideBar.module.scss'
+import { useGetUserDataQuery } from './userDataApiSlice'
 
 
 const SideBar = () => {
