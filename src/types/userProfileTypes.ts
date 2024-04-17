@@ -3,3 +3,9 @@ export type DetailedUserData = {
   last_name: string;
   email: string;
 }
+
+export enum Module {
+  UserInfo = 'user-info',
+  UserSettings = 'user-settings',
+  UserHistory = 'user-history'
+}

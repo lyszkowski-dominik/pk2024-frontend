@@ -1,6 +1,5 @@
 import type React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, CircularProgress } from '@mui/material'
 import styles from './LoginForm.module.scss'
 import { useGetToken } from '../../hooks/useGetToken'
