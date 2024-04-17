@@ -1,6 +1,7 @@
 import styles from './PasswordChangeForm.module.scss';
 import { Form, FormikProvider, useFormik,useField } from 'formik';
 import type React from 'react';
+import type { SetStateAction } from 'react';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
@@ -8,7 +9,17 @@ type PasswordChangeFormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>
 }
 
-const TextInputLiveFeedback = ({ label, helpText, ...props }) => {
+type TextInputLiveFeedbackProps = {
+  label: string,
+  helpText?: string,
+  type: string,
+  id?: string,
+  name: string
+}
+
+// @ts-ignore
+const TextInputLiveFeedback = ({ label, helpText, ...props } : TextInputLiveFeedbackProps) => {
+  // @ts-ignore
   const [field, meta] = useField(props);
 
   // Show inline feedback if EITHER
@@ -17,7 +28,7 @@ const TextInputLiveFeedback = ({ label, helpText, ...props }) => {
   const [didFocus, setDidFocus] = useState(false);
   const handleFocus = () => setDidFocus(true);
   const showFeedback =
-    (!!didFocus && field.value.trim().length > 2) || meta.touched;
+    (didFocus && field.value.trim().length > 2) || meta.touched;
 
   return (
     <div
@@ -41,6 +52,7 @@ const TextInputLiveFeedback = ({ label, helpText, ...props }) => {
         aria-describedby={`${props.id}-feedback ${props.id}-help`}
         onFocus={handleFocus}
       />
+      {/*@ts-ignore*/}
       <div className={styles.text_xs} id={`${props.id}-help`} tabIndex="-1">
         {helpText}
       </div>
