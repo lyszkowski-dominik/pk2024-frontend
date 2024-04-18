@@ -7,12 +7,10 @@ type Payload = {
   new_password2: string
 }
 
-export const ChangePassword = async ({old_password, new_password1, new_password2}: Payload) => {
-  console.log(old_password, new_password1, new_password2);
+export const ChangePassword = async ({old_password, new_password1}: Payload) => {
   const formData = new FormData()
   formData.append('old_password', old_password)
-  formData.append('new_password1', new_password1)
-  formData.append('new_password2', new_password2)
+  formData.append('new_password', new_password1)
   try {
     const { data } = await axios.post(
       `${import.meta.env.VITE_APP_API_URL}/auth/password_change/`,
@@ -20,7 +18,6 @@ export const ChangePassword = async ({old_password, new_password1, new_password2
       {
         headers: {
           "Content-Type": "application/json",
-          // Accept: "application/json",
           Authorization: `Bearer ${GetToken()}`
         }
       }

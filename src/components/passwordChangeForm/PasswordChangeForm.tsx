@@ -64,6 +64,9 @@ const TextInputLiveFeedback = ({ label, helpText, ...props }: TextInputLiveFeedb
 
 const PasswordChangeForm = ({ isModalOn }: PasswordChangeFormProps) => {
   const [isWaiting, setIsWaiting] = useState(false);
+  const [errorMessages, setErrorMessages] = useState<{ old_password?: string, new_password: string } | null>(null);
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const formik = useFormik({
     initialValues: {
       old_password: '',
@@ -74,21 +77,22 @@ const PasswordChangeForm = ({ isModalOn }: PasswordChangeFormProps) => {
       setIsWaiting(true);
       const res = await ChangePassword(values);
       console.log(res);
-      if (res.status === 200) {
-        alert('Hasło zostało zmienione');
-        isModalOn(false);
+      if (res.status === 400) {
+
+        setErrorMessages(res.data);
+        setIsError(true);
       } else {
-        alert('Wystąpił błąd podczas zmiany hasła');
+        setIsError(false);
+        setIsSuccess(true);
+        // isModalOn(false);
       }
       setIsWaiting(false);
     },
     validationSchema: Yup.object({
       old_password: Yup.string().required('Stare hasło jest wymagane'),
-      // .min(8, 'Hasło musi mieć co najmniej 8 znaków'),
       new_password1: Yup.string().required('Nowe hasło jest wymagane')
         .min(8, 'Hasło musi mieć co najmniej 8 znaków')
         .max(20, 'Hasło może mieć maksymalnie 20 znaków')
-        .required('Nowe hasło jest wymagane')
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
           'Hasło musi zawierać co najmniej jedną małą literę, jedną dużą literę i jedną cyfrę'
@@ -104,36 +108,54 @@ const PasswordChangeForm = ({ isModalOn }: PasswordChangeFormProps) => {
   return (
     <div className={styles.container}>
       <h1>Zmiana hasła</h1>
-      <FormikProvider value={formik}>
-        <Form>
-          <TextInputLiveFeedback
-            label="Stare hasło"
-            name="old_password"
-            type="password"
-          />
-          <TextInputLiveFeedback
-            label="Nowe hasło"
-            name="new_password1"
-            type="password"
-          />
-          <TextInputLiveFeedback
-            label="Powtórz nowe hasło"
-            name="new_password2"
-            type="password"
-          />
-          {!isWaiting && (
-            <div className={styles.buttons}>
-              <button className={styles.change} type="submit">Zmień hasło</button>
-              <button className={styles.cancel} type="button" onClick={() => {
-                isModalOn(false);
-              }}>Anuluj
-              </button>
-            </div>
-          )
-          }
-          {isWaiting &&  (<div className={styles.waiting}><CircularProgress color="primary" sx={{ fontSize: 40 }} /></div>)}
-        </Form>
-      </FormikProvider>
+      {isSuccess && <div className={styles.success}>Hasło zostało zmienione
+        <div className={styles.buttons}>
+          <button className={styles.cancel_button} type="button" onClick={() => {
+            isModalOn(false);
+          }}>Zamknij
+          </button>
+        </div>
+      </div>}
+      {!isSuccess && (
+        <FormikProvider value={formik}>
+          <Form>
+            <TextInputLiveFeedback
+              label="Stare hasło"
+              name="old_password"
+              type="password"
+            />
+            <TextInputLiveFeedback
+              label="Nowe hasło"
+              name="new_password1"
+              type="password"
+            />
+            <TextInputLiveFeedback
+              label="Powtórz nowe hasło"
+              name="new_password2"
+              type="password"
+            />
+            {isError && (
+              <div className={styles.error}>
+                {errorMessages?.old_password && <p>{errorMessages.old_password}</p>}
+                {errorMessages?.new_password && <p>{errorMessages.new_password}</p>}
+              </div>
+            )}
+            {!isWaiting && (
+              <div className={styles.buttons}>
+                <button className={styles.change} type="submit">Zmień hasło</button>
+                <button className={styles.cancel} type="reset" onClick={() => {
+                  isModalOn(false);
+                }}>Anuluj
+                </button>
+              </div>
+            )
+            }
+            {isWaiting && (
+              <div className={styles.waiting}><CircularProgress color="primary" sx={{ fontSize: 40 }} /></div>)}
+          </Form>
+        </FormikProvider>
+      )}
+
     </div>
   )
     ;
