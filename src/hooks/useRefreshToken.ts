@@ -29,7 +29,7 @@ export const useRefreshToken = () => {
     queryKey: ["refetchToken"],
     queryFn: () => RefreshToken(),
     // refresh every 50 minutes
-    refetchInterval: 1000 * 60 * 50,
+    refetchInterval: 1000 * 60 * 50 ,
     refetchIntervalInBackground: true,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
