@@ -8,6 +8,7 @@ type TextInputLiveFeedbackProps = {
   type: string,
   id?: string,
   name: string
+  className?: string
 }
 
 
@@ -42,6 +43,7 @@ const TextInputLiveFeedback = ({ label, helpText, ...props }: TextInputLiveFeedb
         {...field}
         aria-describedby={`${props.id}-feedback ${props.id}-help`}
         onFocus={handleFocus}
+        className={props.className}
       />
       {/*@ts-ignore*/}
       <div className={styles.text_xs} id={`${props.id}-help`} tabIndex="-1">

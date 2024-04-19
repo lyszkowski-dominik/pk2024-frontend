@@ -22,7 +22,6 @@
   justify-content: center;
   gap: 1rem;
 
-
   label {
     width: 80%;
     display: flex;
@@ -40,12 +39,21 @@
   }
 
   button {
-    margin: 2rem 0 1rem 0;
+    margin: 1rem 0 1rem 0;
     font-size: 1.2rem;
   }
 
   .btn_pw_change {
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
+    border: #333333 1px solid;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.25s ease-in-out;
+    &:hover {
+        background-color: #333333;
+        color: #f0f0f0;
+    }
   }
 }
+
