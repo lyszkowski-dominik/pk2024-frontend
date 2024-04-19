@@ -41,9 +41,7 @@ const LoginForm = () => {
     handleGetToken();
   };
 
-
   const resetPasswordHandler = () => {
-    console.log('changing password');
     setIsResettingPassword(true);
   };
 
@@ -73,7 +71,7 @@ const LoginForm = () => {
             />
           </label>
           {/*ADD MODAL ERROR WINDOW*/}
-          {isError && <p>Wystąpił błąd</p>}
+          {isError && (<p>Wystąpił błąd lub nie odnaleziono użytkownika.</p>)}
           <Button
             disabled={isFetching}
             variant="contained"
