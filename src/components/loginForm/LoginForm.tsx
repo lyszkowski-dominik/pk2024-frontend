@@ -75,7 +75,8 @@ const LoginForm = () => {
           <Button
             disabled={isFetching}
             variant="contained"
-            color="primary"
+            // color="primary"
+            sx={{ backgroundColor: 'var(--blue)'}}
             type="submit"
             onClick={() => {
               handleGetToken();
