@@ -1,0 +1,95 @@
+.container {
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: var(--gray-800);
+  text-align: center;
+}
+
+.success {
+  background-color: var(--mint);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  color: var(--darkGreen);
+}
+
+.fieldGroup {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--gray-800);
+}
+
+.field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+textarea.field {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.error {
+  color: var(--pink);
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.submitButton {
+  background-color: var(--mint);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: var(--white);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--darkGreen);
+  }
+}
+
+.cancelButton {
+  background-color: var(--gray-400);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: var(--white);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--gray-600);
+  }
+}
+
+.waiting {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

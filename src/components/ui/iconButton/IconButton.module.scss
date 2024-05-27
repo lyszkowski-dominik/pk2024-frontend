@@ -1,0 +1,15 @@
+.iconButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    &:hover .icon {
+      filter: brightness(0.8);
+    }
+  }
+  
