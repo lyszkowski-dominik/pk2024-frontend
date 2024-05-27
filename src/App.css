@@ -1,5 +1,20 @@
 .App {
-    /*height of menu bar*/
-    margin-top: 100px;
-    text-align: center;
-}
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin-left: 250px;
+    margin-top: 60px;
+  }
+  
+  .content {
+    display: flex;
+    flex-grow: 1;
+  }
+  
+  main {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: auto;
+  }
+  

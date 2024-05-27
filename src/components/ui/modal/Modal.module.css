@@ -10,10 +10,11 @@
 
 .modal {
   position: fixed;
-  top: 20vh;
-  left: 5%;
-  width: 90%;
-  height: auto;
+  display: flex;
+  justify-content: center;
+  left: 15vw;
+  width: 80vw;
+  height: 80vh;
   background-color: var(--white);
   color: var(--black);
   padding: 1rem;
@@ -21,10 +22,16 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
+  overflow-y: auto; 
 }
 
 .content {
   text-align: center;
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+  max-height: 90vh;
 }
 
 .content button {

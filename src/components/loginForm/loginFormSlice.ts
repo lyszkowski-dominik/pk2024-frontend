@@ -26,9 +26,9 @@ export const loginFormSlice = createAppSlice({
       localStorage.removeItem('refreshToken');
     })
   }), selectors: {
-    selectLogInStatus: login => login.isLoggedIn
+    selectLogInStatus: login => login.isLoggedIn,
+    selectRoles: login => login.tokenData?.user_permissions
   }
 });
 export const { logIn, logOut } = loginFormSlice.actions;
-
-export const { selectLogInStatus } = loginFormSlice.selectors;
+export const { selectLogInStatus, selectRoles } = loginFormSlice.selectors;
