@@ -7,7 +7,7 @@ import { PropertyTypeDisplayNames } from './types';
 
 const PropertiesList = () => {
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 20;
   const { data, error, isLoading } = useGetPropertiesQuery({
     page,
     pageSize: pageSize,
