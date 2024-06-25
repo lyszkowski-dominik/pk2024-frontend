@@ -4,6 +4,11 @@ import { useGetOwners } from '../../hooks/useGetOwners';
 import type { OwnersResponse } from '../../types/OwnersTypes';
 import OwnersList from './OwnersList';
 import Spinner from '../ui/spinner/Spinner';
+import Modal from '../ui/modal/Modal';
+import { ModalType } from '../property/types';
+import IconButton from '../ui/iconButton/IconButton';
+import AddUserForm from './AddUserForm';
+
 
 interface OwnersProps {
   type: string;
@@ -26,19 +31,63 @@ const Owners = ({ type }: OwnersProps) => {
     hoaID,
     page
   });
+  const [isModalOn, setModalOn] = useState(false);
+  const [openModal, setOpenModal] = useState({});
 
   useEffect(() => {
     refreshPage();
     setOwners(data);
   }, [page, data, hoaID]);
 
-  console.log(isLoading);
   if (isLoading) return <Spinner />;
   if (error) return <div>Błąd ładowania danych</div>;
 
+  function handleImportClick() {
+    console.log('Import clicked');
+  }
+
+  function handleExportClick() {
+    console.log('Export clicked');
+  }
+
   return (
 
-    <div className={styles.info}>
+
+    <div className={styles.propertiesContainer}>
+      {isModalOn && (
+        <Modal>
+          {openModal === ModalType.Add && (
+            <AddUserForm isModalOn={setModalOn} />
+          )}
+        </Modal>
+      )}
+      <div className={styles.iconButtons}>
+        <IconButton
+          iconName="add"
+          onClick={() => {
+            setOpenModal(ModalType.Add);
+            setModalOn(true);
+          }}
+          altText="Add Property"
+          size={24}
+          color="var(--pink)"
+        />
+        <IconButton
+          iconName="import"
+          onClick={handleImportClick}
+          altText="Import Properties"
+          size={24}
+          color="var(--pink)"
+        />
+        <IconButton
+          iconName="export"
+          onClick={handleExportClick}
+          altText="Export Properties"
+          size={24}
+          color="var(--pink)"
+        />
+      </div>
+
       {isFetching && <Spinner />}
       <OwnersList ownersData={owners} changePage={changePage} isFetching={isFetching} />
     </div>

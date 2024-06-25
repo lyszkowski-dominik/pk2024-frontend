@@ -54,6 +54,7 @@ const Properties = () => {
         />
       </div>
       <PropertiesList />
+
     </div>
   );
 };
