@@ -5,11 +5,17 @@ import type { ISidebarElement } from './Sidebar';
 interface SidebarContextType {
   elements: ISidebarElement[];
   setElements: (elements: ISidebarElement[]) => void;
+  activeItem: string;
+  setActiveItem: (item: string) => void;
 }
 
 const defaultSidebarValues: SidebarContextType = {
   elements: [],
-  setElements: () => {},
+  setElements: () => {
+  },
+  activeItem: '',
+  setActiveItem: () => {
+  }
 };
 
 const SidebarContext = createContext(defaultSidebarValues);
@@ -21,12 +27,13 @@ interface SidebarProviderProps {
 }
 
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({
-  children,
-}) => {
+                                                                  children
+                                                                }) => {
+  const [activeItem, setActiveItem] = useState('Właściciele');
   const [elements, setElements] = useState<ISidebarElement[]>([]);
 
   return (
-    <SidebarContext.Provider value={{ elements, setElements }}>
+    <SidebarContext.Provider value={{ elements, setElements, activeItem, setActiveItem }}>
       {children}
     </SidebarContext.Provider>
   );

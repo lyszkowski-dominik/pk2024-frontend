@@ -5,6 +5,8 @@ import Spinner from '../../components/ui/spinner/Spinner';
 import { CommunityModule } from '../../types/communityTypes';
 import useCommunitySidebar from './useCommunitySidebar';
 import Properties from '../../components/property/Properties';
+import styles from './CommunityPage.module.scss';
+import Owners from '../../components/Owners/Owners';
 
 const CommunityPage = () => {
   const { communityID } = useParams<{ communityID: string }>();
@@ -12,11 +14,11 @@ const CommunityPage = () => {
   const {
     data: community,
     isLoading,
-    isError,
+    isError
   } = useGetCommunityByIdQuery(parseInt(communityID || '', 10));
 
   const [moduleLoaded, setModuleLoaded] = useState<CommunityModule>(
-    CommunityModule.Properties,
+    CommunityModule.Owners
   );
 
   useCommunitySidebar(setModuleLoaded);
@@ -29,12 +31,16 @@ const CommunityPage = () => {
     switch (moduleLoaded) {
       case CommunityModule.Properties:
         return <Properties />;
+      case CommunityModule.Owners:
+        return <Owners key="owner" type={'owner'} />;
+      case CommunityModule.Managers:
+        return <Owners key="manager" type={'manager'} />;
       default:
         return (
-          <div>
+          <div className={styles.info}>
             <h1>{community.name}</h1>
-            <p>Adres: {community.address}</p>
-            <p>E-mail: {community.contact_info}</p>
+            {community.address && <div>{community.address}</div>}
+            <div>{community.contact_info}</div>
           </div>
         );
     }

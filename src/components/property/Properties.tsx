@@ -1,4 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
 import { useState } from 'react';
 import styles from './Properties.module.scss';
 import PropertiesList from './PropertiesList';

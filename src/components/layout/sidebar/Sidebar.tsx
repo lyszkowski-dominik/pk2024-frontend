@@ -16,8 +16,8 @@ export interface ISidebarElement {
 }
 
 const Sidebar = () => {
-  const { elements } = useSidebar();
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const { elements, activeItem } = useSidebar();
+  const [, setActiveIndex] = useState<number | null>(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,9 +28,9 @@ const Sidebar = () => {
   const {
     data: communitiesData,
     isLoading,
-    isError,
+    isError
   } = useGetCommunitiesQuery(undefined, {
-    skip: !isLoggedIn,
+    skip: !isLoggedIn
   });
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Sidebar = () => {
 
   const communityOptions = communitiesData?.results.map((community) => ({
     value: community.id,
-    label: community.name,
+    label: community.name
   }));
 
   const handleItemClick = (
@@ -64,7 +64,7 @@ const Sidebar = () => {
     index: number,
     element: {
       onClick?: () => void;
-    },
+    }
   ) => {
     if (element.onClick) element.onClick();
     setActiveIndex(index);
@@ -85,7 +85,7 @@ const Sidebar = () => {
             {communitiesData && (
               <Select
                 value={communityOptions?.find(
-                  (option) => option.value === parseInt(selectedCommunity),
+                  (option) => option.value === parseInt(selectedCommunity)
                 )}
                 onChange={handleCommunityChange}
                 options={communityOptions}
@@ -100,7 +100,7 @@ const Sidebar = () => {
           <li
             key={index}
             onClick={(event) => handleItemClick(event, index, e)}
-            className={index === activeIndex ? styles.activeItem : ''}
+            className={e.title === activeItem ? styles.activeItem : ''}
           >
             {e.title}
           </li>
