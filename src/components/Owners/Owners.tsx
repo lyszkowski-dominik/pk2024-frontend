@@ -21,7 +21,7 @@ const Owners = ({ type }: OwnersProps) => {
     refreshPage();
   };
 
-  const { isLoading, data, error, refetch: refreshPage } = useGetOwners({
+  const { isLoading, data, error, refetch: refreshPage, isFetching } = useGetOwners({
     role: type,
     hoaID,
     page
@@ -32,12 +32,15 @@ const Owners = ({ type }: OwnersProps) => {
     setOwners(data);
   }, [page, data, hoaID]);
 
+  console.log(isLoading);
   if (isLoading) return <Spinner />;
   if (error) return <div>Błąd ładowania danych</div>;
 
   return (
+
     <div className={styles.info}>
-      <OwnersList ownersData={owners} changePage={changePage} />
+      {isFetching && <Spinner />}
+      <OwnersList ownersData={owners} changePage={changePage} isFetching={isFetching} />
     </div>
   );
 };

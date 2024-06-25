@@ -5,9 +5,10 @@ import ReactPaginate from 'react-paginate';
 interface OwnersListProps {
   ownersData: OwnersResponse | null;
   changePage: (pageNumber: number) => void;
+  isFetching?: boolean;
 }
 
-const OwnersList = ({ ownersData, changePage }: OwnersListProps) => {
+const OwnersList = ({ ownersData, changePage, isFetching }: OwnersListProps) => {
   const pageSize = 10;
 
   function handlePageClick(selectedItem: { selected: number }) {
@@ -18,7 +19,7 @@ const OwnersList = ({ ownersData, changePage }: OwnersListProps) => {
     <>
       <h2>Lista właścicieli</h2>
       <div className={styles.tableContainer}>
-
+        {isFetching && <div className={styles.overlay}></div>}
           <table className={styles.table}>
             <thead>
             <tr>
@@ -45,9 +46,10 @@ const OwnersList = ({ ownersData, changePage }: OwnersListProps) => {
           pageCount={Math.ceil(ownersData?.count !== undefined ? ownersData?.count / pageSize : 0)}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
+          onPageChange={isFetching ? undefined : handlePageClick}
           containerClassName={styles.pagination}
           activeClassName={styles.active}
+          disabledClassName={isFetching ? styles.disabled : ''}
         />
       </div>
     </>
