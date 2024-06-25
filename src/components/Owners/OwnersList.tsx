@@ -17,7 +17,6 @@ const OwnersList = ({ ownersData, changePage, isFetching }: OwnersListProps) => 
 
   return (
     <>
-      <h2>Lista właścicieli</h2>
       <div className={styles.tableContainer}>
         {isFetching && <div className={styles.overlay}></div>}
           <table className={styles.table}>
