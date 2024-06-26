@@ -57,7 +57,7 @@ const Owners = ({ type }: OwnersProps) => {
       {isModalOn && (
         <Modal>
           {openModal === ModalType.Add && (
-            <AddUserForm isModalOn={setModalOn} />
+            <AddUserForm isModalOn={setModalOn} refreshList={refreshPage} />
           )}
         </Modal>
       )}

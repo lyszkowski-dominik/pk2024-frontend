@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { CreateNewUser } from '../../utils/CreateNewUser';
 
 
-const AddUserForm = ({ isModalOn }: { isModalOn: (value: boolean) => void }) => {
+const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) => void, refreshList: () => void }) => {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{
@@ -40,7 +40,6 @@ const AddUserForm = ({ isModalOn }: { isModalOn: (value: boolean) => void }) => 
       } else {
         setIsError(false);
         setIsSuccess(true);
-        // isModalOn(false);
       }
       setIsWaiting(false);
     },
@@ -60,7 +59,8 @@ const AddUserForm = ({ isModalOn }: { isModalOn: (value: boolean) => void }) => 
         <div className={styles.buttons}>
           <button className={styles.cancel_button} type="button" onClick={() => {
             isModalOn(false);
-            window.location.reload();
+            // window.location.reload();
+            refreshList();
           }}>Zamknij
           </button>
         </div>
