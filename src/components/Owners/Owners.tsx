@@ -1,7 +1,6 @@
 import styles from './Owners.module.scss';
 import { useEffect, useState } from 'react';
 import { useGetOwners } from '../../hooks/useGetOwners';
-import type { OwnersResponse } from '../../types/OwnersTypes';
 import OwnersList from './OwnersList';
 import Spinner from '../ui/spinner/Spinner';
 import Modal from '../ui/modal/Modal';
@@ -15,7 +14,6 @@ interface OwnersProps {
 }
 
 const Owners = ({ type }: OwnersProps) => {
-  const [owners, setOwners] = useState<OwnersResponse | null>(null);
   // get current url value
   const path = window.location.pathname; // /hoa/1
   const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
@@ -36,7 +34,6 @@ const Owners = ({ type }: OwnersProps) => {
 
   useEffect(() => {
     refreshPage();
-    setOwners(data);
   }, [page, data, hoaID]);
 
   if (isLoading) return <Spinner />;
@@ -68,7 +65,7 @@ const Owners = ({ type }: OwnersProps) => {
             setOpenModal(ModalType.Add);
             setModalOn(true);
           }}
-          altText="Add Property"
+          altText="Add User"
           size={24}
           color="var(--pink)"
         />
@@ -89,7 +86,7 @@ const Owners = ({ type }: OwnersProps) => {
       </div>
 
       {isFetching && <Spinner />}
-      <OwnersList ownersData={owners} changePage={changePage} isFetching={isFetching} />
+      <OwnersList ownersData={data} changePage={changePage} isFetching={isFetching} refetch={refreshPage} />
     </div>
   );
 };
