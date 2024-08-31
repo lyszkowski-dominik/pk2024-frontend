@@ -1,0 +1,42 @@
+.form_control {
+  margin-bottom: 0.5rem;
+  min-width: 350px;
+
+  label {
+    display: block;
+    margin-bottom: 0.1rem;
+    padding-left: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+}
+
+.invalid .feedback {
+  color: var(--red);
+  font-size: 0.8em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  display: block;
+  padding-left: 5px;
+}
+
+.invalid input[type='password'] {
+  border: 1px solid var(--red);
+}
+
+.valid {
+  color: var(--green);
+  font-size: 0.8em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  display: block;
+  text-align: center;
+}

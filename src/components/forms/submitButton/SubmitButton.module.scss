@@ -1,0 +1,8 @@
+.submit-button {
+  background-color: var(--darkGreen);
+
+  &:hover {
+    filter: brightness(85%);
+    background-color: var(--darkGreen);
+  }
+}

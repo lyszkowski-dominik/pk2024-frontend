@@ -1,9 +1,9 @@
 .sidebar {
   width: 10vw;
   min-width: 300px;
-  background-color: var(--gray-100);
+  background-color: var(--white);
   padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid var(--gray-200);
   top: 0;
   left: 0;
   display: flex;

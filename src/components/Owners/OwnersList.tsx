@@ -55,7 +55,7 @@ const OwnersList = ({ ownersData, changePage, isFetching, refetch }: OwnersListP
           </tr>
           </thead>
           <tbody>
-          {ownersData?.results.map(owner => (
+          {ownersData?.results?.map(owner => (
             <tr key={owner.id}>
               <td>{owner.first_name}</td>
               <td>{owner.last_name}</td>

@@ -6,101 +6,57 @@ import { selectLogInStatus } from '../../loginForm/loginFormSlice';
 import { useGetCommunitiesQuery } from '../../../app/slices/communitiesDataApiSlice';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { setSelectedCommunity } from '../../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity, setSelectedCommunity } from '../../../app/slices/sharedDataSlice';
 import Spinner from '../../ui/spinner/Spinner';
 import Icon from '../../ui/icon/Icon';
+
+
 
 export interface ISidebarElement {
   title: string;
   onClick?: () => void;
+  path?: string;
 }
 
 const Sidebar = () => {
-  const { elements, activeItem } = useSidebar();
-  const [, setActiveIndex] = useState<number | null>(null);
+  const { elements } = useSidebar();
+  const [activeItem, setActiveIndex] = useState<number>(0);
 
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector(selectLogInStatus);
-  const [selectedCommunity, setSelectedCommunityState] = useState<string>('');
-
-  const {
-    data: communitiesData,
-    isLoading,
-    isError
-  } = useGetCommunitiesQuery(undefined, {
-    skip: !isLoggedIn
-  });
-
+  const selectedCommunity = useAppSelector(selectSelectedCommunity);
+  // const dispatch = useAppDispatch();
+  // const isLoggedIn = useAppSelector(selectLogInStatus);
   useEffect(() => {
-    if (
-      isLoggedIn &&
-      communitiesData &&
-      communitiesData.results.length === 1 &&
-      (location.pathname === '/' || location.pathname.startsWith('/hoa'))
-    ) {
-      const communityId = communitiesData.results[0].id.toString();
-      setSelectedCommunityState(communityId);
-      dispatch(setSelectedCommunity(parseInt(communityId)));
-      navigate(`/hoa/${communityId}`);
-    }
-  }, [communitiesData, dispatch, navigate, isLoggedIn, location.pathname]);
-
-  const handleCommunityChange = (selectedOption: any) => {
-    const communityId = selectedOption?.value;
-    setSelectedCommunityState(communityId);
-    dispatch(setSelectedCommunity(parseInt(communityId)));
-    navigate(`/hoa/${communityId}`);
-  };
-
-  const communityOptions = communitiesData?.results.map((community) => ({
-    value: community.id,
-    label: community.name
-  }));
+    const path = window.location.pathname; // /hoa/1
+    const pathParts = path.split('/');
+    try {
+      const module = pathParts[pathParts.indexOf('hoa') + 2];
+      const index = elements.findIndex((element) => element.path === module);
+      setActiveIndex(index);
+    } catch (err) { /* empty */ }
+  })
 
   const handleItemClick = (
     event: React.MouseEvent,
     index: number,
-    element: {
-      onClick?: () => void;
-    }
+    element:ISidebarElement
   ) => {
-    if (element.onClick) element.onClick();
     setActiveIndex(index);
+    navigate('/hoa/' + selectedCommunity + '/' + element.path);
   };
 
   return (
-    <div className={styles.sidebar}>
+    <aside className={styles.sidebar}>
       <div className={styles.logo}>
-        <Icon name={'logo'} size={150} />
+        <Icon name={'logo'} size={100} />
       </div>
-      {isLoggedIn &&
-        (location.pathname === '/' || location.pathname.startsWith('/hoa')) && (
-          <div className={styles.communityDropdown}>
-            {isLoading && <Spinner />}
-            {isError && (
-              <div>Błąd podczas ładowania wspólnot mieszkaniowych</div>
-            )}
-            {communitiesData && (
-              <Select
-                value={communityOptions?.find(
-                  (option) => option.value === parseInt(selectedCommunity)
-                )}
-                onChange={handleCommunityChange}
-                options={communityOptions}
-                placeholder="Wybierz wspólnotę"
-                aria-label="Wspólnota mieszkaniowa"
-              />
-            )}
-          </div>
-        )}
       <ul>
         {elements.map((e, index) => (
           <li
             key={index}
             onClick={(event) => handleItemClick(event, index, e)}
-            className={e.title === activeItem ? styles.activeItem : ''}
+            className={index === activeItem ? styles.activeItem : ''}
           >
             {e.title}
           </li>
@@ -109,7 +65,7 @@ const Sidebar = () => {
       <div className={styles.footer}>
         <p>Footer</p>
       </div>
-    </div>
+    </aside>
   );
 };
 

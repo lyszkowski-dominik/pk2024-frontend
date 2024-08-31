@@ -10,7 +10,36 @@ interface SidebarContextType {
 }
 
 const defaultSidebarValues: SidebarContextType = {
-  elements: [],
+  elements: [
+    {
+      title: 'Lokale',
+      path: 'properties'
+    },
+    {
+      title: 'Właściciele',
+      path: 'owners'
+    },
+    {
+      title: 'Uchwały',
+      path: 'resolutions'
+    },
+    {
+      title: 'Powiadomienia',
+      path: 'notifications'
+    },
+    {
+      title: 'Kalendarz',
+      path: 'calendar'
+    },
+    {
+      title: 'Zarządcy',
+      path: 'managers'
+    },
+    {
+      title: 'Rachunki',
+      path: 'bills'
+    }
+  ],
   setElements: () => {
   },
   activeItem: '',
@@ -29,11 +58,11 @@ interface SidebarProviderProps {
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({
                                                                   children
                                                                 }) => {
-  const [activeItem, setActiveItem] = useState('Właściciele');
-  const [elements, setElements] = useState<ISidebarElement[]>([]);
+  // const [activeItem, setActiveItem] = useState('Właściciele');
+  // const [elements, setElements] = useState<ISidebarElement[]>([]);
 
   return (
-    <SidebarContext.Provider value={{ elements, setElements, activeItem, setActiveItem }}>
+    <SidebarContext.Provider value={defaultSidebarValues}>
       {children}
     </SidebarContext.Provider>
   );

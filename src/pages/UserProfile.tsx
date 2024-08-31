@@ -9,6 +9,7 @@ import UserSettings from '../components/userSettings/UserSettings';
 import { useRefreshToken } from '../hooks/useRefreshToken';
 import { useSidebar } from '../components/layout/sidebar/SidebarProvider';
 import { useGetUserDataQuery } from '../components/userProfile/userDataApiSlice';
+import MainLayout from '../components/layout/mainLayout/MainLayout';
 
 const UserProfile = () => {
   const navigate = useNavigate();

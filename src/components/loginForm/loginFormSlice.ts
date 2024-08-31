@@ -4,31 +4,38 @@ import { jwtDecode } from 'jwt-decode';
 import { validateToken } from '../../utils/ValidateToken';
 
 export interface LoginSliceState {
-  isLoggedIn: boolean,
-  tokenData: Token | null
+  isLoggedIn: boolean;
+  tokenData: Token | null;
 }
 
 const initialState: LoginSliceState = {
   isLoggedIn: validateToken(),
-  tokenData: localStorage.getItem('accessToken') ? jwtDecode(localStorage.getItem('accessToken') as string) : null
+  tokenData: localStorage.getItem('accessToken')
+    ? jwtDecode(localStorage.getItem('accessToken') as string)
+    : null,
 };
 
 export const loginFormSlice = createAppSlice({
-  name: 'login', initialState, reducers: create => ({
+  name: 'auth',
+  initialState,
+  reducers: (create) => ({
     logIn: create.reducer((state, action: { payload: LogInPayload }) => {
       localStorage.setItem('accessToken', action.payload.access);
       localStorage.setItem('refreshToken', action.payload.refresh);
 
       state.isLoggedIn = true;
-    }), logOut: create.reducer(state => {
+      state.tokenData = jwtDecode(localStorage.getItem('accessToken') as string);
+    }),
+    logOut: create.reducer((state) => {
       state.isLoggedIn = false;
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-    })
-  }), selectors: {
-    selectLogInStatus: login => login.isLoggedIn,
-    selectRoles: login => login.tokenData?.user_permissions
-  }
+    }),
+  }),
+  selectors: {
+    selectLogInStatus: (login) => login.isLoggedIn,
+    selectRoles: (login) => login.tokenData?.user_permissions[0],
+  },
 });
 export const { logIn, logOut } = loginFormSlice.actions;
 export const { selectLogInStatus, selectRoles } = loginFormSlice.selectors;

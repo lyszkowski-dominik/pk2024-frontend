@@ -4,7 +4,7 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import { ChangePassword } from '../../utils/ChangePassword';
 import { CircularProgress } from '@mui/material';
-import TextInputLiveFeedback from './TextInputLiveFeedback';
+import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
 import type { PasswordChangeFormProps } from '../../types/passwordChangeFormTypes';
 
 const PasswordChangeForm = ({ isModalOn }: PasswordChangeFormProps) => {

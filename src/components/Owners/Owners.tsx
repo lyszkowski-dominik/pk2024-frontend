@@ -7,6 +7,8 @@ import Modal from '../ui/modal/Modal';
 import { ModalType } from '../property/types';
 import IconButton from '../ui/iconButton/IconButton';
 import AddUserForm from './AddUserForm';
+import { useAppSelector } from '../../app/hooks';
+import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 
 
 interface OwnersProps {
@@ -16,9 +18,11 @@ interface OwnersProps {
 const Owners = ({ type }: OwnersProps) => {
   // get current url value
   const path = window.location.pathname; // /hoa/1
-  const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
+  const hoaID = useAppSelector(selectSelectedCommunity) || -1;
+  // const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
   const [page, setPage] = useState(1);
 
+  console.log(path.split('/'))
   const changePage = (pageNumber: number) => {
     setPage(pageNumber);
     refreshPage();

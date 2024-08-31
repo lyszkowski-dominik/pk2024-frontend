@@ -1,5 +1,5 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import TextInputLiveFeedback from '../passwordChangeForm/TextInputLiveFeedback';
+import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
 import Select from '@mui/material/Select';
 import styles from '../passwordChangeForm/PasswordChangeForm.module.scss';
 import { CircularProgress, FormControl, InputLabel, MenuItem } from '@mui/material';

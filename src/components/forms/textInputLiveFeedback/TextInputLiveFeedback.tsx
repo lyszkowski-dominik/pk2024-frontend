@@ -1,6 +1,6 @@
 import { useField } from 'formik';
 import { useState } from 'react';
-import styles from './PasswordChangeForm.module.scss';
+import styles from './TextInputLiveFeedback.module.scss';
 
 type TextInputLiveFeedbackProps = {
   label: string,

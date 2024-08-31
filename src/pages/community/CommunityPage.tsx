@@ -7,6 +7,7 @@ import useCommunitySidebar from './useCommunitySidebar';
 import Properties from '../../components/property/Properties';
 import styles from './CommunityPage.module.scss';
 import Owners from '../../components/Owners/Owners';
+import MainLayout from '../../components/layout/mainLayout/MainLayout';
 
 const CommunityPage = () => {
   const { communityID } = useParams<{ communityID: string }>();
@@ -46,7 +47,7 @@ const CommunityPage = () => {
     }
   };
 
-  return <>{renderComponent()}</>;
+  return renderComponent();
 };
 
 export default CommunityPage;

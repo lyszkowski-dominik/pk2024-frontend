@@ -67,8 +67,9 @@ const useCommunitySidebar = (
       });
     }
     setElements(elements);
+    console.log(elements)
 
-    return () => setElements([]);
+    return () => setElements(elements);
   }, [setCurrentComponent, setElements, userRoles, setActiveItem]);
 };
 

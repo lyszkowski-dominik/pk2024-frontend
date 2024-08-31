@@ -1,27 +1,11 @@
 @import "../../global_styles/global.scss";
 
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.form_container {
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
-  border: 1px solid var(--gray-200);
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
 .form {
   p{
-    font-size: 1.2rem;
+    font-size: 1em;
     font-weight: 500;
-    margin-top: 1rem;
+    // margin-top: 0.5rem;
     color: var(--red);
   }
   display: flex;
@@ -31,37 +15,12 @@
   gap: 1rem;
 
   label {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.5rem;
-    font-weight: 500;
-    min-width: 450px;
+    min-width: 350px;
   }
 
   input {
-    padding: 10px;
-    border-radius: 5px;
-    align-self: flex-end;
-    font-size: 1.2rem;
-  }
-
-  button {
-    margin: 1rem 0 1rem 0;
-    font-size: 1.2rem;
-  }
-
-  .btn_pw_change {
     font-size: 1rem;
-    cursor: pointer;
-    border: var(--btn-dark) 1px solid;
-    padding: 10px;
-    border-radius: 5px;
-    transition: all 0.25s ease-in-out;
-    &:hover {
-        background-color: var(--btn-dark);
-        color: var(--gray-100);
-    }
   }
+
 }
 
