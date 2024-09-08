@@ -3,3 +3,10 @@ export enum UserRole {
   Manager = 'Manager',
   Owner = 'Owner',
 }
+
+export type ApiPaginatedResult<T> = {
+  count: number;
+  next: string;
+  previous: string;
+  results: T[];
+};

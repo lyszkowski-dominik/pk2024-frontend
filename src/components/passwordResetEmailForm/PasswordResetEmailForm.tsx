@@ -4,7 +4,7 @@ import styles from '../passwordChangeForm/PasswordChangeForm.module.scss';
 import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
 import { Button, CircularProgress } from '@mui/material';
 import { useState } from 'react';
-import './PasswordResetEmailForm.module.scss';
+import styles2 from './PasswordResetEmailForm.module.scss';
 import { ResetPasswordEmail } from '../../utils/ResetPasswordEmail';
 import { useNavigate } from 'react-router';
 import SubmitButton from '../forms/submitButton/SubmitButton';
@@ -50,7 +50,7 @@ const ResetPasswordEmailForm = () => {
   return (
     <>
       <h1>Zmiana hasła</h1>
-      <p>Na podany adres zostanie wysłany email z linkiem umożliwiajacym zmianę hasła.</p>
+      <p className={styles2.info}>Na podany adres zostanie wysłany email z linkiem umożliwiajacym zmianę hasła.</p>
       <FormikProvider value={formikReset}>
         <Form>
           <TextInputLiveFeedback

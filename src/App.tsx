@@ -16,6 +16,8 @@ import PasswordResetConfirmPage from './pages/auth/PasswordResetConfirmPage';
 import MainLayout from './components/layout/mainLayout/MainLayout';
 import Owners from './components/Owners/Owners';
 import NotFound404 from './pages/404';
+import Resolutions from './pages/resolutions/Resolutions';
+import ResolutionDetails from './pages/resolutions/ResolutionDetails';
 
 const App = () => {
   // const isTokenValid = validateToken();
@@ -32,29 +34,46 @@ const App = () => {
 
   return (
     // <SidebarProvider>
-      // <div className="App">
-        // <Menu />
-        // <div className="content">
-        //   {!sidebarHidden && <Sidebar />}
-        //   <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/reset-password" element={<PasswordResetPage />} />
-              <Route path="/reset-confirm/:uidb64/:token" element={<PasswordResetConfirmPage />} />
-              <Route path="/password-reset-email-sent" element={<PasswordResetEmailSent />} />
-              <Route element={<ProtectedRoutes />}>
-                <Route element={<MainLayout />}>
-                  <Route path="/user-profile" element={<UserProfile />} />
-                  <Route path="/hoa/:communityID" element={<CommunityPage />} />
-                  <Route path="/hoa/:communityID/owners" element={<Owners key="owner" type={'owner'} />} />
-                  <Route path="*" element={<NotFound404 />}/>
-                </Route>
-              </Route>
-            </Routes>
-        //   </main>
-        // </div>
-      // </div>
+    // <div className="App">
+    // <Menu />
+    // <div className="content">
+    //   {!sidebarHidden && <Sidebar />}
+    //   <main>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/reset-password" element={<PasswordResetPage />} />
+      <Route
+        path="/reset-confirm/:uidb64/:token"
+        element={<PasswordResetConfirmPage />}
+      />
+      <Route
+        path="/password-reset-email-sent"
+        element={<PasswordResetEmailSent />}
+      />
+      <Route element={<ProtectedRoutes />}>
+        <Route element={<MainLayout />}>
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/hoa/:communityID" element={<CommunityPage />} />
+          <Route
+            path="/hoa/:communityID/owners"
+            element={<Owners key="owner" type={'owner'} />}
+          />
+          <Route
+            path="/hoa/:communityID/resolutions"
+            element={<Resolutions key="resolutions" />}
+          />
+          <Route
+            path="/hoa/:communityID/resolutions/:resolutionID"
+            element={<ResolutionDetails key="resolution" />}
+          />
+          <Route path="*" element={<NotFound404 />} />
+        </Route>
+      </Route>
+    </Routes>
+    //   </main>
+    // </div>
+    // </div>
     // </SidebarProvider>
   );
 };
