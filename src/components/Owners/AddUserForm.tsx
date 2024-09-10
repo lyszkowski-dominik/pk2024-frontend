@@ -6,6 +6,8 @@ import { CircularProgress, FormControl, InputLabel, MenuItem } from '@mui/materi
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { CreateNewUser } from '../../utils/CreateNewUser';
+import { useAppSelector } from '../../app/hooks';
+import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 
 
 const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) => void, refreshList: () => void }) => {
@@ -18,8 +20,9 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
     role?: string,
     hoaID?: number
   } | null>(null);
-  const path = window.location.pathname; // /hoa/1
-  const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
+  // const path = window.location.pathname; // /hoa/1
+  // const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
+  const hoaID = useAppSelector(selectSelectedCommunity) || -1;
 
   const formik = useFormik({
     initialValues: {

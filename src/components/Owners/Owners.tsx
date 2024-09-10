@@ -17,12 +17,12 @@ interface OwnersProps {
 
 const Owners = ({ type }: OwnersProps) => {
   // get current url value
-  const path = window.location.pathname; // /hoa/1
+  // const path = window.location.pathname; // /hoa/1
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   // const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
   const [page, setPage] = useState(1);
 
-  console.log(path.split('/'))
+  // console.log(path.split('/'))
   const changePage = (pageNumber: number) => {
     setPage(pageNumber);
     refreshPage();

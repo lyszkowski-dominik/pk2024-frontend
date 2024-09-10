@@ -57,8 +57,8 @@ const CommunityMenu = () => {
     value: community.id,
     label: community.name
   }));
-  console.log(communityOptions)
-  console.log(selectedCommunity)
+  // console.log(communityOptions)
+  // console.log(selectedCommunity)
 
   const haveManyOptions = (communityOptions?.length || 0) > 1;
 

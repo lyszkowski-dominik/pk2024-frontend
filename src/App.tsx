@@ -60,6 +60,9 @@ const App = () => {
             element={<Owners key="owner" type={'owner'} />}
           />
           <Route
+            path="/hoa/:communityID/managers"
+            element={<Owners key="manager" type={'manager'} />} />
+          <Route
             path="/hoa/:communityID/resolutions"
             element={<Resolutions key="resolutions" />}
           />
