@@ -33,6 +33,7 @@ const ResolutionDetails = () => {
   const isManager = role === 'manager';
   const isOwner = role === 'owner';
   const isOpenVoting = data?.can_vote || false;
+  const canEdit = data?.can_edit || false;
   const haveResults = data?.results ?? false;
 
   useEffect(() => {
@@ -112,7 +113,7 @@ const ResolutionDetails = () => {
           <div className={styles.header}>
             <h1>{data?.title}</h1>
             <div className={styles.actions}>
-              {isManager && (
+              {isManager && canEdit && (
                 <>
                   <Button variant="outlined" type="button" onClick={onEdit}>
                     <span>Edytuj</span>

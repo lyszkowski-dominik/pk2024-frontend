@@ -8,6 +8,7 @@ export type Resolution = {
   hoa: number;
   vote: string;
   can_vote: boolean;
+  can_edit: boolean;
   results: any;
 };
 

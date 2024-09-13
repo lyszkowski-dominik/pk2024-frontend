@@ -4,9 +4,7 @@ import GetResolutions from '../utils/GetResolutions';
 
 export const useGetResolutions = ({ hoaID, page, pageSize }: GetResolutionsData) => {
   return useQuery({
-    queryKey: ['xd'],
-    refetchOnMount: false,
-    enabled: false,
+    queryKey: ['xdd'],
     queryFn: () =>
       GetResolutions({
         hoaID,

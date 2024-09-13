@@ -13,12 +13,12 @@ interface FormData {
 const EditResolution = async (id: number, data: FormData) => {
   const patchData = {
     title: data.title,
-    describe: data.description,
+    description: data.description,
     start_date: new Date(localDateToISO(data.start_date)),
     end_date: new Date(localDateToISO(data.end_date)),
     hoa: data.hoa,
   };
-  console.log(patchData)
+  
   try {
     const { data: responseData } = await axios.patch(
       `${import.meta.env.VITE_APP_API_URL}/resolutions/resolutions/${id}/`,
