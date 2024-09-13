@@ -5,7 +5,6 @@ interface FormData {
   message: string;
   description: string;
   link: string;
-  user: string;
   hoa: number;
 }
 

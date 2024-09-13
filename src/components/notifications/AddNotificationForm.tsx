@@ -17,7 +17,6 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
     message?: string;
     description?: string;
     link?: string;
-    user?: string;
     hoaID?: number;
   } | null>(null);
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
@@ -27,7 +26,6 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
       message: '',
       description: '',
       link: '',
-      user: '',
       hoa: hoaID,
     },
     onSubmit: async (values) => {
@@ -75,7 +73,6 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
             />
             <TextAreaLiveFeedback label="Opis" name="description" />
             <TextInputLiveFeedback label="Link" type="text" name="link" />
-            <TextInputLiveFeedback label="Użytkownik" type="text" name="user" />
             {isError && (
               <div className={styles.error}>
                 {Object.entries(errorMessages || {}).map(([key, value]) => (
