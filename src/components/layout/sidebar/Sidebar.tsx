@@ -2,15 +2,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import styles from './Sidebar.module.scss';
 import { useSidebar } from './SidebarProvider';
-import { selectLogInStatus } from '../../loginForm/loginFormSlice';
+import { selectLogInStatus, selectRoles } from '../../loginForm/loginFormSlice';
 import { useGetCommunitiesQuery } from '../../../app/slices/communitiesDataApiSlice';
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { selectSelectedCommunity, setSelectedCommunity } from '../../../app/slices/sharedDataSlice';
+import {
+  selectSelectedCommunity,
+  setSelectedCommunity,
+} from '../../../app/slices/sharedDataSlice';
 import Spinner from '../../ui/spinner/Spinner';
 import Icon from '../../ui/icon/Icon';
-
-
 
 export interface ISidebarElement {
   title: string;
@@ -19,28 +20,35 @@ export interface ISidebarElement {
 }
 
 const Sidebar = () => {
-  const { elements } = useSidebar();
+  let { elements } = useSidebar();
   const [activeItem, setActiveIndex] = useState<number>(0);
-
-  // const location = useLocation();
-  const navigate = useNavigate();
   const selectedCommunity = useAppSelector(selectSelectedCommunity);
-  // const dispatch = useAppDispatch();
-  // const isLoggedIn = useAppSelector(selectLogInStatus);
+  const navigate = useNavigate();
+
+  const userRoles = useAppSelector(selectRoles);
+  if (userRoles === 'owner') {
+    elements = elements.filter((element) => {
+      return element.path !== 'owners';
+    });
+  }
+
   useEffect(() => {
     const path = window.location.pathname; // /hoa/1
     const pathParts = path.split('/');
-    try {
-      const module = pathParts[pathParts.indexOf('hoa') + 2];
+    const module = pathParts[pathParts.indexOf('hoa') + 2];
+
+    if (module === undefined) {
+      setActiveIndex(0);
+    } else {
       const index = elements.findIndex((element) => element.path === module);
       setActiveIndex(index);
-    } catch (err) { /* empty */ }
-  })
+    }
+  });
 
   const handleItemClick = (
     event: React.MouseEvent,
     index: number,
-    element:ISidebarElement
+    element: ISidebarElement,
   ) => {
     setActiveIndex(index);
     navigate('/hoa/' + selectedCommunity + '/' + element.path);

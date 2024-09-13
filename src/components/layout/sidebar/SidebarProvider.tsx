@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext, useState } from 'react';
 import type { ISidebarElement } from './Sidebar';
+import { useGetUserDataQuery } from '../../userProfile/userDataApiSlice';
+import { useAppSelector } from '../../../app/hooks';
+import { selectRoles } from '../../loginForm/loginFormSlice';
 
 interface SidebarContextType {
   elements: ISidebarElement[];
@@ -12,39 +15,41 @@ interface SidebarContextType {
 const defaultSidebarValues: SidebarContextType = {
   elements: [
     {
-      title: 'Lokale',
-      path: 'properties'
+      title: 'Strona główna',
+      path: ''
     },
     {
-      title: 'Właściciele',
-      path: 'owners'
+      title: 'Lokale',
+      path: 'properties',
     },
     {
       title: 'Uchwały',
-      path: 'resolutions'
+      path: 'resolutions',
+    },
+    {
+      title: 'Właściciele',
+      path: 'owners',
     },
     {
       title: 'Powiadomienia',
-      path: 'notifications'
+      path: 'notifications',
     },
     {
       title: 'Kalendarz',
-      path: 'calendar'
+      path: 'calendar',
     },
     {
       title: 'Zarządcy',
-      path: 'managers'
+      path: 'managers',
     },
     {
       title: 'Rachunki',
-      path: 'bills'
-    }
+      path: 'bills',
+    },
   ],
-  setElements: () => {
-  },
+  setElements: () => {},
   activeItem: '',
-  setActiveItem: () => {
-  }
+  setActiveItem: () => {},
 };
 
 const SidebarContext = createContext(defaultSidebarValues);
@@ -56,8 +61,8 @@ interface SidebarProviderProps {
 }
 
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({
-                                                                  children
-                                                                }) => {
+  children,
+}) => {
   // const [activeItem, setActiveItem] = useState('Właściciele');
   // const [elements, setElements] = useState<ISidebarElement[]>([]);
 

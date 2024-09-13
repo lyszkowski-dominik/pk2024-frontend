@@ -1,4 +1,4 @@
-import styles from './Resolutions.module.scss';
+import styles from './Notifications.module.scss';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
@@ -11,35 +11,27 @@ import { ModalType } from '../../components/property/types';
 import IconButton from '../../components/ui/iconButton/IconButton';
 import AddResolutionForm from '../../components/resolutions/AddResolutionForm';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
+import { useGetNotifications } from '../../hooks/useGetNotifications';
+import AddNotificationForm from '../../components/notifications/AddNotificationForm';
 
 const listColumns = [
   {
-    name: 'title',
-    label: 'Nazwa',
+    name: 'message',
+    label: 'Wiadomośc',
     type: 'string',
   },
   {
     name: 'created_at',
     label: 'Utworzono',
     type: 'datetime',
-  },
-  {
-    name: 'start_date',
-    label: 'Rozpczęcie',
-    type: 'datetime',
-  },
-  {
-    name: 'end_date',
-    label: 'Zakończenie',
-    type: 'datetime',
-  },
+  }
 ];
 
-const Resolutions = () => {
+const Notifications = () => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const { page, setPage, pageSize } = usePagination();
   const userRole = useAppSelector(selectRoles);
-  const canAddResolution = userRole === 'manager';
+  const canAddNotification = userRole === 'manager';
 
   const changePage = (pageNumber: number) => {
     setPage(pageNumber);
@@ -52,7 +44,7 @@ const Resolutions = () => {
     error,
     refetch: refreshPage,
     isFetching,
-  } = useGetResolutions({
+  } = useGetNotifications({
     hoaID,
     page: page,
     pageSize,
@@ -81,7 +73,7 @@ const Resolutions = () => {
       {isModalOn && (
         <Modal>
           {openModal === ModalType.Add && (
-            <AddResolutionForm
+            <AddNotificationForm
               onCancel={() => {
                 setModalOn(false);
                 refreshPage();
@@ -91,7 +83,7 @@ const Resolutions = () => {
         </Modal>
       )}
       <div className={styles.iconButtons}>
-        {canAddResolution && <IconButton
+        {canAddNotification && <IconButton
           iconName="add"
           onClick={() => {
             setOpenModal(ModalType.Add);
@@ -101,7 +93,7 @@ const Resolutions = () => {
           size={24}
           color="var(--pink)"
         />}
-        {canAddResolution && <IconButton
+        {canAddNotification && <IconButton
           iconName="import"
           onClick={handleImportClick}
           altText="Import Properties"
@@ -127,11 +119,11 @@ const Resolutions = () => {
         page={page}
         pageSize={pageSize}
         getDetailsHref={(record) =>
-          '/hoa/' + hoaID + '/resolutions/' + record.id
+          record.link
         }
       />
     </div>
   );
 };
 
-export default Resolutions;
+export default Notifications;

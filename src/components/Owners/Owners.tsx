@@ -9,6 +9,7 @@ import IconButton from '../ui/iconButton/IconButton';
 import AddUserForm from './AddUserForm';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectRoles } from '../loginForm/loginFormSlice';
 
 
 interface OwnersProps {
@@ -19,6 +20,8 @@ const Owners = ({ type }: OwnersProps) => {
   // get current url value
   // const path = window.location.pathname; // /hoa/1
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
+  const userRole = useAppSelector(selectRoles);
+  const canAddManager = userRole === 'manager';
   // const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
   const [page, setPage] = useState(1);
 
@@ -63,7 +66,7 @@ const Owners = ({ type }: OwnersProps) => {
         </Modal>
       )}
       <div className={styles.iconButtons}>
-        <IconButton
+        {canAddManager && <IconButton
           iconName="add"
           onClick={() => {
             setOpenModal(ModalType.Add);
@@ -72,14 +75,14 @@ const Owners = ({ type }: OwnersProps) => {
           altText="Add User"
           size={24}
           color="var(--pink)"
-        />
-        <IconButton
+        />}
+        {canAddManager && <IconButton
           iconName="import"
           onClick={handleImportClick}
           altText="Import Properties"
           size={24}
           color="var(--pink)"
-        />
+        />}
         <IconButton
           iconName="export"
           onClick={handleExportClick}

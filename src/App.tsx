@@ -18,6 +18,7 @@ import Owners from './components/Owners/Owners';
 import NotFound404 from './pages/404';
 import Resolutions from './pages/resolutions/Resolutions';
 import ResolutionDetails from './pages/resolutions/ResolutionDetails';
+import Notifications from './pages/notifications/Notifications';
 
 const App = () => {
   // const isTokenValid = validateToken();
@@ -69,6 +70,10 @@ const App = () => {
           <Route
             path="/hoa/:communityID/resolutions/:resolutionID"
             element={<ResolutionDetails key="resolution" />}
+          />
+          <Route
+            path="/hoa/:communityID/notifications"
+            element={<Notifications key="notifications" />}
           />
           <Route path="*" element={<NotFound404 />} />
         </Route>
