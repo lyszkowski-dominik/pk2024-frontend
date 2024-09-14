@@ -83,7 +83,7 @@ const CommunityPage = () => {
           </div>
         ))}
         <div className={styles.more_info}>
-          <Link to={'notifications'}>Więcej aktualnosci</Link>
+          <Link to={'notifications'}>Więcej aktualności</Link>
         </div>
       {/* </div> */}
     </div>
