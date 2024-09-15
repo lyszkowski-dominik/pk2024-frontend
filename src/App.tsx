@@ -41,7 +41,6 @@ const App = () => {
     //   {!sidebarHidden && <Sidebar />}
     //   <main>
     <Routes>
-      <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/reset-password" element={<PasswordResetPage />} />
       <Route
@@ -53,6 +52,7 @@ const App = () => {
         element={<PasswordResetEmailSent />}
       />
       <Route element={<ProtectedRoutes />}>
+        <Route path="/" element={<HomePage />} />
         <Route element={<MainLayout />}>
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/hoa/:communityID" element={<CommunityPage />} />
