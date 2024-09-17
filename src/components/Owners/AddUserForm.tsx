@@ -60,12 +60,12 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
       <h1>Dodawanie nowego użytkownika</h1>
       {isSuccess && <div className={styles.success}>Użytkownik został utworzony.
         <div className={styles.buttons}>
-          <button className={styles.cancel_button} type="button" onClick={() => {
+          <Button className={styles.cancel_button} type="button" onClick={() => {
             isModalOn(false);
             // window.location.reload();
             refreshList();
           }}>Zamknij
-          </button>
+          </Button>
         </div>
       </div>}
       {!isSuccess &&

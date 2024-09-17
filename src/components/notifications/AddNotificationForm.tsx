@@ -53,13 +53,13 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
         <div className={styles.success}>
           Powiadomienie wysłane.
           <div className={styles.buttons}>
-            <button
+            <Button
               className={styles.cancel_button}
               type="button"
               onClick={onCancel}
             >
               Zamknij
-            </button>
+            </Button>
           </div>
         </div>
       )}
