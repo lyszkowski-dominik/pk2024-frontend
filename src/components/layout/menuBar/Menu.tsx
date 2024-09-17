@@ -23,7 +23,7 @@ const Menu = () => {
   return (
     <div className={styles.container}>
       <div className={styles.menu}>
-        <Link to={'/'}>Start</Link>
+        <Link onClick={() => window.history.back()} to=''>&lt; Powrót</Link>
       </div>
       <div className={styles['right-menu']}>
         <CommunityMenu />
