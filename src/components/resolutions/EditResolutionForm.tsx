@@ -6,6 +6,7 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
 import { EditResolution } from '../../utils/EditResolution';
+import { useNotifications } from '../notifications/NotificationContext';
 
 type EditResolutionFormProps = {
   onCancel: () => void;
@@ -28,6 +29,8 @@ const EditResolutionForm = ({
     end_date?: string;
     hoaID?: number;
   } | null>(null);
+  const { addNotification } = useNotifications();
+
 
   const formik = useFormik({
     initialValues: initialData,
@@ -41,6 +44,8 @@ const EditResolutionForm = ({
       } else {
         setIsError(false);
         setIsSuccess(true);
+        addNotification("Uchwałą zostałą edytowana.", 'success');
+        onCancel();
       }
       setIsWaiting(false);
       onSubmitCallback && onSubmitCallback();
@@ -56,7 +61,7 @@ const EditResolutionForm = ({
   return (
     <div className={styles.container}>
       <h1>Edycja uchwały</h1>
-      {isSuccess && (
+      {/* {isSuccess && (
         <div className={styles.success}>
           Uchwała została uaktualniona.
           <div className={styles.buttons}>
@@ -69,7 +74,7 @@ const EditResolutionForm = ({
             </button>
           </div>
         </div>
-      )}
+      )} */}
       {!isSuccess && (
         <FormikProvider value={formik}>
           <Form style={{ width: '100%' }}>

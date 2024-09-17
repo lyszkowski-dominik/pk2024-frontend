@@ -33,6 +33,8 @@ const FileUploadForm = ({ url, setModalOn, refreshPage }: FileUploadformProps) =
         for (const error of response.data.errors){
           addNotification(error, 'error');
         }
+      } else {
+        addNotification("Dane zostały zaimportowane.", "success");
       }
       if (setModalOn) {
         setModalOn(false);

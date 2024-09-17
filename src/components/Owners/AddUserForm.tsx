@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { CreateNewUser } from '../../utils/CreateNewUser';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { useNotifications } from '../notifications/NotificationContext';
 
 
 const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) => void, refreshList: () => void }) => {
@@ -20,6 +21,7 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
     role?: string,
     hoaID?: number
   } | null>(null);
+  const { addNotification } = useNotifications();
   // const path = window.location.pathname; // /hoa/1
   // const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
@@ -43,6 +45,8 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
       } else {
         setIsError(false);
         setIsSuccess(true);
+        addNotification("Użytkownik został dodany.", 'success');
+        isModalOn(false);
       }
       setIsWaiting(false);
     },
@@ -58,7 +62,7 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
   return (
     <div className={styles.container}>
       <h1>Dodawanie nowego użytkownika</h1>
-      {isSuccess && <div className={styles.success}>Użytkownik został utworzony.
+      {/* {isSuccess && <div className={styles.success}>Użytkownik został utworzony.
         <div className={styles.buttons}>
           <Button className={styles.cancel_button} type="button" onClick={() => {
             isModalOn(false);
@@ -67,7 +71,7 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
           }}>Zamknij
           </Button>
         </div>
-      </div>}
+      </div>} */}
       {!isSuccess &&
         <FormikProvider value={formik}>
           <Form>

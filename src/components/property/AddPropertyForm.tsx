@@ -10,6 +10,7 @@ import SearchDropdown from '../ui/search/SearchDropdown';
 import { PropertyType, PropertyTypeDisplayNames } from './types';
 import { CreateProperty } from '../../utils/CreateProperty';
 import { Button } from '@mui/material';
+import { useNotifications } from '../notifications/NotificationContext';
 
 type PropertyFormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
@@ -48,6 +49,7 @@ const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
   const [errorMessages, setErrorMessages] = useState<{ errors: string } | null>(
     null,
   );
+  const { addNotification } = useNotifications();
 
   const selectedCommunity = useAppSelector(selectSelectedCommunity);
 
@@ -61,22 +63,24 @@ const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
   return (
     <div className={styles.container}>
       <h1>Dodaj lokal</h1>
-      {isSuccess && (
+      {/* {isSuccess && (<>
         <div className={styles.success}>
           Dodano lokal
           <div className={styles.buttons}>
-            <button
+            <Button
               className={styles.cancel_button}
               type="button"
+              variant='outlined'
+              color="secondary"
               onClick={() => {
                 isModalOn(false);
               }}
-            >
+              >
               Zamknij
-            </button>
+            </Button>
           </div>
         </div>
-      )}
+      </>)} */}
       {!isSuccess && selectedCommunity && (
         <Formik
           initialValues={{
@@ -113,6 +117,8 @@ const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
             } else {
               setIsError(false);
               setIsSuccess(true);
+              addNotification("Nowy lokal został dodany", 'success');
+              isModalOn(false);
             }
             setIsWaiting(false);
             setSubmitting(false);

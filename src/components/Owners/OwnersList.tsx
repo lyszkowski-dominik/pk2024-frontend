@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Modal from '../ui/modal/Modal';
 import IconButton from '../ui/iconButton/IconButton';
 import { Button } from '@mui/material';
+import { useNotifications } from '../notifications/NotificationContext';
 
 
 interface OwnersListProps {
@@ -20,7 +21,7 @@ const OwnersList = ({ ownersData, changePage, isFetching, refetch }: OwnersListP
   const pageSize = 10;
   const [editModal, setEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(-1);
-
+  const { addNotification } = useNotifications();
   function handlePageClick(selectedItem: { selected: number }) {
     changePage(selectedItem.selected + 1);
   }
@@ -34,6 +35,7 @@ const OwnersList = ({ ownersData, changePage, isFetching, refetch }: OwnersListP
             <Button variant="contained" color="error" onClick={async () => {
               await RemoveUser({ id: selectedUser });
               setEditModal(false);
+              addNotification("Użytkownik został usunięty.");
               refetch();
             }} >Usuń
             </Button>

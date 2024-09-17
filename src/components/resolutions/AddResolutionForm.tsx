@@ -8,6 +8,7 @@ import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { CreateNewResolution } from '../../utils/CreateNewResolution';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
+import { useNotifications } from '../notifications/NotificationContext';
 
 const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
   const [isError, setIsError] = useState(false);
@@ -20,6 +21,7 @@ const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
     end_date?: string;
     hoaID?: number;
   } | null>(null);
+  const {addNotification } = useNotifications();
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
 
   const formik = useFormik({
@@ -40,6 +42,8 @@ const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
       } else {
         setIsError(false);
         setIsSuccess(true);
+        addNotification("Nowa uchwała została dodana.", 'success');
+        onCancel();
       }
       setIsWaiting(false);
     },
@@ -54,7 +58,7 @@ const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
   return (
     <div className={styles.container}>
       <h1>Dodawanie nowej uchwały</h1>
-      {isSuccess && (
+      {/* {isSuccess && (
         <div className={styles.success}>
           Uchwała została dodana.
           <div className={styles.buttons}>
@@ -67,7 +71,7 @@ const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
       {!isSuccess && (
         <FormikProvider value={formik}>
           <Form style={{ width: '100%' }}>

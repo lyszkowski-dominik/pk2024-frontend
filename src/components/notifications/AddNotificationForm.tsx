@@ -8,6 +8,7 @@ import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
 import { CreateNewNotification } from '../../utils/CreateNewNotification';
+import { useNotifications } from './NotificationContext';
 
 const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
   const [isError, setIsError] = useState(false);
@@ -20,7 +21,7 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
     hoaID?: number;
   } | null>(null);
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
-
+  const { addNotification } = useNotifications();
   const formik = useFormik({
     initialValues: {
       message: '',
@@ -38,6 +39,8 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
       } else {
         setIsError(false);
         setIsSuccess(true);
+        onCancel();
+        addNotification("Powiadomienie zostało dodane.", "success");
       }
       setIsWaiting(false);
     },
@@ -49,7 +52,7 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
   return (
     <div className={styles.container}>
       <h1>Dodawanie nowego powiadomienia</h1>
-      {isSuccess && (
+      {/* {isSuccess && (
         <div className={styles.success}>
           Powiadomienie wysłane.
           <div className={styles.buttons}>
@@ -62,7 +65,7 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
             </Button>
           </div>
         </div>
-      )}
+      )} */}
       {!isSuccess && (
         <FormikProvider value={formik}>
           <Form style={{ width: '100%' }}>

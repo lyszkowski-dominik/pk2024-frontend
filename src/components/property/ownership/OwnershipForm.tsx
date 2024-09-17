@@ -14,6 +14,7 @@ import { UpdateOwnership } from '../../../utils/UpdateOwnership';
 import type { Owner } from '../../../types/OwnersTypes';
 import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import { Button } from '@mui/material';
+import { useNotifications } from '../../notifications/NotificationContext';
 
 type FormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
@@ -36,7 +37,7 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
   );
   const [initialData, setInitialData] = useState<IOwnership | null>(null);
   const selectedCommunity = useAppSelector(selectSelectedCommunity);
-
+  const { addNotification } = useNotifications();
   useEffect(() => {
     if (ownershipId) {
       const fetchOwnershipData = async () => {
@@ -72,7 +73,7 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
   return (
     <div className={styles.container}>
       <h1>{ownershipId ? 'Edytuj właściciela' : 'Dodaj właściciela'}</h1>
-      {isSuccess && (
+      {/* {isSuccess && (
         <div className={styles.success}>
           {ownershipId ? 'Edytowano właściciela' : 'Dodano właściciela'}
           <div className={styles.buttons}>
@@ -87,7 +88,7 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
       {!isSuccess && selectedCommunity && (
         <Formik
           enableReinitialize
@@ -113,6 +114,8 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
             } else {
               setIsError(false);
               setIsSuccess(true);
+              addNotification('Właściciele zostali dodani.', 'success');
+              isModalOn(false);
             }
             setIsWaiting(false);
             setSubmitting(false);
