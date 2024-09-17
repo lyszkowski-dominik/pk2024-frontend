@@ -9,6 +9,7 @@ import { selectRoles } from '../../loginForm/loginFormSlice';
 import OwnershipForm from './OwnershipForm';
 import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import { DeleteOwnership } from '../../../utils/DeleteOwnership';
+import { Button } from '@mui/material';
 
 interface IProps {
   propertyId: number;
@@ -50,24 +51,25 @@ const Ownerships = ({ propertyId }: IProps) => {
             <div>
               <h2>Czy na pewno chcesz usunąć tego właściciela?</h2>
               <div className={styles.modalButtons}>
-                <button
-                  className={styles.btn_edit}
-                  onClick={() => {
-                    setModalOn(false);
-                  }}
-                >
-                  Anuluj
-                </button>
-                <button
+                <Button
+                variant='contained'
+                color='error'
                   onClick={async () => {
                     await DeleteOwnership(selectedOwnership || -1);
                     setModalOn(false);
                     dispatch(setUpdatedOwnerships(true));
                   }}
-                  className={`${styles.btn_edit} ${styles.btn_delete}`}
                 >
                   Usuń
-                </button>
+                </Button>
+                <Button
+                color='secondary'
+                  onClick={() => {
+                    setModalOn(false);
+                  }}
+                >
+                  Anuluj
+                </Button>
               </div>
             </div>
           )}

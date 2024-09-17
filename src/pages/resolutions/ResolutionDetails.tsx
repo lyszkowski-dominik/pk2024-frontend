@@ -122,7 +122,7 @@ const ResolutionDetails = () => {
                     variant="outlined"
                     type="button"
                     onClick={onDelete}
-                    color="warning"
+                    color="error"
                   >
                     <span>Usuń</span>
                   </Button>

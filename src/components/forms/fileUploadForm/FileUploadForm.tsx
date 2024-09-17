@@ -58,6 +58,7 @@ const FileUploadForm = ({ url, setModalOn, refreshPage }: FileUploadformProps) =
           </Button>
           <Button
             className={styles.cancel}
+            color="secondary"
             type="reset"
             onClick={() => {
               setModalOn && setModalOn(false);

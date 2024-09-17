@@ -5,6 +5,8 @@ import styles2 from './OwnersList.module.scss';
 import { RemoveUser } from '../../utils/RemoveUser';
 import { useState } from 'react';
 import Modal from '../ui/modal/Modal';
+import IconButton from '../ui/iconButton/IconButton';
+import { Button } from '@mui/material';
 
 
 interface OwnersListProps {
@@ -29,16 +31,16 @@ const OwnersList = ({ ownersData, changePage, isFetching, refetch }: OwnersListP
         <div className={styles2.modal}>
           <h2>Czy na pewno chcesz usunąć tego użytkownika?</h2>
           <div className={styles2.modalButtons}>
-            <button className={styles2.btn_edit} onClick={() => {
-              setEditModal(false);
-            }}>Anuluj
-            </button>
-            <button onClick={async () => {
+            <Button variant="contained" color="error" onClick={async () => {
               await RemoveUser({ id: selectedUser });
               setEditModal(false);
               refetch();
-            }} className={`${styles2.btn_edit} ${styles2.btn_delete}`}>Usuń
-            </button>
+            }} >Usuń
+            </Button>
+            <Button color="secondary" onClick={() => {
+              setEditModal(false);
+            }}>Anuluj
+            </Button>
           </div>
         </div>
       </Modal>}
@@ -51,7 +53,7 @@ const OwnersList = ({ ownersData, changePage, isFetching, refetch }: OwnersListP
             <th>Imię</th>
             <th>Nazwisko</th>
             <th>Email</th>
-            <th>Akcja</th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -62,11 +64,21 @@ const OwnersList = ({ ownersData, changePage, isFetching, refetch }: OwnersListP
               <td>{owner.email}</td>
               <td>
                 {/*<button>Edytuj</button>*/}
-                <button onClick={() => {
+                <IconButton
+                    iconName="delete"
+                    onClick={(event: any) => {
+                      setSelectedUser(owner.id);
+                      setEditModal(true);
+                    }}
+                    altText="Delete Ownership"
+                    size={24}
+                    color="var(--pink)"
+                  />
+                {/* <button onClick={() => {
                   setSelectedUser(owner.id);
                   setEditModal(true);
                 }} className={`${styles2.btn_edit} ${styles2.btn_delete}`}>Usuń
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}

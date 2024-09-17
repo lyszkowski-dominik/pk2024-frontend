@@ -14,6 +14,7 @@ import { getUnit } from '../propertyUtils';
 import { useAppSelector } from '../../../app/hooks';
 import { selectRoles } from '../../loginForm/loginFormSlice';
 import SendPayment from '../../../utils/SendPayment';
+import { Button } from '@mui/material';
 
 const Billing = () => {
   const role = useAppSelector(selectRoles);
@@ -95,12 +96,12 @@ const Billing = () => {
       {isOwner && billing && (
         <>
           <div className={propertiesStyles.payment}>
-            <button
+            <Button
               disabled={billing.is_paid}
               onClick={async () => await handlePayment()}
             >
               Zapłać
-            </button>
+            </Button>
           </div>
 
           {isError && (

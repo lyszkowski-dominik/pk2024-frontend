@@ -103,6 +103,7 @@ const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
                 <Button
                   className={styles.cancel}
                   type="reset"
+                  color="secondary"
                   onClick={onCancel}
                 >
                   Anuluj

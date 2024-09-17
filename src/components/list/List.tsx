@@ -3,6 +3,8 @@ import styles2 from './List.module.scss';
 import ReactPaginate from 'react-paginate';
 import type { ApiPaginatedResult } from '../../types/types';
 import { useNavigate } from 'react-router';
+import { Button } from '@mui/material';
+import IconButton from '../ui/iconButton/IconButton';
 
 type ColumnDef = {
   label: string;
@@ -72,12 +74,19 @@ const List = ({
         {cols}
         {onDelete ? (
           <td>
-            <button
+            {/* <Button
               onClick={(event) => onDelete(event, record.id, record)}
               className={`${styles2.btn_edit} ${styles2.btn_delete}`}
             >
               Usuń
-            </button>
+            </Button> */}
+            <IconButton
+              iconName="delete"
+              onClick={(event) => onDelete(event, record.id, record)}
+              altText="Usuń"
+              size={24}
+              color="var(--pink)"
+            />
           </td>
         ) : (
           ''

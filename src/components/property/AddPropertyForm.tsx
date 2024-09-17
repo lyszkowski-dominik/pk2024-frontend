@@ -9,6 +9,7 @@ import type { SearchDropdownOption } from '../ui/search/SearchDropdown';
 import SearchDropdown from '../ui/search/SearchDropdown';
 import { PropertyType, PropertyTypeDisplayNames } from './types';
 import { CreateProperty } from '../../utils/CreateProperty';
+import { Button } from '@mui/material';
 
 type PropertyFormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
@@ -230,18 +231,18 @@ const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
                   className={styles.error}
                 />
               </div>
-              <button type="submit" disabled={isSubmitting}>
+              <Button type="submit" variant="contained" disabled={isSubmitting}>
                 Dodaj lokal
-              </button>
-              <button
-                className={styles.cancel}
+              </Button>
+              <Button
+                color='secondary'
                 type="reset"
                 onClick={() => {
                   isModalOn(false);
                 }}
               >
                 Anuluj
-              </button>
+              </Button>
               {isWaiting && (
                 <div className={styles.waiting}>
                   <Spinner />

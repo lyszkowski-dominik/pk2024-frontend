@@ -2,7 +2,7 @@ import { Form, FormikProvider, useFormik } from 'formik';
 import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
 import Select from '@mui/material/Select';
 import styles from '../passwordChangeForm/PasswordChangeForm.module.scss';
-import { CircularProgress, FormControl, InputLabel, MenuItem } from '@mui/material';
+import { Button, CircularProgress, FormControl, InputLabel, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { CreateNewUser } from '../../utils/CreateNewUser';
@@ -92,11 +92,11 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
             )}
             {!isWaiting && (
               <div className={styles.buttons}>
-                <button className={styles.change} type="submit">Stwórz</button>
-                <button className={styles.cancel} type="reset" onClick={() => {
+                <Button variant='contained' className={styles.change} type="submit">Stwórz</Button>
+                <Button color='secondary' className={styles.cancel} type="reset" onClick={() => {
                   isModalOn(false);
                 }}>Anuluj
-                </button>
+                </Button>
               </div>
             )
             }

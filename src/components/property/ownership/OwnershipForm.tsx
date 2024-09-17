@@ -13,6 +13,7 @@ import GetOwnershipById from '../../../utils/GetOwnershipById';
 import { UpdateOwnership } from '../../../utils/UpdateOwnership';
 import type { Owner } from '../../../types/OwnersTypes';
 import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
+import { Button } from '@mui/material';
 
 type FormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
@@ -163,18 +164,19 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
                   ))}
                 </div>
               )}
-              <button type="submit" disabled={isSubmitting}>
+              <Button variant="contained" type="submit" disabled={isSubmitting}>
                 {ownershipId ? 'Zapisz' : 'Dodaj'}
-              </button>
-              <button
+              </Button>
+              <Button
                 className={styles.cancel}
                 type="reset"
+                color="secondary"
                 onClick={() => {
                   isModalOn(false);
                 }}
               >
                 Anuluj
-              </button>
+              </Button>
               {isWaiting && (
                 <div className={styles.waiting}>
                   <Spinner />

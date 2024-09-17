@@ -6,6 +6,8 @@ import { store } from "./app/store"
 import "./index.css"
 import { BrowserRouter } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ThemeProvider } from "@mui/material"
+import muiTheme from "./mui-theme"
 const queryClient = new QueryClient()
 
 const container = document.getElementById("root")
@@ -16,12 +18,14 @@ if (container) {
   root.render(
     <React.StrictMode>
       <BrowserRouter>
-
+      
+        <ThemeProvider theme={muiTheme}>
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
             <App />
           </QueryClientProvider>
         </Provider>
+        </ThemeProvider>
 
       </BrowserRouter>
     </React.StrictMode>

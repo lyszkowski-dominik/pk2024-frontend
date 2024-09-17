@@ -104,6 +104,7 @@ const EditResolutionForm = ({
                 </Button>
                 <Button
                   className={styles.cancel}
+                  color="secondary"
                   type="reset"
                   onClick={onCancel}
                 >
