@@ -4,7 +4,7 @@ import styles from './IconButton.module.scss';
 
 type IconButtonProps = {
   iconName: keyof typeof icons;
-  onClick: () => void;
+  onClick: (event?: any) => void;
   altText: string;
   size?: number;
   color?: string;

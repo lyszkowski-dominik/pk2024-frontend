@@ -3,18 +3,16 @@ import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { loginFormSlice } from '../components/loginForm/loginFormSlice';
 import { userDataApiSlice } from '../components/userProfile/userDataApiSlice';
-import { communitiesDataApiSlice } from './slices/communitiesDataApiSlice';
 import { sharedDataSlice } from './slices/sharedDataSlice';
-import { propertiesDataApiSlice } from '../components/property/propertiesApiSlice';
+import { propertiesSlice } from './slices/propertiesState';
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
 const rootReducer = combineSlices(
   loginFormSlice,
   userDataApiSlice,
-  communitiesDataApiSlice,
   sharedDataSlice,
-  propertiesDataApiSlice,
+  propertiesSlice,
 );
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
@@ -27,11 +25,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) => {
       // return getDefaultMiddleware()
-      return getDefaultMiddleware().concat(
-        userDataApiSlice.middleware,
-        communitiesDataApiSlice.middleware,
-        propertiesDataApiSlice.middleware,
-      );
+      return getDefaultMiddleware().concat(userDataApiSlice.middleware);
     },
     preloadedState,
   });

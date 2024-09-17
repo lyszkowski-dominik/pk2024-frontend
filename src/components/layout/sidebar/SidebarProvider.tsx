@@ -16,7 +16,7 @@ const defaultSidebarValues: SidebarContextType = {
   elements: [
     {
       title: 'Strona główna',
-      path: ''
+      path: '',
     },
     {
       title: 'Lokale',

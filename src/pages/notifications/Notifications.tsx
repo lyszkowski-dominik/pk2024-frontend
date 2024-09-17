@@ -24,7 +24,7 @@ const listColumns = [
     name: 'created_at',
     label: 'Utworzono',
     type: 'datetime',
-  }
+  },
 ];
 
 const Notifications = () => {
@@ -83,30 +83,36 @@ const Notifications = () => {
         </Modal>
       )}
       <div className={styles.iconButtons}>
-        {canAddNotification && <IconButton
-          iconName="add"
-          onClick={() => {
-            setOpenModal(ModalType.Add);
-            setModalOn(true);
-          }}
-          altText="Add User"
-          size={24}
-          color="var(--pink)"
-        />}
-        {canAddNotification && <IconButton
-          iconName="import"
-          onClick={handleImportClick}
-          altText="Import Properties"
-          size={24}
-          color="var(--pink)"
-        />}
-        {canAddNotification && <IconButton
-          iconName="export"
-          onClick={handleExportClick}
-          altText="Export Properties"
-          size={24}
-          color="var(--pink)"
-        />}
+        {canAddNotification && (
+          <IconButton
+            iconName="add"
+            onClick={() => {
+              setOpenModal(ModalType.Add);
+              setModalOn(true);
+            }}
+            altText="Add User"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
+        {canAddNotification && (
+          <IconButton
+            iconName="import"
+            onClick={handleImportClick}
+            altText="Import Properties"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
+        {canAddNotification && (
+          <IconButton
+            iconName="export"
+            onClick={handleExportClick}
+            altText="Export Properties"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
       </div>
 
       {isFetching && <Spinner />}
@@ -118,9 +124,7 @@ const Notifications = () => {
         nameField="title"
         page={page}
         pageSize={pageSize}
-        getDetailsHref={(record) =>
-          record.link
-        }
+        getDetailsHref={(record) => record.link}
       />
     </div>
   );

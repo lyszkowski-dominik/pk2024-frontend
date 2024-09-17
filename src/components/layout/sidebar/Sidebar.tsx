@@ -1,16 +1,10 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../app/hooks';
 import styles from './Sidebar.module.scss';
 import { useSidebar } from './SidebarProvider';
-import { selectLogInStatus, selectRoles } from '../../loginForm/loginFormSlice';
-import { useGetCommunitiesQuery } from '../../../app/slices/communitiesDataApiSlice';
+import { selectRoles } from '../../loginForm/loginFormSlice';
 import { useEffect, useState } from 'react';
-import Select from 'react-select';
-import {
-  selectSelectedCommunity,
-  setSelectedCommunity,
-} from '../../../app/slices/sharedDataSlice';
-import Spinner from '../../ui/spinner/Spinner';
+import { selectSelectedCommunity } from '../../../app/slices/sharedDataSlice';
 import Icon from '../../ui/icon/Icon';
 
 export interface ISidebarElement {

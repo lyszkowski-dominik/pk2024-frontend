@@ -16,9 +16,14 @@ import PasswordResetConfirmPage from './pages/auth/PasswordResetConfirmPage';
 import MainLayout from './components/layout/mainLayout/MainLayout';
 import Owners from './components/Owners/Owners';
 import NotFound404 from './pages/404';
+import Properties from './components/property/Properties';
 import Resolutions from './pages/resolutions/Resolutions';
 import ResolutionDetails from './pages/resolutions/ResolutionDetails';
 import Notifications from './pages/notifications/Notifications';
+import BillingList from './components/property/bills/BillingList';
+import { PropertyTab } from './types/propertiesTypes';
+import Property from './components/property/Property';
+import Billing from './components/property/bills/Billing';
 
 const App = () => {
   // const isTokenValid = validateToken();
@@ -62,7 +67,21 @@ const App = () => {
           />
           <Route
             path="/hoa/:communityID/managers"
-            element={<Owners key="manager" type={'manager'} />} />
+            element={<Owners key="manager" type={'manager'} />}
+          />
+          <Route path="/hoa/:communityID/properties" element={<Properties />} />
+          <Route
+            path="/hoa/:communityID/properties/:propertyId"
+            element={<Property />}
+          />
+          <Route
+            path="/hoa/:communityID/billings"
+            element={<Property currentTab={PropertyTab.billings} />}
+          />
+          <Route
+            path="/hoa/:communityID/billings/:billingId"
+            element={<Billing />}
+          />
           <Route
             path="/hoa/:communityID/resolutions"
             element={<Resolutions key="resolutions" />}

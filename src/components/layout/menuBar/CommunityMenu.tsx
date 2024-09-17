@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { useLocation, useNavigate } from 'react-router';
 import { logOut, selectLogInStatus } from '../../loginForm/loginFormSlice';
-import { useGetUserDataQuery } from '../../userProfile/userDataApiSlice';
-import { Link } from 'react-router-dom';
-import styles from './Menu.module.scss';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useGetCommunitiesQuery } from '../../../app/slices/communitiesDataApiSlice';
 import { setSelectedCommunity } from '../../../app/slices/sharedDataSlice';
+import { useGetCommunities } from '../../../hooks/useGetCommunities';
+import styles from './Menu.module.scss';
+import type { Community } from '../../../types/communityTypes';
 
 const CommunityMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,9 +21,7 @@ const CommunityMenu = () => {
     data: communitiesData,
     isLoading,
     isError
-  } = useGetCommunitiesQuery(undefined, {
-    skip: !isLoggedIn
-  });
+  } = useGetCommunities(isLoggedIn);
 
   useEffect(() => {
     if (
@@ -53,7 +50,7 @@ const CommunityMenu = () => {
     navigate(`/hoa/${communityId}`);
   };
 
-  const communityOptions = communitiesData?.results.map((community) => ({
+  const communityOptions = communitiesData?.results.map((community: Community) => ({
     value: community.id,
     label: community.name
   }));
@@ -70,7 +67,7 @@ const CommunityMenu = () => {
         className={styles['menu-button']}
       >
         {communityOptions?.find(
-          (option) => option.value === parseInt(selectedCommunity)
+          (option: any) => option.value === parseInt(selectedCommunity)
         )?.label}
         {haveManyOptions && <ExpandMoreIcon />}
       </button>

@@ -10,3 +10,8 @@ export type ApiPaginatedResult<T> = {
   previous: string;
   results: T[];
 };
+
+export interface ListRequest {
+  page: number;
+  pageSize: number;
+}

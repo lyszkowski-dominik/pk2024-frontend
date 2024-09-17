@@ -25,7 +25,7 @@ const listColumns = [
   },
   {
     name: 'start_date',
-    label: 'Rozpczęcie',
+    label: 'Rozpoczęcie',
     type: 'datetime',
   },
   {
@@ -91,30 +91,36 @@ const Resolutions = () => {
         </Modal>
       )}
       <div className={styles.iconButtons}>
-        {canAddResolution && <IconButton
-          iconName="add"
-          onClick={() => {
-            setOpenModal(ModalType.Add);
-            setModalOn(true);
-          }}
-          altText="Add User"
-          size={24}
-          color="var(--pink)"
-        />}
-        {canAddResolution && <IconButton
-          iconName="import"
-          onClick={handleImportClick}
-          altText="Import Properties"
-          size={24}
-          color="var(--pink)"
-        />}
-        {canAddResolution && <IconButton
-          iconName="export"
-          onClick={handleExportClick}
-          altText="Export Properties"
-          size={24}
-          color="var(--pink)"
-        />}
+        {canAddResolution && (
+          <IconButton
+            iconName="add"
+            onClick={() => {
+              setOpenModal(ModalType.Add);
+              setModalOn(true);
+            }}
+            altText="Add User"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
+        {canAddResolution && (
+          <IconButton
+            iconName="import"
+            onClick={handleImportClick}
+            altText="Import Properties"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
+        {canAddResolution && (
+          <IconButton
+            iconName="export"
+            onClick={handleExportClick}
+            altText="Export Properties"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
       </div>
 
       {isFetching && <Spinner />}

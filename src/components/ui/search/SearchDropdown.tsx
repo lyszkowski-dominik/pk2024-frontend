@@ -16,6 +16,8 @@ interface SearchDropdownProps {
   label: string;
   getOptions: (data: any) => SearchDropdownOption[];
   disabled?: boolean;
+  multiselect?: boolean;
+  value?: any[];
 }
 
 const SearchDropdown: React.FC<SearchDropdownProps> = ({
@@ -25,6 +27,8 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
   label,
   getOptions,
   disabled,
+  multiselect = false,
+  value = [],
 }) => {
   const [field, meta, helpers] = useField(name);
   const { setValue } = helpers;
@@ -35,6 +39,8 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [selectedValues, setSelectedValues] =
+    useState<SearchDropdownOption[]>(value);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const fetchOptions = async () => {
@@ -80,17 +86,51 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
     };
   }, [dropdownRef]);
 
+  const handleSelectionToggle = (option: SearchDropdownOption) => {
+    if (multiselect) {
+      const isSelected = selectedValues.find(
+        (selected) => selected.value === option.value,
+      );
+      let updatedSelections;
+      if (isSelected) {
+        updatedSelections = selectedValues.filter(
+          (selected) => selected.value !== option.value,
+        );
+      } else {
+        updatedSelections = [...selectedValues, option];
+      }
+      setSelectedValues(updatedSelections);
+      setValue(updatedSelections?.map((opt) => opt.value));
+    } else {
+      setSelectedValues([option]);
+      setValue(option.value);
+      setSearchTerm(option.label);
+      setIsDropdownOpen(false);
+    }
+  };
+
+  const isSelected = (option: SearchDropdownOption) => {
+    return selectedValues.some((selected) => selected.value === option.value);
+  };
+
+  const displaySelectedLabels = () => {
+    return selectedValues?.map((opt) => opt.label).join(', ');
+  };
+
   return (
     <div className={styles.container}>
       <label>{label}</label>
       <input
         type="text"
-        value={searchTerm}
+        value={
+          isDropdownOpen || !multiselect ? searchTerm : displaySelectedLabels()
+        }
         onChange={(e) => setSearchTerm(e.target.value)}
         onClick={() => {
           if (!isDropdownOpen && !disabled) {
             fetchOptions();
             setIsDropdownOpen(true);
+            setSearchTerm('');
           }
         }}
         onBlur={() => {
@@ -110,17 +150,26 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
               <Spinner />
             </li>
           ) : filteredOptions.length > 0 ? (
-            filteredOptions.map((option) => (
+            filteredOptions?.map((option) => (
               <li
                 key={option.value}
-                onMouseDown={() => {
-                  setValue(option.value);
-                  setSearchTerm(option.label);
-                  setIsDropdownOpen(false);
-                }}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => handleSelectionToggle(option)}
                 className={styles.dropdownItem}
               >
-                {option.label}
+                {multiselect ? (
+                  <>
+                    <input
+                      type="checkbox"
+                      checked={isSelected(option)}
+                      readOnly
+                      className={styles.checkbox}
+                    />
+                    {option.label}
+                  </>
+                ) : (
+                  <>{option.label}</>
+                )}
               </li>
             ))
           ) : (

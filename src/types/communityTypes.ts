@@ -7,3 +7,17 @@ export enum CommunityModule {
   Calendar = 'calendar',
   Managers = 'managers',
 }
+
+export interface Community {
+  id: number;
+  name: string;
+  address: string;
+  contact_info: string;
+}
+
+export interface CommunityDataApiResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Community[];
+}

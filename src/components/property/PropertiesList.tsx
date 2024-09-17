@@ -1,20 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import styles from '../../global_styles/Table.module.scss';
 import Spinner from '../ui/spinner/Spinner';
-import { useGetPropertiesQuery } from './propertiesApiSlice';
 import { PropertyTypeDisplayNames } from './types';
+import type { Property } from '../../types/propertiesTypes';
+import IconButton from '../ui/iconButton/IconButton';
+import { useNavigate } from 'react-router';
+import { useGetProperties } from '../../hooks/useGetProperties';
 
-const PropertiesList = () => {
+interface IProps {
+  hoaId: number;
+}
+
+const PropertiesList = ({ hoaId }: IProps) => {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const pageSize = 20;
-  const { data, error, isLoading } = useGetPropertiesQuery({
+  const {
+    data,
+    error,
+    isLoading,
+    refetch: refreshPage,
+    isFetching,
+  } = useGetProperties({
     page,
-    pageSize: pageSize,
+    pageSize,
+    hoaId,
   });
+
+  useEffect(() => {
+    refreshPage();
+  }, [page, data, hoaId, refreshPage]);
 
   const handlePageClick = (selectedItem: { selected: number }) => {
     setPage(selectedItem.selected + 1);
+    refreshPage();
   };
 
   if (isLoading) return <Spinner />;
@@ -22,7 +42,7 @@ const PropertiesList = () => {
 
   return (
     <div className={styles.tableContainer}>
-      <table className={styles.table}>
+      <table className={styles.clickableTable}>
         <thead>
           <tr>
             <th>Numer</th>
@@ -34,8 +54,13 @@ const PropertiesList = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.results.map((property) => (
-            <tr key={property.id}>
+          {data?.results?.map((property: Property) => (
+            <tr
+              key={property.id}
+              onClick={() =>
+                navigate(`/hoa/${hoaId}/properties/${property.id}`)
+              }
+            >
               <td>{property.number}</td>
               <td>{PropertyTypeDisplayNames[property.type]}</td>
               <td>{property.floor}</td>
@@ -51,7 +76,7 @@ const PropertiesList = () => {
         nextLabel={'>'}
         breakLabel={'...'}
         breakClassName={'break-me'}
-        pageCount={Math.ceil(data?.count ?? 0 / pageSize)}
+        pageCount={Math.ceil((data?.count ?? 0) / pageSize)}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         onPageChange={handlePageClick}

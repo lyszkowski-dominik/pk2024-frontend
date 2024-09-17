@@ -1,9 +1,14 @@
+import type { ListRequest } from './types';
+
 export enum ModalType {
   Add,
   Import,
   Export,
-  Edit,
-  Delete
+}
+
+export interface IPropertiesState {
+  updatedOwnerships: boolean;
+  updatedBillings: boolean;
 }
 
 export interface Property {
@@ -18,6 +23,10 @@ export interface Property {
   inhabitants?: number | null;
   hoa: number;
   parent?: number | null;
+}
+
+export interface PropertiesRequest extends ListRequest {
+  hoaId?: number;
 }
 
 export interface PropertiesResponse {
@@ -46,3 +55,9 @@ export const PropertyTypeDisplayNames: { [key in PropertyType]: string } = {
   [PropertyType.Common]: 'Lokal do użytku wspólnego',
   [PropertyType.Other]: 'Inne',
 };
+
+export enum PropertyTab {
+  billings,
+  meters,
+  owners,
+}

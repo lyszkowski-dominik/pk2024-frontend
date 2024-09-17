@@ -25,9 +25,9 @@
     background-color: var(--gray-100);
   }
 
-  tr:hover {
-    background-color: var(--gray-200);
-  }
+  // tr:hover {
+  //   background-color: var(--gray-200);
+  // }
 }
 
 .pagination {
@@ -76,4 +76,18 @@
 .disabled {
   pointer-events: none;
   opacity: 0.5;
+}
+
+.clickableTable {
+  @extend .table;
+
+  /* Hover effect */
+  tr:hover {
+    background-color: var(--gray-200);
+  }
+
+  /* Pointer cursor */
+  tr {
+    cursor: pointer;
+  }
 }

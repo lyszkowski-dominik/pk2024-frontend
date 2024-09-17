@@ -1,13 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useGetCommunityByIdQuery } from '../../app/slices/communitiesDataApiSlice';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Spinner from '../../components/ui/spinner/Spinner';
-import { CommunityModule } from '../../types/communityTypes';
-import useCommunitySidebar from './useCommunitySidebar';
-import Properties from '../../components/property/Properties';
 import styles from './CommunityPage.module.scss';
-import Owners from '../../components/Owners/Owners';
-import MainLayout from '../../components/layout/mainLayout/MainLayout';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { useGetNotifications } from '../../hooks/useGetNotifications';
@@ -26,7 +20,6 @@ const CommunityPage = () => {
     data,
     error,
     refetch: refreshPage,
-    isFetching,
   } = useGetNotifications({
     hoaID,
     page: 1,
@@ -71,20 +64,24 @@ const CommunityPage = () => {
     <div className={styles.propertiesContainer}>
       <h1>Aktualności</h1>
       {/* <div className={styles.container}> */}
-        {data?.results?.map((notification: any) => (
-          <div className={styles.notification}>
-              <h2>{notification.message}</h2>
-              <div className={styles.header}>
-              <small>{new Date(notification.created_at).toLocaleString()}</small>
-            {notification.link && <p><Link to={notification.link}>Więcej &gt;&gt;&gt;</Link></p>}
-                </div>
-            <hr />
-            <p>{notification.description}</p>
+      {data?.results?.map((notification: any) => (
+        <div className={styles.notification}>
+          <h2>{notification.message}</h2>
+          <div className={styles.header}>
+            <small>{new Date(notification.created_at).toLocaleString()}</small>
+            {notification.link && (
+              <p>
+                <Link to={notification.link}>Więcej &gt;&gt;&gt;</Link>
+              </p>
+            )}
           </div>
-        ))}
-        <div className={styles.more_info}>
-          <Link to={'notifications'}>Więcej aktualności</Link>
+          <hr />
+          <p>{notification.description}</p>
         </div>
+      ))}
+      <div className={styles.more_info}>
+        <Link to={'notifications'}>Więcej aktualności</Link>
+      </div>
       {/* </div> */}
     </div>
   );

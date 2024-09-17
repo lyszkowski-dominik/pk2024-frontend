@@ -94,7 +94,7 @@ const List = ({
     <>
       <div className={styles.tableContainer}>
         {isFetching && <div className={styles.overlay}></div>}
-        <table className={styles.table}>
+        <table className={styles.clickableTable}>
           <thead>
             <tr>
               {columns.map((column) => (

@@ -39,4 +39,47 @@
       background-color: var(--gray-100);
     }
   }
+
+  /* styles.checkbox */
+.checkbox {
+  width: 16px;                  /* Define the width of the checkbox */
+  height: 16px;                 /* Define the height of the checkbox */
+  background-color: #fff;       /* White background for unchecked state */
+  border: 2px solid #ccc;       /* Light gray border */
+  border-radius: 4px;           /* Rounded corners for a modern look */
+  display: inline-block;        /* Display inline with other elements */
+  vertical-align: middle;       /* Align vertically with label */
+  position: relative;           /* Position relative for checkmark positioning */
+  transition: background-color 0.2s ease, border-color 0.2s ease;  /* Smooth transition */
+}
+
+/* Checkmark styles (for when the checkbox is checked) */
+.checkbox::after {
+  content: '';                     /* Content to show */
+  position: absolute;              /* Positioned inside the checkbox */
+  left: 4px;                       /* Align the checkmark */
+  top: 1px;                        /* Position vertically inside */
+  width: 6px;                      /* Width of the checkmark */
+  height: 10px;                    /* Height of the checkmark */
+  border: solid #4caf50;           /* Green checkmark color */
+  border-width: 0 2px 2px 0;       /* Make it a checkmark shape */
+  transform: rotate(45deg);        /* Rotate the border to look like a checkmark */
+  opacity: 0;                      /* Initially hidden */
+  transition: opacity 0.2s ease;   /* Smooth transition for appearance */
+}
+
+/* Checked state */
+input[type="checkbox"]:checked + .checkbox {
+  background-color: #4caf50;       /* Green background when checked */
+  border-color: #4caf50;           /* Green border when checked */
+}
+
+input[type="checkbox"]:checked + .checkbox::after {
+  opacity: 1;                      /* Show the checkmark when checked */
+}
+
+/* Hover state */
+.checkbox:hover {
+  border-color: #999;              /* Darker border on hover */
+}
   

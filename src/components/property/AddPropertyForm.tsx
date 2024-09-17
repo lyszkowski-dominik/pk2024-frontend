@@ -5,10 +5,10 @@ import styles from './AddPropertyForm.module.scss';
 import { useState, type SetStateAction } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
-import { useAddPropertyMutation } from './propertiesApiSlice';
 import type { SearchDropdownOption } from '../ui/search/SearchDropdown';
 import SearchDropdown from '../ui/search/SearchDropdown';
 import { PropertyType, PropertyTypeDisplayNames } from './types';
+import { CreateProperty } from '../../utils/CreateProperty';
 
 type PropertyFormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
@@ -43,15 +43,15 @@ const propertySchema = Yup.object().shape({
 const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{ errors: string } | null>(
     null,
   );
-  const [addProperty, { isLoading, isError, error }] = useAddPropertyMutation();
 
   const selectedCommunity = useAppSelector(selectSelectedCommunity);
 
   const getParentOptions = (data: any): SearchDropdownOption[] => {
-    return data.results.map((property: any) => ({
+    return data.results?.map((property: any) => ({
       value: property.id,
       label: `${property.building} ${property.number} ${property.floor}`,
     }));
@@ -104,13 +104,14 @@ const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
               hoa: selectedCommunity,
             };
 
-            try {
-              setIsWaiting(true);
-              const response = await addProperty(numericValues).unwrap();
+            const res = await CreateProperty(numericValues);
+            if (res.status === 400) {
+              setErrorMessages(res.data);
+              console.log(res.data);
+              setIsError(true);
+            } else {
+              setIsError(false);
               setIsSuccess(true);
-            } catch (error) {
-              console.log(error);
-              setIsSuccess(false);
             }
             setIsWaiting(false);
             setSubmitting(false);
