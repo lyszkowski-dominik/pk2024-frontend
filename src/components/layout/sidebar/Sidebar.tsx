@@ -64,9 +64,9 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <div className={styles.footer}>
+      {/* <div className={styles.footer}>
         <p>Footer</p>
-      </div>
+      </div> */}
     </aside>
   );
 };
