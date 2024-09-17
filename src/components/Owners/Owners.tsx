@@ -1,5 +1,5 @@
 import styles from './Owners.module.scss';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetOwners } from '../../hooks/useGetOwners';
 import OwnersList from './OwnersList';
 import Spinner from '../ui/spinner/Spinner';
@@ -10,7 +10,8 @@ import AddUserForm from './AddUserForm';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { selectRoles } from '../loginForm/loginFormSlice';
-
+import { downloadFile } from '../../utils/downloadFile';
+import FileUploadForm from '../forms/fileUploadForm/FileUploadForm';
 
 interface OwnersProps {
   type: string;
@@ -31,10 +32,16 @@ const Owners = ({ type }: OwnersProps) => {
     refreshPage();
   };
 
-  const { isLoading, data, error, refetch: refreshPage, isFetching } = useGetOwners({
+  const {
+    isLoading,
+    data,
+    error,
+    refetch: refreshPage,
+    isFetching,
+  } = useGetOwners({
     role: type,
     hoaID,
-    page
+    page,
   });
   const [isModalOn, setModalOn] = useState(false);
   const [openModal, setOpenModal] = useState({});
@@ -47,42 +54,55 @@ const Owners = ({ type }: OwnersProps) => {
   if (error) return <div>Błąd ładowania danych</div>;
 
   function handleImportClick() {
-    console.log('Import clicked');
+    setOpenModal(ModalType.Import);
+    setModalOn(true);
   }
 
   function handleExportClick() {
-    console.log('Export clicked');
+    downloadFile(`/auth/users/export?hoa=${hoaID}&role=${type}`, 'users.csv');
   }
 
   return (
-
-
     <div className={styles.propertiesContainer}>
       {isModalOn && (
         <Modal>
           {openModal === ModalType.Add && (
             <AddUserForm isModalOn={setModalOn} refreshList={refreshPage} />
           )}
+          {openModal === ModalType.Import && (
+            <>
+              <h1>Import {type === "owner" ? "właścicieli" :"zarządców"}</h1>
+              <FileUploadForm
+                url={`/auth/users/import/?hoa=${hoaID}&role=${type}`}
+                setModalOn={setModalOn}
+                refreshPage={refreshPage}
+              />
+            </>
+          )}
         </Modal>
       )}
       <div className={styles.iconButtons}>
-        {canAddManager && <IconButton
-          iconName="add"
-          onClick={() => {
-            setOpenModal(ModalType.Add);
-            setModalOn(true);
-          }}
-          altText="Add User"
-          size={24}
-          color="var(--pink)"
-        />}
-        {canAddManager && <IconButton
-          iconName="import"
-          onClick={handleImportClick}
-          altText="Import Properties"
-          size={24}
-          color="var(--pink)"
-        />}
+        {canAddManager && (
+          <IconButton
+            iconName="add"
+            onClick={() => {
+              setOpenModal(ModalType.Add);
+              setModalOn(true);
+            }}
+            altText="Add User"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
+        {canAddManager && (
+          <IconButton
+            iconName="import"
+            onClick={handleImportClick}
+            altText="Import Properties"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
         <IconButton
           iconName="export"
           onClick={handleExportClick}
@@ -93,7 +113,12 @@ const Owners = ({ type }: OwnersProps) => {
       </div>
 
       {isFetching && <Spinner />}
-      <OwnersList ownersData={data} changePage={changePage} isFetching={isFetching} refetch={refreshPage} />
+      <OwnersList
+        ownersData={data}
+        changePage={changePage}
+        isFetching={isFetching}
+        refetch={refreshPage}
+      />
     </div>
   );
 };

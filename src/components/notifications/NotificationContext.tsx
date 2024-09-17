@@ -22,7 +22,7 @@ export const NotificationProvider = ({ children }: { children: any }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const timeoutsRef = useRef<any>({});
 
-  const addNotification = (message: string, type = 'info', duration = 3000) => {
+  const addNotification = (message: string, type = 'info', duration = 10000) => {
     const id = Date.now();
     setNotifications((prevNotifications) => [
       ...prevNotifications,
