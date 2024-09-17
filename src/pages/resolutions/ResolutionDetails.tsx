@@ -11,6 +11,7 @@ import { DeleteResolution } from '../../utils/DeleteResolution';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { useNotifications } from '../../components/notifications/NotificationContext';
 import { VoteResolution } from '../../utils/VoteResolution';
+import Spinner from '../../components/ui/spinner/Spinner';
 
 const ResolutionDetails = () => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -22,7 +23,7 @@ const ResolutionDetails = () => {
 
   const { addNotification } = useNotifications();
   const { resolutionID } = useParams();
-  const { data, refetch: refreshPage } = useGetResolution({
+  const { data, refetch: refreshPage, isLoading } = useGetResolution({
     id: parseInt(resolutionID || ''),
   });
 
@@ -105,7 +106,9 @@ const ResolutionDetails = () => {
   const yourVote: string = data?.vote
     ? voteMap[data?.vote as 'for' | 'against' | 'abstain']
     : 'Wstrzymano się';
-
+  if (isLoading) {
+    return <Spinner />
+  }
   return (
     <>
       <div className={styles.propertiesContainer}>
