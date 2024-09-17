@@ -103,13 +103,13 @@ const Owners = ({ type }: OwnersProps) => {
             color="var(--pink)"
           />
         )}
-        <IconButton
+        {canAddManager && (<IconButton
           iconName="export"
           onClick={handleExportClick}
           altText="Export Properties"
           size={24}
           color="var(--pink)"
-        />
+        />)}
       </div>
 
       {isFetching && <Spinner />}

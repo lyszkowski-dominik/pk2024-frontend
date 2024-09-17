@@ -34,10 +34,10 @@ const defaultSidebarValues: SidebarContextType = {
       title: 'Powiadomienia',
       path: 'notifications',
     },
-    {
-      title: 'Kalendarz',
-      path: 'calendar',
-    },
+    // {
+    //   title: 'Kalendarz',
+    //   path: 'calendar',
+    // },
     {
       title: 'Zarządcy',
       path: 'managers',

@@ -108,13 +108,13 @@ const Resolutions = () => {
           size={24}
           color="var(--pink)"
         />}
-        <IconButton
+        {canAddResolution && <IconButton
           iconName="export"
           onClick={handleExportClick}
           altText="Export Properties"
           size={24}
           color="var(--pink)"
-        />
+        />}
       </div>
 
       {isFetching && <Spinner />}

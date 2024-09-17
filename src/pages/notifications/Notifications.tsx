@@ -17,7 +17,7 @@ import AddNotificationForm from '../../components/notifications/AddNotificationF
 const listColumns = [
   {
     name: 'message',
-    label: 'Wiadomośc',
+    label: 'Wiadomość',
     type: 'string',
   },
   {
@@ -100,13 +100,13 @@ const Notifications = () => {
           size={24}
           color="var(--pink)"
         />}
-        <IconButton
+        {canAddNotification && <IconButton
           iconName="export"
           onClick={handleExportClick}
           altText="Export Properties"
           size={24}
           color="var(--pink)"
-        />
+        />}
       </div>
 
       {isFetching && <Spinner />}
