@@ -4,6 +4,7 @@ interface UserDataApiResponse {
   first_name: string;
   last_name: string;
   email: string;
+  id: number;
 }
 
 // Define a service using a base URL and expected endpoints

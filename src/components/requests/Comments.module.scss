@@ -1,0 +1,15 @@
+
+.comment_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    // align-items: flex-end;
+    width: 100%;
+    min-width: 600px;
+    max-width: 800px;
+}
+.comment_controls {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px;
+}

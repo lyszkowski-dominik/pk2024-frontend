@@ -24,6 +24,8 @@ import BillingList from './components/property/bills/BillingList';
 import { PropertyTab } from './types/propertiesTypes';
 import Property from './components/property/Property';
 import Billing from './components/property/bills/Billing';
+import Requests from './pages/requests/Requests';
+import ReqeustDetails from './pages/requests/RequestDetails';
 
 const App = () => {
   // const isTokenValid = validateToken();
@@ -93,6 +95,14 @@ const App = () => {
           <Route
             path="/hoa/:communityID/notifications"
             element={<Notifications key="notifications" />}
+          />
+          <Route
+            path="/hoa/:communityID/requests"
+            element={<Requests key="requests" />}
+          />
+           <Route
+            path="/hoa/:communityID/requests/:requestID"
+            element={<ReqeustDetails key="request" />}
           />
           <Route path="*" element={<NotFound404 />} />
         </Route>

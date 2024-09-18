@@ -1,0 +1,77 @@
+.propertiesContainer {
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .iconButtons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 50%;
+    gap: 10%;
+  }
+
+  .propertiesTable {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    th {
+      background-color: var(--gray-100);
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+
+  hr {
+    width: 100%;
+  }
+}
+
+.description {
+  width: 100%;
+  p {
+    width: 100%;
+    max-width: 768px;
+    text-align: justify;
+  }
+}
+
+.details {
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 5px;
+}
+.actions {
+  button {
+    margin: 3px;
+  }
+}
+.error {
+  color: red;
+}

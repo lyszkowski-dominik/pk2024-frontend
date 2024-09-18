@@ -46,6 +46,10 @@ const defaultSidebarValues: SidebarContextType = {
       title: 'Rachunki',
       path: 'bills',
     },
+     {
+      title: 'Zapytania',
+      path: 'requests',
+    },
   ],
   setElements: () => {},
   activeItem: '',
