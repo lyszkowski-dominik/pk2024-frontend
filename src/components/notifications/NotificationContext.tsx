@@ -8,7 +8,7 @@ export type Notification = {
   duration: number;
 };
 
-type NotificationContextType = {
+export type NotificationContextType = {
   addNotification: (message: string, type?: string, duration?: number) => void;
 };
 const NotificationContext = createContext<NotificationContextType>({

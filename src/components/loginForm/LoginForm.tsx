@@ -8,6 +8,10 @@ import { selectLogInStatus, logIn } from './loginFormSlice';
 import InputField from '../forms/inputField/InputField';
 import SubmitButton from '../forms/submitButton/SubmitButton';
 
+/**
+ * 
+ * @returns {JSX.Element} The `LoginForm` component returns a form for user login.
+ */
 const LoginForm = () => {
   const dispatch = useAppDispatch();
 

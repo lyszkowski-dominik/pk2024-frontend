@@ -7,12 +7,22 @@ import { useEffect, useState } from 'react';
 import { selectSelectedCommunity } from '../../../app/slices/sharedDataSlice';
 import Icon from '../../ui/icon/Icon';
 
+/**
+ * The `ISidebarElement` interface defines the structure of the sidebar element.
+ * @property {string} title - The `title` property represents the title of the sidebar element.
+ * @property {() => void} onClick - The `onClick` property represents the function to be executed when the sidebar element is clicked.
+ * @property {string} path - The `path` property represents the path of the sidebar element.
+ */
 export interface ISidebarElement {
   title: string;
   onClick?: () => void;
   path?: string;
 }
 
+/**
+ * 
+ * @returns {JSX.Element} The `Sidebar` component returns the sidebar of the application.
+ */
 const Sidebar = () => {
   let { elements } = useSidebar();
   const [activeItem, setActiveIndex] = useState<number>(0);

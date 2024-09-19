@@ -7,6 +7,10 @@ const initialState: IPropertiesState = {
   updatedBillings: false,
 };
 
+/**
+ * The `propertiesSlice` manages the state of the properties.
+ * @returns {IPropertiesState} The initial state of the properties.
+ */
 export const propertiesSlice = createSlice({
   name: 'propertiesState',
   initialState,

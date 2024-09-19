@@ -28,6 +28,10 @@ const listColumns = [
   },
 ];
 
+/**
+ * 
+ * @returns {JSX.Element} The `ManagerRequests` component returns a list of requests.
+ */
 const OwnerRequests = () => {
   const [isModalOn, setModalOn] = useState(false);
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;

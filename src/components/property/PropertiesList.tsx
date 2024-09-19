@@ -8,10 +8,19 @@ import IconButton from '../ui/iconButton/IconButton';
 import { useNavigate } from 'react-router';
 import { useGetProperties } from '../../hooks/useGetProperties';
 
-interface IProps {
+/**
+ * @property {number} hoaId - The `hoaId` property represents the id of the hoa.
+ */
+export interface IProps {
   hoaId: number;
 }
 
+
+/**
+ * 
+ * @param {IProps} params
+ * @returns {JSX.Element} The `PropertiesList` component returns a list of properties.
+ */
 const PropertiesList = ({ hoaId }: IProps) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);

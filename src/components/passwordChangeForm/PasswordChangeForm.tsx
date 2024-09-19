@@ -7,6 +7,11 @@ import { CircularProgress } from '@mui/material';
 import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
 import type { PasswordChangeFormProps } from '../../types/passwordChangeFormTypes';
 
+/**
+ * 
+ * @param {PasswordChangeFormProps} params
+ * @returns {JSX.Element} The `PasswordChangeForm` component returns a form for changing the password.
+ */
 const PasswordChangeForm = ({ isModalOn }: PasswordChangeFormProps) => {
   const [isWaiting, setIsWaiting] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{ old_password?: string, new_password: string } | null>(null);

@@ -10,13 +10,24 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import IconButton from '../../ui/iconButton/IconButton';
 
-interface IProps {
+/**
+ * @property {number} propertyId - The `propertyId` property represents the id of the property.
+ * @property {function} onRowClicked - The `onRowClicked` property represents the function to be called when a row is clicked.
+ * @property {function} onRowDelete - The `onRowDelete` property represents the function to be called when a row is deleted.
+ * @property {boolean} isEditable - The `isEditable` property represents whether the list is editable.
+ */
+export interface IProps {
   propertyId: number;
   onRowClicked: (id: number) => void;
   onRowDelete: (id: number) => void;
   isEditable: boolean;
 }
 
+/**
+ * 
+ * @param {IProps} params
+ * @returns {JSX.Element} The `OwnershipList` component returns a list of ownerships.
+ */
 const OwnershipList = ({
   propertyId,
   onRowClicked,

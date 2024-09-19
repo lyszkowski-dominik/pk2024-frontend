@@ -11,6 +11,14 @@ import { useSidebar } from '../components/layout/sidebar/SidebarProvider';
 import { useGetUserDataQuery } from '../components/userProfile/userDataApiSlice';
 import MainLayout from '../components/layout/mainLayout/MainLayout';
 
+/**
+ * The UserProfile component in TypeScript React handles user profile information, navigation, and
+ * sidebar elements based on user authentication status and selected module.
+ * @returns {JSX.Element} The `UserProfile` component is being returned. It contains conditional rendering based on
+ * the `moduleLoaded` state, displaying either the `UserInfo` component or the `UserSettings`
+ * component. It also handles navigation based on the user's login status and sets up the sidebar
+ * elements accordingly. Additionally, it displays an error message if there is a refresh token error.
+ */
 const UserProfile = () => {
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector(selectLogInStatus);

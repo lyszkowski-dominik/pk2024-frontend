@@ -3,6 +3,10 @@ import Modal from '../ui/modal/Modal';
 import { useState } from 'react';
 import PasswordChangeForm from '../passwordChangeForm/PasswordChangeForm';
 
+/**
+ * 
+ * @returns {JSX.Element} The `UserSettings` component returns the user settings.
+ */
 const UserSettings = () => {
   const [isChangingPassword, setIsChangingPassword] = useState<boolean>(false);
 

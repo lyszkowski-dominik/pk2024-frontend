@@ -10,6 +10,10 @@ import { useNavigate } from 'react-router';
 import SubmitButton from '../forms/submitButton/SubmitButton';
 
 
+/**
+ * 
+ * @returns {JSX.Element} The `ResetPasswordEmailForm` component returns a form for resetting the password.
+ */
 const ResetPasswordEmailForm = () => {
   const [isWaiting, setIsWaiting] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{ email: string } | null>(

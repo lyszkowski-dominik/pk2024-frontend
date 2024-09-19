@@ -14,10 +14,19 @@ import { downloadFile } from '../../utils/downloadFile';
 import FileUploadForm from '../forms/fileUploadForm/FileUploadForm';
 import { useNotifications } from '../notifications/NotificationContext';
 
-interface OwnersProps {
+
+/**
+ * @property {string} type The `type` property is a string that specifies the type of user.
+ */
+export interface OwnersProps {
   type: string;
 }
 
+/**
+ * 
+ * @param {string} type The `type` parameter is a string that specifies the type of user.
+ * @returns {JSX.Element} The `Owners` component returns a list of owners or managers.
+ */
 const Owners = ({ type }: OwnersProps) => {
   // get current url value
   // const path = window.location.pathname; // /hoa/1

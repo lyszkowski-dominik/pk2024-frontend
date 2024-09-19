@@ -8,6 +8,10 @@ import styles from './Menu.module.scss';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+/**
+ * 
+ * @returns {JSX.Element} The `UserMenu` component returns a dropdown menu for user actions.
+ */
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();

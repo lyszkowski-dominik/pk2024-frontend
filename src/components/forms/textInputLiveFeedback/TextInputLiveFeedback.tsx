@@ -2,7 +2,16 @@ import { useField } from 'formik';
 import { useState } from 'react';
 import styles from './TextInputLiveFeedback.module.scss';
 
-type TextInputLiveFeedbackProps = {
+/**
+ * The type `TextInputLiveFeedbackProps` defines props for a text input field component in TypeScript React.
+ * @param {string} label - A descriptive label for the text input field.
+ * @param {string | undefined} helpText - The `helpText` property in the `TextInputLiveFeedbackProps` type is an optional string that provides additional information or guidance to the user about the input field.
+ * @param {string} type - The `type` property in the `TextInputLiveFeedbackProps` type represents the type of input field, such as text, password, email, etc.
+ * @param {string | undefined} id - The `id` property in the `TextInputLiveFeedbackProps` type represents the unique identifier for the text input field. It is optional and can be used to associate the input field with a label or other elements on the page.
+ * @param {string} name - The `name` property in the `TextInputLiveFeedbackProps` type represents the name of the text input field. It is a required property and must be provided when using the component.
+ * @param {string | undefined} className - The `className` property in the `TextInputLiveFeedbackProps` type represents the CSS class name(s) to apply to the text input field. It is optional and can be used to customize the appearance of the input field.
+ */
+export type TextInputLiveFeedbackProps = {
   label: string,
   helpText?: string,
   type: string,
@@ -11,7 +20,11 @@ type TextInputLiveFeedbackProps = {
   className?: string
 }
 
-
+/**
+ * 
+ * @param {TextInputLiveFeedbackProps} params
+ * @returns {JSX.Element} The `TextInputLiveFeedback` component returns a text input field with live feedback based on user input and validation status.
+ */
 const TextInputLiveFeedback = ({ label, helpText, ...props }: TextInputLiveFeedbackProps) => {
   const [field, meta] = useField(props);
   // Show inline feedback if EITHER

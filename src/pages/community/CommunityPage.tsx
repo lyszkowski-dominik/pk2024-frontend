@@ -5,7 +5,10 @@ import styles from './CommunityPage.module.scss';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { useGetNotifications } from '../../hooks/useGetNotifications';
-
+/**
+ * 
+ * @returns {React.FunctionComponent} The `CommunityPage` component is a functional component that displays the details of a community.
+ */
 const CommunityPage = () => {
   // const { communityID } = useParams<{ communityID: string }>();
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;

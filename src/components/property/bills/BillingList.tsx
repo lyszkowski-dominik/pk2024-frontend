@@ -9,10 +9,18 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { selectSelectedCommunity } from '../../../app/slices/sharedDataSlice';
 import { setUpdatedBillings } from '../../../app/slices/propertiesState';
 
-interface IProps {
+/**
+ * @property {number} propertyId - The `propertyId` property represents the id of the property.
+ */
+export interface IProps {
   propertyId?: number;
 }
 
+/**
+ * 
+ * @param {IProps} { propertyId } - The `BillingList` component displays a list of bills.
+ * @returns {JSX.Element} The `BillingList` component returns a list of bills.
+ */
 const BillingList = ({ propertyId }: IProps) => {
   const shouldUpdate = useAppSelector(
     (state) => state.propertiesState.updatedBillings,

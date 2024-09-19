@@ -16,7 +16,12 @@ import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import { Button } from '@mui/material';
 import { useNotifications } from '../../notifications/NotificationContext';
 
-type FormProps = {
+/**
+ * @param {boolean} isModalOn - The `isModalOn` function is a callback function that closes the form.
+ * @param {number} propertyId - The `propertyId` property represents the id of the property.
+ * @param {number} ownershipId - The `ownershipId` property represents the id of the ownership.
+ */
+export type FormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
   propertyId: number;
   ownershipId?: number;
@@ -27,6 +32,11 @@ const ownershipSchema = Yup.object().shape({
   start: Yup.string().required('Podaj datę nabycia'),
 });
 
+/**
+ * 
+ * @param {FormProps} params
+ * @returns {JSX.Element} The `OwnershipForm` component returns a form for adding or editing ownership.
+ */
 const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
   const dispatch = useAppDispatch();
   const [isSuccess, setIsSuccess] = useState(false);

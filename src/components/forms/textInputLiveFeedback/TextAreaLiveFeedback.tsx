@@ -2,7 +2,15 @@ import { useField } from 'formik';
 import { useState } from 'react';
 import styles from './TextInputLiveFeedback.module.scss';
 
-type TextAreaLiveFeedbackProps = {
+/**
+ * The type `TextAreaLiveFeedbackProps` defines props for a textarea input field component in TypeScript React.
+ * @param {string} label - A descriptive label for the textarea input field.
+ * @param {string | undefined} helpText - The `helpText` property in the `TextAreaLiveFeedbackProps` type is an optional string that provides additional information or guidance to the user about the input field.
+ * @param {string | undefined} id - The `id` property in the `TextAreaLiveFeedbackProps` type represents the unique identifier for the textarea input field. It is optional and can be used to associate the textarea with a label or other elements on the page.
+ * @param {string} name - The `name` property in the `TextAreaLiveFeedbackProps` type represents the name of the textarea input field. It is a required property and must be provided when using the component.
+ * @param {string | undefined} className - The `className` property in the `TextAreaLiveFeedbackProps` type represents the CSS class name(s) to apply to the textarea input field. It is optional and can be used to customize the appearance of the textarea.
+ */
+export type TextAreaLiveFeedbackProps = {
   label: string;
   helpText?: string;
   id?: string;
@@ -10,6 +18,11 @@ type TextAreaLiveFeedbackProps = {
   className?: string;
 };
 
+/**
+ * 
+ * @param {TextAreaLiveFeedbackProps} params
+ * @returns {JSX.Element} The `TextAreaLiveFeedback` component returns a textarea input field with live feedback based on user input and validation status.
+ */
 const TextAreaLiveFeedback = ({
   label,
   helpText,

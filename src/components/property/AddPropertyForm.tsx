@@ -12,7 +12,10 @@ import { CreateProperty } from '../../utils/CreateProperty';
 import { Button } from '@mui/material';
 import { useNotifications } from '../notifications/NotificationContext';
 
-type PropertyFormProps = {
+/**
+ * @property {React.Dispatch<SetStateAction<boolean>>} isModalOn - The `isModalOn` property represents a function that sets the modal state.
+ */
+export type PropertyFormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
 };
 
@@ -42,6 +45,11 @@ const propertySchema = Yup.object().shape({
   parent: Yup.number(),
 });
 
+/**
+ * 
+ * @param {PropertyFormProps} params
+ * @returns {JSX.Element} The `AddPropertyForm` component returns a form for adding a new property.
+ */
 const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);

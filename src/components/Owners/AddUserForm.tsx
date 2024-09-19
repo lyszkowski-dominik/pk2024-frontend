@@ -11,6 +11,12 @@ import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { useNotifications } from '../notifications/NotificationContext';
 
 
+/**
+ * 
+ * @param {function} isModalOn The `isModalOn` function is a callback function that closes the form.
+ * @param {function} refreshList The `refreshList` function is a callback function that refreshes the list of users.
+ * @returns {JSX.Element} The `AddUserForm` component returns a form for adding a new user.
+ */
 const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) => void, refreshList: () => void }) => {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);

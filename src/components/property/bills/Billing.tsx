@@ -16,6 +16,10 @@ import { selectRoles } from '../../loginForm/loginFormSlice';
 import SendPayment from '../../../utils/SendPayment';
 import { Button } from '@mui/material';
 
+/**
+ * 
+ * @returns {JSX.Element} The `Billing` component returns the billing details.
+ */
 const Billing = () => {
   const role = useAppSelector(selectRoles);
   const navigate = useNavigate();

@@ -4,7 +4,10 @@ import AuthLayout from '../../components/layout/authLayout/AuthLayout';
 import { selectLogInStatus } from '../../components/loginForm/loginFormSlice';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+/**
+ * 
+ * @returns {React.FunctionComponent} The `PasswordResetEmailSent` component is a functional component that displays a message that the password reset email has been sent.
+ */
 const PasswordResetEmailSent = () => {
   const isLoggedIn = useAppSelector(selectLogInStatus);
   const navigate = useNavigate();

@@ -34,7 +34,10 @@ const listColumns = [
     type: 'datetime',
   },
 ];
-
+/**
+ * 
+ * @returns {React.FunctionComponent} The `Resolutions` component is a functional component that displays a list of resolutions.
+ */
 const Resolutions = () => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const { page, setPage, pageSize } = usePagination();

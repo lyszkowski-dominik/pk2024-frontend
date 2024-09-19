@@ -13,6 +13,10 @@ import { useNotifications } from '../../components/notifications/NotificationCon
 import { VoteResolution } from '../../utils/VoteResolution';
 import Spinner from '../../components/ui/spinner/Spinner';
 
+/**
+ * 
+ * @returns {React.FunctionComponent} The `ResolutionDetails` component is a functional component that displays the details of a resolution.
+ */
 const ResolutionDetails = () => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);

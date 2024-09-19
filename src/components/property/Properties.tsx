@@ -9,6 +9,10 @@ import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { selectRoles } from '../loginForm/loginFormSlice';
 
+/**
+ * 
+ * @returns {JSX.Element} The `Properties` component returns a list of properties.
+ */
 const Properties = () => {
   const [openModal, setOpenModal] = useState({});
   const [isModalOn, setModalOn] = useState(false);

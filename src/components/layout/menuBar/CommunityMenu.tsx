@@ -9,6 +9,11 @@ import { useGetCommunities } from '../../../hooks/useGetCommunities';
 import styles from './Menu.module.scss';
 import type { Community } from '../../../types/communityTypes';
 
+
+/**
+ * 
+ * @returns {JSX.Element} The `CommunityMenu` component returns a dropdown menu for selecting a community.
+ */
 const CommunityMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();

@@ -7,7 +7,14 @@ import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { useNotifications } from '../notifications/NotificationContext';
 import { Button, Divider, FormControl, InputLabel, List, ListItem, ListItemText, TextField, Typography } from '@mui/material';
 
-type CommentsProps = {
+/**
+ * @property {Comment[]} comments - The `comments` property represents the list of comments.
+ * @property {string} newCommentEndpoint - The `newCommentEndpoint` property represents the endpoint for adding a new comment.
+ * @property {boolean} isDisabled - The `isDisabled` property represents whether the comments are disabled.
+ * @property {function} refreshPage - The `refreshPage` property represents the function to refresh the page.
+ * @property {number} requestID - The `requestID` property represents the id of the request.
+ */
+export type CommentsProps = {
   comments: Comment[];
   newCommentEndpoint: string;
   isDisabled: boolean;
@@ -15,6 +22,11 @@ type CommentsProps = {
   requestID: number;
 };
 
+/**
+ * 
+ * @param {CommentsProps} params
+ * @returns {JSX.Element} The `Comments` component returns a list of comments.
+ */
 const Comments = ({
   comments,
   newCommentEndpoint,

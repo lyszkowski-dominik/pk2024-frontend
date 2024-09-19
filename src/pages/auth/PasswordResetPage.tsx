@@ -5,6 +5,10 @@ import { selectLogInStatus } from '../../components/loginForm/loginFormSlice';
 import { useEffect } from 'react';
 import ResetPasswordForm from '../../components/passwordResetEmailForm/PasswordResetEmailForm';
 
+/**
+ * 
+ * @returns {React.FunctionComponent} The `PasswordResetPage` component is a functional component that displays the password reset page.
+ */
 const PasswordResetPage = () => {
   const isLoggedIn = useAppSelector(selectLogInStatus);
   const navigate = useNavigate();

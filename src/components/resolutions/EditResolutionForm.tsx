@@ -8,12 +8,22 @@ import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFee
 import { EditResolution } from '../../utils/EditResolution';
 import { useNotifications } from '../notifications/NotificationContext';
 
-type EditResolutionFormProps = {
+/**
+ * @property {function} onCancel The `onCancel` function is a callback function that closes the form.
+ * @property {function} onSubmit The `onSubmit` function is a callback function that refreshes the list of resolutions.
+ * @property {any} initialData The `initialData` object contains the initial data of the resolution.
+ */
+export type EditResolutionFormProps = {
   onCancel: () => void;
   onSubmit: () => void | null;
   initialData: any;
 };
 
+/**
+ * 
+ * @param {EditResolutionFormProps} params
+ * @returns {JSX.Element} The `EditResolutionForm` component returns a form for editing a resolution.
+ */
 const EditResolutionForm = ({
   onCancel,
   onSubmit: onSubmitCallback,

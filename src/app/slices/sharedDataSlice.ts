@@ -10,6 +10,10 @@ const initialState: SharedDataState = {
   selectedCommunityId: null,
 };
 
+/**
+ * The `sharedDataSlice` manages the state of the shared data.
+ * @returns {SharedDataState} The initial state of the shared data.
+ */
 export const sharedDataSlice = createSlice({
   name: 'sharedData',
   initialState,

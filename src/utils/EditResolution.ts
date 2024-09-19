@@ -2,6 +2,14 @@ import axios from 'axios';
 import { GetToken } from './GetToken';
 import { localDateToISO } from './date';
 
+/**
+ * The `FormData` interface defines the structure of the data object that will be used to update a resolution.
+ * @property {string} title - The `title` property in the `FormData` interface represents the title of the resolution.
+ * @property {string} description - The `description` property in the `FormData` interface represents the description of the resolution.
+ * @property {string} start_date - The `start_date` property in the `FormData` interface represents the start date of the resolution.
+ * @property {string} end_date - The `end_date` property in the `FormData` interface represents the end date of the resolution.
+ * @property {number} hoa - The `hoa` property in the `FormData` interface represents the HOA associated with the resolution.
+ */
 interface FormData {
   title: string;
   description: string;

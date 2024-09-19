@@ -5,6 +5,10 @@ import { useNavigate } from 'react-router';
 import { selectLogInStatus } from '../loginForm/loginFormSlice';
 import { useGetUserDataQuery } from './userDataApiSlice';
 
+/**
+ * 
+ * @returns {JSX.Element} The `UserDataTable` component returns the user data.
+ */
 const UserDataTable = () => {
   const isLoggedIn = useAppSelector(selectLogInStatus);
   const navigate = useNavigate();

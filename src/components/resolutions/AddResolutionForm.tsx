@@ -10,6 +10,11 @@ import { CreateNewResolution } from '../../utils/CreateNewResolution';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
 import { useNotifications } from '../notifications/NotificationContext';
 
+/**
+ * 
+ * @param {function} onCancel The `onCancel` function is a callback function that closes the form.
+ * @returns {JSX.Element} The `AddResolutionForm` component returns a form for adding a resolution.
+ */
 const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);

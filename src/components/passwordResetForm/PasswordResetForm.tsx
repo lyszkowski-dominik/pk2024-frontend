@@ -9,6 +9,12 @@ import { ResetPassword } from '../../utils/ResetPassword';
 import { useNavigate, useParams } from 'react-router';
 import SubmitButton from '../forms/submitButton/SubmitButton';
 
+
+/**
+ * 
+ * @param {PasswordChangeFormProps} params
+ * @returns {JSX.Element} The `PasswordChangeForm` component returns a form for changing the password.
+ */
 const PasswordResetForm = ({ isModalOn }: PasswordChangeFormProps) => {
   const [isWaiting, setIsWaiting] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{

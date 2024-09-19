@@ -1,11 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-interface UserDataApiResponse {
+/**
+ * @property {string} first_name The `first_name` property represents the first name of the user.
+ * @property {string} last_name The `last_name` property represents the last name of the user.
+ * @property {string} email The `email` property represents the email of the user.
+ * @property {number} id The `id` property represents the id of the user.
+ */
+export interface UserDataApiResponse {
   first_name: string;
   last_name: string;
   email: string;
   id: number;
 }
+
 
 // Define a service using a base URL and expected endpoints
 export const userDataApiSlice = createApi({

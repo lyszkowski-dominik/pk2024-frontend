@@ -1,0 +1,9 @@
+{
+  "entryPointStrategy": "expand",
+  "entryPoints": ["./src"],
+  "out": "doc",
+  "exclude": ["**/node_modules/**", "**/test/**", "**/react-app-env.d.ts", "**/App.test.tsx", "**/index.tsx", "**/reportWebVitals.ts", "**/setupTests.ts", "**/build/**"],
+  "plugin": ["typedoc-plugin-merge-modules"],
+  "mergeModulesRenameDefaults": "true",
+  "mergeModulesMergeMode": "module"
+}

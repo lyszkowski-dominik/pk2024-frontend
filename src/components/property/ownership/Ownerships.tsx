@@ -11,10 +11,18 @@ import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import { DeleteOwnership } from '../../../utils/DeleteOwnership';
 import { Button } from '@mui/material';
 
-interface IProps {
+/**
+ * @property {number} propertyId - The `propertyId` property represents the id of the property.
+ */
+export interface IProps {
   propertyId: number;
 }
 
+/**
+ * 
+ * @param {IProps} params
+ * @returns {JSX.Element} The `Ownerships` component returns a list of ownerships.
+ */
 const Ownerships = ({ propertyId }: IProps) => {
   const dispatch = useAppDispatch();
   const [openModal, setOpenModal] = useState({});

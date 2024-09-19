@@ -6,10 +6,18 @@ import { useParams } from 'react-router-dom';
 import Ownerships from './ownership/Ownerships';
 import BillingList from './bills/BillingList';
 
-interface IProps {
+/**
+ * @property {PropertyTab} currentTab - The `currentTab` property represents the current tab.
+ */
+export interface IProps {
   currentTab?: PropertyTab;
 }
 
+/**
+ * 
+ * @param {IProps} params
+ * @returns {JSX.Element} The `Property` component returns a property.
+ */
 const Property = ({ currentTab = PropertyTab.billings }: IProps) => {
   const [tabIndex, setTabIndex] = useState(currentTab);
 

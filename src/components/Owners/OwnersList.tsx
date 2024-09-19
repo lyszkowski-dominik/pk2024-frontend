@@ -10,13 +10,25 @@ import { Button } from '@mui/material';
 import { useNotifications } from '../notifications/NotificationContext';
 
 
-interface OwnersListProps {
+/**
+ * The type `OwnersListProps` defines the structure of the props for the `OwnersList` component.
+ * @param {OwnersResponse | null} ownersData - The `ownersData` property represents the data to be displayed in the list.
+ * @param {function} changePage - The `changePage` property represents the function to be called when the page changes.
+ * @param {boolean} isFetching - The `isFetching` property represents whether the data is being fetched.
+ * @param {function} refetch - The `refetch` property represents the function to be called to refetch the data.
+ */
+export interface OwnersListProps {
   ownersData: OwnersResponse | null;
   changePage: (pageNumber: number) => void;
   isFetching?: boolean;
   refetch: () => void;
 }
 
+/**
+ * 
+ * @param {OwnersListProps} props
+ * @returns {JSX.Element} The `OwnersList` component returns a list of owners.
+ */
 const OwnersList = ({ ownersData, changePage, isFetching, refetch }: OwnersListProps) => {
   const pageSize = 10;
   const [editModal, setEditModal] = useState(false);

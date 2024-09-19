@@ -10,6 +10,11 @@ import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFee
 import { CreateNewNotification } from '../../utils/CreateNewNotification';
 import { useNotifications } from './NotificationContext';
 
+/**
+ * 
+ * @param {function} onCancel The `onCancel` function is a callback function that closes the form.
+ * @returns {JSX.Element} The `AddNotificationForm` component returns a form for adding a new notification.
+ */
 const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);

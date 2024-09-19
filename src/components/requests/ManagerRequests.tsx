@@ -40,6 +40,10 @@ const listColumnsTypes = [
   },
 ];
 
+/**
+ * 
+ * @returns {JSX.Element} The `ManagerRequests` component returns a list of requests.
+ */
 const ManagerRequests = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;

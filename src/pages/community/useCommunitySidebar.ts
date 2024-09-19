@@ -4,7 +4,11 @@ import { useSidebar } from '../../components/layout/sidebar/SidebarProvider';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
 import { CommunityModule } from '../../types/communityTypes';
 import { UserRole } from '../../types/types';
-
+/**
+ * 
+ * @param setCurrentComponent - The `setCurrentComponent` is a function that sets the current component.
+ * @returns {void} The `useCommunitySidebar` function is a custom hook that sets the sidebar elements for the community page.
+ */
 const useCommunitySidebar = (
   setCurrentComponent: React.Dispatch<React.SetStateAction<CommunityModule>>
 ) => {

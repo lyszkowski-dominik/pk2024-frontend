@@ -19,6 +19,13 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 // The store setup is wrapped in `makeStore` to allow reuse
 // when setting up tests that need the same store config
+/**
+ * 
+ * @param {Partial<RootState>} preloadedState - The `makeStore` function creates a store with the provided preloaded state.
+ * @remarks
+ * The `makeStore` function creates a store with the provided preloaded state.
+ * @returns {AppStore} The `makeStore` function creates a store with the provided preloaded state.
+ */
 export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({
     reducer: rootReducer, // Adding the api middleware enables caching, invalidation, polling,

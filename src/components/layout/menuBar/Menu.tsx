@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router';
 import UserMenu from './UserMenu';
 import CommunityMenu from './CommunityMenu';
 
+/**
+ * 
+ * @returns {JSX.Element} The `Menu` component returns the main menu of the application.
+ */
 const Menu = () => {
   const [logout, setLogout] = useState(false);
   const dispatch = useAppDispatch();

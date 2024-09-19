@@ -12,7 +12,10 @@ import { useGetRequest } from '../../hooks/useGetRequest';
 import { EditRequest } from '../../utils/EditRequest';
 import { useGetUserDataQuery } from '../../components/userProfile/userDataApiSlice';
 import Comments from '../../components/requests/Comments';
-
+/**
+ * 
+ * @returns {React.FunctionComponent} The `ReqeustDetails` component is a functional component that displays the details of a request.
+ */
 const ReqeustDetails = () => {
   const [isCloseModalOpen, setCloseModalOpen] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);

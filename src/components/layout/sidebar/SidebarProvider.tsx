@@ -5,7 +5,14 @@ import { useGetUserDataQuery } from '../../userProfile/userDataApiSlice';
 import { useAppSelector } from '../../../app/hooks';
 import { selectRoles } from '../../loginForm/loginFormSlice';
 
-interface SidebarContextType {
+/**
+ * The `SidebarContextType` interface defines the structure of the sidebar context.
+ * @property {ISidebarElement[]} elements - The `elements` property represents the sidebar elements.
+ * @property {(elements: ISidebarElement[]) => void} setElements - The `setElements` property represents the function to set the sidebar elements.
+ * @property {string} activeItem - The `activeItem` property represents the active sidebar element.
+ * @property {(item: string) => void} setActiveItem - The `setActiveItem` property represents the function to set the active sidebar element.
+ */
+export interface SidebarContextType {
   elements: ISidebarElement[];
   setElements: (elements: ISidebarElement[]) => void;
   activeItem: string;

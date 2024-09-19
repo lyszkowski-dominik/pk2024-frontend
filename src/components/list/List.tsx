@@ -6,13 +6,31 @@ import { useNavigate } from 'react-router';
 import { Button } from '@mui/material';
 import IconButton from '../ui/iconButton/IconButton';
 
+/**
+ * The type `ColumnDef` defines the structure of the column definition object.
+ * @param {string} label - The `label` property represents the label of the column.
+ * @param {string} name - The `name` property represents the name of the column.
+ * @param {string} type - The `type` property represents the type of the column.
+ */
 type ColumnDef = {
   label: string;
   name: string;
   type: string;
 };
 
-type ListProps = {
+/**
+ * The type `ListProps` defines the structure of the props for the `List` component.
+ * @param {ApiPaginatedResult<any>} data - The `data` property represents the paginated data to be displayed in the list.
+ * @param {ColumnDef[]} columns - The `columns` property represents the column definitions for the list.
+ * @param {string} nameField - The `nameField` property represents the field in the data that contains the name of the record.
+ * @param {function} onDelete - The `onDelete` property represents the function to be called when a record is deleted.
+ * @param {function} onPageChange - The `onPageChange` property represents the function to be called when the page changes.
+ * @param {boolean} isFetching - The `isFetching` property represents whether the data is being fetched.
+ * @param {number} page - The `page` property represents the current page number.
+ * @param {number} pageSize - The `pageSize` property represents the number of records to be displayed per page.
+ * @param {function} getDetailsHref - The `getDetailsHref` property represents the function to get the details URL for a record.
+ */
+export type ListProps = {
   data: ApiPaginatedResult<any>;
   columns: ColumnDef[];
   nameField: string;
@@ -24,6 +42,11 @@ type ListProps = {
   getDetailsHref?: (record: any) => string;
 };
 
+/**
+ * 
+ * @param {ListProps} props
+ * @returns {JSX.Element} The `List` component returns a paginated list of records.
+ */
 const List = ({
   data,
   columns,

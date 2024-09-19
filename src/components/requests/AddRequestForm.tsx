@@ -17,11 +17,20 @@ const propertySchema = Yup.object().shape({
   type: Yup.number(),
 });
 
-type RequestFormProps = {
+/**
+ * @param {React.Dispatch<SetStateAction<boolean>>} isModalOn The `isModalOn` function is a callback function that closes the form.
+ * @param {function} refreshList The `refreshList` function is a callback function that refreshes the list of requests.
+ */
+export type RequestFormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
   refreshList: () => void;
 };
 
+/**
+ * 
+ * @param {RequestFormProps} params
+ * @returns {JSX.Element} The `AddRequestForm` component returns a form for adding a request.
+ */
 const AddRequestForm = ({ isModalOn }: RequestFormProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
