@@ -1,35 +1,40 @@
 import { Form, FormikProvider, useFormik } from 'formik';
 import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
-import Select from '@mui/material/Select';
 import styles from '../passwordChangeForm/PasswordChangeForm.module.scss';
-import { Button, CircularProgress, FormControl, InputLabel, MenuItem } from '@mui/material';
+import { Button } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { CreateNewUser } from '../../utils/CreateNewUser';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { useNotifications } from '../notifications/NotificationContext';
-
+import Spinner from '../ui/spinner/Spinner';
 
 /**
- * 
+ *
  * @param {function} isModalOn The `isModalOn` function is a callback function that closes the form.
  * @param {function} refreshList The `refreshList` function is a callback function that refreshes the list of users.
  * @returns {JSX.Element} The `AddUserForm` component returns a form for adding a new user.
  */
-const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) => void, refreshList: () => void }) => {
+const AddUserForm = ({
+  isModalOn,
+  refreshList,
+  role,
+}: {
+  isModalOn: (value: boolean) => void;
+  refreshList: () => void;
+  role: string;
+}) => {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{
-    email?: string,
-    first_name?: string,
-    last_name?: string,
-    role?: string,
-    hoaID?: number
+    email?: string;
+    first_name?: string;
+    last_name?: string;
+    role?: string;
+    hoaID?: number;
   } | null>(null);
   const { addNotification } = useNotifications();
-  // const path = window.location.pathname; // /hoa/1
-  // const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
 
   const formik = useFormik({
@@ -37,8 +42,8 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
       email: '',
       first_name: '',
       last_name: '',
-      role: 'owner',
-      hoa: hoaID
+      role: role,
+      hoa: hoaID,
     },
     onSubmit: async (values) => {
       console.log(values);
@@ -51,70 +56,70 @@ const AddUserForm = ({ isModalOn, refreshList }: { isModalOn: (value: boolean) =
       } else {
         setIsError(false);
         setIsSuccess(true);
-        addNotification("Użytkownik został dodany.", 'success');
+        addNotification('Użytkownik został dodany.', 'success');
         isModalOn(false);
       }
       setIsWaiting(false);
     },
     validationSchema: Yup.object({
-      email: Yup.string().email('Niepoprawny adres email').required('Email jest wymagany'),
+      email: Yup.string()
+        .email('Niepoprawny adres email')
+        .required('Email jest wymagany'),
       first_name: Yup.string().required('Imię jest wymagane'),
       last_name: Yup.string().required('Nazwisko jest wymagane'),
-      role: Yup.string().required('Rola jest wymagana')
-    })
+    }),
   });
   const [isWaiting, setIsWaiting] = useState(false);
 
   return (
     <div className={styles.container}>
       <h1>Dodawanie nowego użytkownika</h1>
-      {/* {isSuccess && <div className={styles.success}>Użytkownik został utworzony.
-        <div className={styles.buttons}>
-          <Button className={styles.cancel_button} type="button" onClick={() => {
-            isModalOn(false);
-            // window.location.reload();
-            refreshList();
-          }}>Zamknij
-          </Button>
-        </div>
-      </div>} */}
-      {!isSuccess &&
+      {!isSuccess && (
         <FormikProvider value={formik}>
           <Form>
             <TextInputLiveFeedback label="Imię" type="text" name="first_name" />
-            <TextInputLiveFeedback label="Nazwisko" type="text" name="last_name" />
+            <TextInputLiveFeedback
+              label="Nazwisko"
+              type="text"
+              name="last_name"
+            />
             <TextInputLiveFeedback label="Email" type="email" name="email" />
-            <FormControl>
-              <InputLabel id="role">Rola</InputLabel>
-              <Select labelId="role" id="role" value={formik.values.role} onChange={formik.handleChange} name="role">
-                <MenuItem value="admin">Administrator</MenuItem>
-                <MenuItem value="owner">Właściciel</MenuItem>
-                <MenuItem value="manager">Zarządca</MenuItem>
-              </Select>
-            </FormControl>
             {isError && (
               <div className={styles.error}>
                 {errorMessages?.email && <div>{errorMessages.email}</div>}
-                {errorMessages?.first_name && <div>{errorMessages.first_name}</div>}
-                {errorMessages?.last_name && <div>{errorMessages.last_name}</div>}
-                {errorMessages?.role && <div>{errorMessages.role}</div>}
+                {errorMessages?.first_name && (
+                  <div>{errorMessages.first_name}</div>
+                )}
+                {errorMessages?.last_name && (
+                  <div>{errorMessages.last_name}</div>
+                )}
               </div>
             )}
             {!isWaiting && (
               <div className={styles.buttons}>
-                <Button variant='contained' className={styles.change} type="submit">Stwórz</Button>
-                <Button color='secondary' className={styles.cancel} type="reset" onClick={() => {
-                  isModalOn(false);
-                }}>Anuluj
+                <Button
+                  variant="contained"
+                  className={styles.change}
+                  type="submit"
+                >
+                  Dodaj
+                </Button>
+                <Button
+                  color="secondary"
+                  className={styles.cancel}
+                  type="reset"
+                  onClick={() => {
+                    isModalOn(false);
+                  }}
+                >
+                  Anuluj
                 </Button>
               </div>
-            )
-            }
-            {isWaiting && (
-              <div className={styles.waiting}><CircularProgress color="primary" sx={{ fontSize: 40 }} /></div>)}
+            )}
+            {isWaiting && <Spinner />}
           </Form>
         </FormikProvider>
-      }
+      )}
     </div>
   );
 };

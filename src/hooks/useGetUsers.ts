@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import GetOwners from '../utils/GetOwners';
-import type { GetOwnersData } from '../types/OwnersTypes';
+import type { GetUsersData } from '../types/UsersTypes';
+import GetUsers from '../utils/GetUsers';
 
 /**
  *
- * @param {GetOwnersData} - The `useGetOwners` function fetches owner data using a query with caching enabled.
+ * @param {GetUsersData} - The `useGetOwners` function fetches owner data using a query with caching enabled.
  * @remarks
  * queryKey: ['loginCheck'] - The `queryKey` is an array that specifies the query key for easy refetching.
  * queryFn: () => GetOwners({ role, hoaID, page }) - The `queryFn` is a function that fetches owner data.
@@ -17,11 +17,11 @@ import type { GetOwnersData } from '../types/OwnersTypes';
  * ```
  * @returns the result of the useGetOwners hook.
  */
-export const useGetOwners = ({ role, hoaID, page }: GetOwnersData) => {
+export const useGetUsers = ({ role, hoaID, page }: GetUsersData) => {
   return useQuery({
-    queryKey: ['getOwners'],
+    queryKey: ['getUsers', `${role}`],
     queryFn: () =>
-      GetOwners({
+      GetUsers({
         role,
         hoaID,
         page,

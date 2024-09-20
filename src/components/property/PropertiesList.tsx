@@ -15,9 +15,8 @@ export interface IProps {
   hoaId: number;
 }
 
-
 /**
- * 
+ *
  * @param {IProps} params
  * @returns {JSX.Element} The `PropertiesList` component returns a list of properties.
  */
@@ -75,7 +74,7 @@ const PropertiesList = ({ hoaId }: IProps) => {
               <td>{property.floor}</td>
               <td>{property.total_area}</td>
               <td>{property.building}</td>
-              <td>{property.building}</td>
+              <td>{property.parent}</td>
             </tr>
           ))}
         </tbody>

@@ -6,17 +6,11 @@ import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { useGetNotifications } from '../../hooks/useGetNotifications';
 /**
- * 
+ *
  * @returns {React.FunctionComponent} The `CommunityPage` component is a functional component that displays the details of a community.
  */
 const CommunityPage = () => {
-  // const { communityID } = useParams<{ communityID: string }>();
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
-  // const {
-  //   data: community,
-  //   isLoading,
-  //   isError,
-  // } = useGetCommunityByIdQuery(communityID || -1);
 
   const {
     isLoading,
@@ -33,40 +27,12 @@ const CommunityPage = () => {
     refreshPage();
   }, [data, hoaID, refreshPage]);
 
-  // const [moduleLoaded, setModuleLoaded] = useState<CommunityModule>(
-  //   CommunityModule.Owners
-  // );
-
-  // useCommunitySidebar(setModuleLoaded);
-
   if (isLoading) return <Spinner />;
   if (error) return <div>Błąd ładowania danych</div>;
-  // if (isError) return <div>Błąd ładowania wspólnot mieszkaniowych</div>;
-  // if (!community) return <div>Nie znaleziono wspólnot mieszkaniowych</div>;
 
-  // const renderComponent = () => {
-  //   switch (moduleLoaded) {
-  //     case CommunityModule.Properties:
-  //       return <Properties />;
-  //     case CommunityModule.Owners:
-  //       return <Owners key="owner" type={'owner'} />;
-  //     case CommunityModule.Managers:
-  //       return <Owners key="manager" type={'manager'} />;
-  //     default:
-  //       return (
-  //         <div className={styles.info}>
-  //           <h1>{community.name}</h1>
-  //           {community.address && <div>{community.address}</div>}
-  //           <div>{community.contact_info}</div>
-  //         </div>
-  //       );
-  //   }
-  // };
-  console.log(data);
   return (
     <div className={styles.propertiesContainer}>
       <h1>Aktualności</h1>
-      {/* <div className={styles.container}> */}
       {data?.results?.map((notification: any) => (
         <div className={styles.notification}>
           <h2>{notification.message}</h2>
@@ -85,7 +51,6 @@ const CommunityPage = () => {
       <div className={styles.more_info}>
         <Link to={'notifications'}>Więcej aktualności</Link>
       </div>
-      {/* </div> */}
     </div>
   );
 };

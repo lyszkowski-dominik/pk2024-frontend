@@ -11,7 +11,7 @@ import { CreateOwnership } from '../../../utils/CreateOwnership';
 import type { IOwnership } from '../../../types/ownershipTypes';
 import GetOwnershipById from '../../../utils/GetOwnershipById';
 import { UpdateOwnership } from '../../../utils/UpdateOwnership';
-import type { Owner } from '../../../types/OwnersTypes';
+import type { User } from '../../../types/OwnersTypes';
 import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import { Button } from '@mui/material';
 import { useNotifications } from '../../notifications/NotificationContext';
@@ -33,7 +33,7 @@ const ownershipSchema = Yup.object().shape({
 });
 
 /**
- * 
+ *
  * @param {FormProps} params
  * @returns {JSX.Element} The `OwnershipForm` component returns a form for adding or editing ownership.
  */
@@ -70,7 +70,7 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
   }, [ownershipId]);
 
   const getUserOptions = (data: any): SearchDropdownOption[] => {
-    return data.results?.map((owner: Owner) => ({
+    return data.results?.map((owner: User) => ({
       value: owner.id,
       label: `${owner.first_name} ${owner.last_name} [${owner.email}]`,
     }));
@@ -141,7 +141,7 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
                   label="Właściciele"
                   getOptions={getUserOptions}
                   multiselect={true}
-                  value={values.owners.map((owner: Owner) => ({
+                  value={values.owners.map((owner: User) => ({
                     value: owner.id,
                     label: `${owner.first_name} ${owner.last_name} [${owner.email}]`,
                   }))}

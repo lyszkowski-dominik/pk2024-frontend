@@ -5,10 +5,10 @@ import propertiesStyles from '../Properties.module.scss';
 import Spinner from '../../ui/spinner/Spinner';
 import { useGetOwnerships } from '../../../hooks/useGetOwnerships';
 import type { IOwnership } from '../../../types/ownershipTypes';
-import type { Owner } from '../../../types/OwnersTypes';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import IconButton from '../../ui/iconButton/IconButton';
+import type { User } from '../../../types/UsersTypes';
 
 /**
  * @property {number} propertyId - The `propertyId` property represents the id of the property.
@@ -24,7 +24,7 @@ export interface IProps {
 }
 
 /**
- * 
+ *
  * @param {IProps} params
  * @returns {JSX.Element} The `OwnershipList` component returns a list of ownerships.
  */
@@ -84,9 +84,9 @@ const OwnershipList = ({
     refreshPage();
   };
 
-  const getOwners = (owners: Owner[]) => {
+  const getOwners = (owners: User[]) => {
     return owners?.map((owner) => (
-      <p>
+      <p key={owner.id}>
         {owner.first_name} {owner.last_name}
       </p>
     ));
@@ -148,7 +148,7 @@ const OwnershipList = ({
     ownerships?.map((ownership: IOwnership) => (
       <div key={ownership.id} className={propertiesStyles.details}>
         <b>Właściciele: </b>
-        {ownership.owners?.map((owner: Owner) => (
+        {ownership.owners?.map((owner: User) => (
           <div key={owner.id} className={propertiesStyles.owners_details}>
             <b>Imię: </b> {owner.first_name}
             <br />

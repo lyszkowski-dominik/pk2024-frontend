@@ -1,7 +1,6 @@
-import styles from './Owners.module.scss';
-import React, { useEffect, useState } from 'react';
-import { useGetOwners } from '../../hooks/useGetOwners';
-import OwnersList from './OwnersList';
+import styles from './Users.module.scss';
+import { useEffect, useState } from 'react';
+import { useGetUsers } from '../../hooks/useGetUsers';
 import Spinner from '../ui/spinner/Spinner';
 import Modal from '../ui/modal/Modal';
 import { ModalType } from '../property/types';
@@ -12,31 +11,27 @@ import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
 import { selectRoles } from '../loginForm/loginFormSlice';
 import { downloadFile } from '../../utils/downloadFile';
 import FileUploadForm from '../forms/fileUploadForm/FileUploadForm';
-import { useNotifications } from '../notifications/NotificationContext';
-
+import { UserRole } from '../../types/types';
+import UsersList from './UsersList';
 
 /**
  * @property {string} type The `type` property is a string that specifies the type of user.
  */
-export interface OwnersProps {
+export interface UsersProps {
   type: string;
 }
 
 /**
- * 
+ *
  * @param {string} type The `type` parameter is a string that specifies the type of user.
  * @returns {JSX.Element} The `Owners` component returns a list of owners or managers.
  */
-const Owners = ({ type }: OwnersProps) => {
-  // get current url value
-  // const path = window.location.pathname; // /hoa/1
+const Users = ({ type }: UsersProps) => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const userRole = useAppSelector(selectRoles);
-  const canAddManager = userRole === 'manager';
-  // const hoaID = parseInt(path.split('/').pop() || '', 10); // 1
+  const canAddManager = userRole === UserRole.Manager;
   const [page, setPage] = useState(1);
 
-  // console.log(path.split('/'))
   const changePage = (pageNumber: number) => {
     setPage(pageNumber);
     refreshPage();
@@ -48,7 +43,7 @@ const Owners = ({ type }: OwnersProps) => {
     error,
     refetch: refreshPage,
     isFetching,
-  } = useGetOwners({
+  } = useGetUsers({
     role: type,
     hoaID,
     page,
@@ -58,7 +53,7 @@ const Owners = ({ type }: OwnersProps) => {
 
   useEffect(() => {
     refreshPage();
-  }, [page, data, hoaID]);
+  }, [page, data, hoaID, refreshPage]);
 
   if (isLoading) return <Spinner />;
   if (error) return <div>Błąd ładowania danych</div>;
@@ -77,11 +72,15 @@ const Owners = ({ type }: OwnersProps) => {
       {isModalOn && (
         <Modal>
           {openModal === ModalType.Add && (
-            <AddUserForm isModalOn={setModalOn} refreshList={refreshPage} />
+            <AddUserForm
+              isModalOn={setModalOn}
+              refreshList={refreshPage}
+              role={type}
+            />
           )}
           {openModal === ModalType.Import && (
             <>
-              <h1>Import {type === "owner" ? "właścicieli" :"zarządców"}</h1>
+              <h1>Import {type === 'owner' ? 'właścicieli' : 'zarządców'}</h1>
               <FileUploadForm
                 url={`/auth/users/import/?hoa=${hoaID}&role=${type}`}
                 setModalOn={setModalOn}
@@ -113,18 +112,20 @@ const Owners = ({ type }: OwnersProps) => {
             color="var(--pink)"
           />
         )}
-        {canAddManager && (<IconButton
-          iconName="export"
-          onClick={handleExportClick}
-          altText="Export Properties"
-          size={24}
-          color="var(--pink)"
-        />)}
+        {canAddManager && (
+          <IconButton
+            iconName="export"
+            onClick={handleExportClick}
+            altText="Export Properties"
+            size={24}
+            color="var(--pink)"
+          />
+        )}
       </div>
 
       {isFetching && <Spinner />}
-      <OwnersList
-        ownersData={data}
+      <UsersList
+        usersData={data}
         changePage={changePage}
         isFetching={isFetching}
         refetch={refreshPage}
@@ -133,4 +134,4 @@ const Owners = ({ type }: OwnersProps) => {
   );
 };
 
-export default Owners;
+export default Users;

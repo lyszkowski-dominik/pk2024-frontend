@@ -1,8 +1,8 @@
-import type { Owner } from './OwnersTypes';
+import type { User } from './OwnersTypes';
 
 export interface IOwnership {
   id: number;
-  owners: Owner[];
+  owners: User[];
   start: string;
   end: string;
   property: number;

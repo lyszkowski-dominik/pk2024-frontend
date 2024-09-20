@@ -1,7 +1,7 @@
 export enum UserRole {
-  Admin = 'Administrator',
-  Manager = 'Manager',
-  Owner = 'Owner',
+  Admin = 'hoa_administrator',
+  Manager = 'manager',
+  Owner = 'owner',
 }
 
 export type ApiPaginatedResult<T> = {

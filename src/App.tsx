@@ -1,52 +1,28 @@
 import './App.css';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/auth/LoginPage';
-import Menu from './components/layout/menuBar/Menu';
 import HomePage from './pages/HomePage';
 import UserProfile from './pages/UserProfile';
-import { validateToken } from './utils/ValidateToken';
-import { useEffect } from 'react';
-import { SidebarProvider } from './components/layout/sidebar/SidebarProvider';
-import Sidebar from './components/layout/sidebar/Sidebar';
 import CommunityPage from './pages/community/CommunityPage';
 import ProtectedRoutes from './components/protectedRoutes/ProtectedRoutes';
 import PasswordResetPage from './pages/auth/PasswordResetPage';
 import PasswordResetEmailSent from './pages/auth/PassowrdResetEmailSent';
 import PasswordResetConfirmPage from './pages/auth/PasswordResetConfirmPage';
 import MainLayout from './components/layout/mainLayout/MainLayout';
-import Owners from './components/Owners/Owners';
 import NotFound404 from './pages/404';
 import Properties from './components/property/Properties';
 import Resolutions from './pages/resolutions/Resolutions';
 import ResolutionDetails from './pages/resolutions/ResolutionDetails';
 import Notifications from './pages/notifications/Notifications';
-import BillingList from './components/property/bills/BillingList';
 import { PropertyTab } from './types/propertiesTypes';
 import Property from './components/property/Property';
 import Billing from './components/property/bills/Billing';
 import Requests from './pages/requests/Requests';
 import ReqeustDetails from './pages/requests/RequestDetails';
+import Users from './components/users/Users';
 
 const App = () => {
-  // const isTokenValid = validateToken();
-  // const navigate = useNavigate();
-  // const location = useLocation();
-
-  // useEffect(() => {
-  //   if (!isTokenValid) {
-  //     navigate('/login', { replace: true });
-  //   }
-  // }, [navigate, isTokenValid]);
-
-  // const sidebarHidden = location.pathname === '/login';
-
   return (
-    // <SidebarProvider>
-    // <div className="App">
-    // <Menu />
-    // <div className="content">
-    //   {!sidebarHidden && <Sidebar />}
-    //   <main>
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/reset-password" element={<PasswordResetPage />} />
@@ -65,11 +41,11 @@ const App = () => {
           <Route path="/hoa/:communityID" element={<CommunityPage />} />
           <Route
             path="/hoa/:communityID/owners"
-            element={<Owners key="owner" type={'owner'} />}
+            element={<Users key="owner" type={'owner'} />}
           />
           <Route
             path="/hoa/:communityID/managers"
-            element={<Owners key="manager" type={'manager'} />}
+            element={<Users key="manager" type={'manager'} />}
           />
           <Route path="/hoa/:communityID/properties" element={<Properties />} />
           <Route
@@ -100,7 +76,7 @@ const App = () => {
             path="/hoa/:communityID/requests"
             element={<Requests key="requests" />}
           />
-           <Route
+          <Route
             path="/hoa/:communityID/requests/:requestID"
             element={<ReqeustDetails key="request" />}
           />
@@ -108,10 +84,6 @@ const App = () => {
         </Route>
       </Route>
     </Routes>
-    //   </main>
-    // </div>
-    // </div>
-    // </SidebarProvider>
   );
 };
 

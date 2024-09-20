@@ -1,10 +1,10 @@
-import type { GetOwnersData } from '../types/OwnersTypes';
+import type { GetUsersData } from '../types/UsersTypes';
 import { GetToken } from './GetToken';
 
 /**
  * The function `GetOwners` makes an asynchronous request to fetch a list of owners based on specified
  * parameters.
- * @param {GetOwnersData}  - The `GetOwners` function is an asynchronous function that fetches a list
+ * @param {GetUsersData}  - The `GetOwners` function is an asynchronous function that fetches a list
  * of owners based on the provided parameters. Here's a breakdown of the parameters:
  * @remarks
  * - `role` - The `role` property in the `GetOwnersData` object represents the role of the owners to be fetched.
@@ -15,7 +15,7 @@ import { GetToken } from './GetToken';
  * returns the JSON data using `response.json()`. If there is an error during the fetch operation or
  * the response status is not ok, it throws an error with the message 'Failed to fetch owners
  */
-const GetOwners = async ({ role, hoaID, page }: GetOwnersData) => {
+const GetUsers = async ({ role, hoaID, page }: GetUsersData) => {
   try {
     const response = await fetch(
       `${import.meta.env.VITE_APP_API_URL}/auth/users?hoa=${hoaID}&role=${role}&page=${page}&page_size=10`,
@@ -37,4 +37,4 @@ const GetOwners = async ({ role, hoaID, page }: GetOwnersData) => {
   }
 };
 
-export default GetOwners;
+export default GetUsers;
