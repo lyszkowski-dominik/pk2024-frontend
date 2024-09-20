@@ -1,4 +1,4 @@
-import { RateType } from '../../types/billingTypes';
+import { MeterType, RateType } from '../../types/billingTypes';
 
 export const getUnit = (rateType: RateType) => {
   switch (rateType) {
@@ -14,6 +14,17 @@ export const getUnit = (rateType: RateType) => {
       return '-';
     case RateType.property:
       return 'lok.';
+    default:
+      return '';
+  }
+};
+
+export const getMeterType = (meterType: MeterType) => {
+  switch (meterType) {
+    case MeterType.cold_water:
+      return 'Licznik zimnej wody';
+    case MeterType.hot_water:
+      return 'Licznik ciepłej wody';
     default:
       return '';
   }

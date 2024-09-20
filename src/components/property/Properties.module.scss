@@ -128,3 +128,26 @@
       }
     }
   }
+
+  .meterTitle{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .readingTitle{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .meterSection{
+    padding: 10px;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    border: var(--darkGreen) 1px solid;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }

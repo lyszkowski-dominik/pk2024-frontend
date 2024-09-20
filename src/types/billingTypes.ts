@@ -39,6 +39,15 @@ export interface IMeter {
   property: number;
 }
 
+export interface IMeterReading {
+  id: number;
+  reading_date: string;
+  reading_value: string;
+  meter: number;
+  meter_number: string;
+  meter_type: MeterType;
+}
+
 export enum RateType {
   unit = 'unit',
   area = 'area',
@@ -49,6 +58,6 @@ export enum RateType {
 }
 
 export enum MeterType {
-  hot_water,
-  cold_water,
+  hot_water = 'hot_water',
+  cold_water = 'cold_water',
 }

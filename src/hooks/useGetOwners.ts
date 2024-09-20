@@ -19,7 +19,7 @@ import type { GetOwnersData } from '../types/OwnersTypes';
  */
 export const useGetOwners = ({ role, hoaID, page }: GetOwnersData) => {
   return useQuery({
-    queryKey: ['loginCheck'],
+    queryKey: ['getOwners'],
     queryFn: () =>
       GetOwners({
         role,

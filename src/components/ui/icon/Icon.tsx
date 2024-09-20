@@ -5,6 +5,7 @@ import ExportIcon from '../../../icons/download.svg?react';
 import OpenIcon from '../../../icons/open.svg?react';
 import Logo from '../../../icons/neighbourlink-icon.svg?react';
 import Delete from '../../../icons/trash.svg?react';
+import Edit from '../../../icons/pen.svg?react';
 
 export const icons = {
   add: AddIcon,
@@ -13,6 +14,7 @@ export const icons = {
   logo: Logo,
   open: OpenIcon,
   delete: Delete,
+  edit: Edit,
 };
 
 interface IconProps {

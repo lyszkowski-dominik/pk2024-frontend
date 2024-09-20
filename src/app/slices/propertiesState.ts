@@ -5,6 +5,8 @@ import type { IPropertiesState } from '../../types/propertiesTypes';
 const initialState: IPropertiesState = {
   updatedOwnerships: false,
   updatedBillings: false,
+  updatedMeters: false,
+  updatedMeterReadings: false,
 };
 
 /**
@@ -21,8 +23,18 @@ export const propertiesSlice = createSlice({
     setUpdatedBillings(state, action: PayloadAction<boolean>) {
       state.updatedBillings = action.payload;
     },
+    setUpdatedMeters(state, action: PayloadAction<boolean>) {
+      state.updatedMeters = action.payload;
+    },
+    setUpdatedMeterReadings(state, action: PayloadAction<boolean>) {
+      state.updatedMeterReadings = action.payload;
+    },
   },
 });
 
-export const { setUpdatedOwnerships, setUpdatedBillings } =
-  propertiesSlice.actions;
+export const {
+  setUpdatedOwnerships,
+  setUpdatedBillings,
+  setUpdatedMeters,
+  setUpdatedMeterReadings,
+} = propertiesSlice.actions;

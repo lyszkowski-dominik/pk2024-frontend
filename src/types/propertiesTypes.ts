@@ -9,6 +9,8 @@ export enum ModalType {
 export interface IPropertiesState {
   updatedOwnerships: boolean;
   updatedBillings: boolean;
+  updatedMeters: boolean;
+  updatedMeterReadings: boolean;
 }
 
 export interface Property {
@@ -27,6 +29,7 @@ export interface Property {
 
 export interface PropertiesRequest extends ListRequest {
   hoaId?: number;
+  propertyId?: number;
 }
 
 export interface PropertiesResponse {

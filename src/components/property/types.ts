@@ -3,7 +3,8 @@ export enum ModalType {
   Import,
   Export,
   Edit,
-  Delete
+  Delete,
+  Details,
 }
 
 export interface Property {

@@ -14,4 +14,5 @@ export type ApiPaginatedResult<T> = {
 export interface ListRequest {
   page: number;
   pageSize: number;
+  propertyId?: number;
 }
