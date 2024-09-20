@@ -1,4 +1,4 @@
-import type { User } from './OwnersTypes';
+import type { User } from './usersTypes';
 
 export interface IOwnership {
   id: number;

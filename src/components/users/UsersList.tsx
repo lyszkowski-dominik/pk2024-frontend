@@ -7,7 +7,7 @@ import Modal from '../ui/modal/Modal';
 import IconButton from '../ui/iconButton/IconButton';
 import { Button } from '@mui/material';
 import { useNotifications } from '../notifications/NotificationContext';
-import type { UsersResponse } from '../../types/UsersTypes';
+import type { UsersResponse } from '../../types/usersTypes';
 
 /**
  * The type `OwnersListProps` defines the structure of the props for the `OwnersList` component.

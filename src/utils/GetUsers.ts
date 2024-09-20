@@ -1,4 +1,4 @@
-import type { GetUsersData } from '../types/UsersTypes';
+import type { GetUsersData } from '../types/usersTypes';
 import { GetToken } from './GetToken';
 
 /**

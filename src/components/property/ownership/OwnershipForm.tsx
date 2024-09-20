@@ -11,10 +11,10 @@ import { CreateOwnership } from '../../../utils/CreateOwnership';
 import type { IOwnership } from '../../../types/ownershipTypes';
 import GetOwnershipById from '../../../utils/GetOwnershipById';
 import { UpdateOwnership } from '../../../utils/UpdateOwnership';
-import type { User } from '../../../types/OwnersTypes';
 import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import { Button } from '@mui/material';
 import { useNotifications } from '../../notifications/NotificationContext';
+import { User } from '../../../types/usersTypes';
 
 /**
  * @param {boolean} isModalOn - The `isModalOn` function is a callback function that closes the form.

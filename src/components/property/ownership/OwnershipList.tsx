@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import type { User } from '../../../types/usersTypes';
 import styles from '../../../global_styles/Table.module.scss';
 import propertiesStyles from '../Properties.module.scss';
 import Spinner from '../../ui/spinner/Spinner';
@@ -8,7 +9,6 @@ import type { IOwnership } from '../../../types/ownershipTypes';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
 import IconButton from '../../ui/iconButton/IconButton';
-import type { User } from '../../../types/UsersTypes';
 
 /**
  * @property {number} propertyId - The `propertyId` property represents the id of the property.
