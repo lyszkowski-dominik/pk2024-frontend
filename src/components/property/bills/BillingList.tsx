@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import styles from '../../../global_styles/Table.module.scss';
+import styles from '../../../styles/Table.module.scss';
 import Spinner from '../../ui/spinner/Spinner';
 import { useNavigate } from 'react-router';
-import { useGetBillings } from '../../../hooks/useGetBillings';
-import type { IBilling } from '../../../types/billingTypes';
+import { useGetBillings } from '../../../features/billings/useGetBillings';
+import type { IBilling } from '../../../features/billings/billingTypes';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectSelectedCommunity } from '../../../app/slices/sharedDataSlice';
-import { setUpdatedBillings } from '../../../app/slices/propertiesState';
+import { selectSelectedCommunity } from '../../../features/communities/sharedDataSlice';
+import { setUpdatedBillings } from '../../../features/properties/propertiesState';
 
 /**
  * @property {number} propertyId - The `propertyId` property represents the id of the property.

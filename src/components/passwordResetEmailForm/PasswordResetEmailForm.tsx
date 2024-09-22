@@ -5,7 +5,7 @@ import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveF
 import { Button, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import styles2 from './PasswordResetEmailForm.module.scss';
-import { ResetPasswordEmail } from '../../utils/ResetPasswordEmail';
+import { ResetPasswordEmail } from '../../features/auth/ResetPasswordEmail';
 import { useNavigate } from 'react-router';
 import SubmitButton from '../forms/submitButton/SubmitButton';
 

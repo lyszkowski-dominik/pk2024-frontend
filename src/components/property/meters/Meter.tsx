@@ -1,8 +1,8 @@
-import styles from '../../../global_styles/Table.module.scss';
+import styles from '../../../styles/Table.module.scss';
 import IconButton from '../../ui/iconButton/IconButton';
-import type { IMeter } from '../../../types/billingTypes';
+import type { IMeter } from '../../../features/billings/billingTypes';
 import { getMeterType } from '../propertyUtils';
-import propertiesStyles from '../Properties.module.scss';
+import propertiesStyles from '../../../pages/properties/Properties.module.scss';
 import { Button } from '@mui/material';
 import MeterReadingList from './MeterReadingList';
 

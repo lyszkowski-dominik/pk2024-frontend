@@ -4,11 +4,11 @@ import Spinner from '../ui/spinner/Spinner';
 import styles from './AddPropertyForm.module.scss';
 import { useState, type SetStateAction } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import type { SearchDropdownOption } from '../ui/search/SearchDropdown';
 import SearchDropdown from '../ui/search/SearchDropdown';
 import { PropertyType, PropertyTypeDisplayNames } from './types';
-import { CreateProperty } from '../../utils/CreateProperty';
+import { CreateProperty } from '../../features/properties/CreateProperty';
 import { Button } from '@mui/material';
 import { useNotifications } from '../notifications/NotificationContext';
 

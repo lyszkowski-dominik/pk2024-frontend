@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import Spinner from '../../components/ui/spinner/Spinner';
 import styles from './CommunityPage.module.scss';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
-import { useGetNotifications } from '../../hooks/useGetNotifications';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
+import { useGetNotifications } from '../../features/notifications/useGetNotifications';
 /**
  *
  * @returns {React.FunctionComponent} The `CommunityPage` component is a functional component that displays the details of a community.

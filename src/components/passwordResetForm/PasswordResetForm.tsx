@@ -4,8 +4,8 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import { Button, CircularProgress } from '@mui/material';
 import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
-import type { PasswordChangeFormProps } from '../../types/passwordChangeFormTypes';
-import { ResetPassword } from '../../utils/ResetPassword';
+import type { PasswordChangeFormProps } from '../../features/auth/passwordChangeFormTypes';
+import { ResetPassword } from '../../features/auth/ResetPassword';
 import { useNavigate, useParams } from 'react-router';
 import SubmitButton from '../forms/submitButton/SubmitButton';
 

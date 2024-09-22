@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import type { Comment } from '../../types/reqeustTypes';
+import type { Comment } from '../../features/requests/reqeustTypes';
 import styles from './Comments.module.scss';
-import { AddComment } from '../../utils/AddComment';
+import { AddComment } from '../../features/comments/AddComment';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { useNotifications } from '../notifications/NotificationContext';
 import { Button, Divider, FormControl, InputLabel, List, ListItem, ListItemText, TextField, Typography } from '@mui/material';
 

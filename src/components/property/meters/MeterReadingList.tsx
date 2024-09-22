@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import styles from '../../../global_styles/Table.module.scss';
+import styles from '../../../styles/Table.module.scss';
 import Spinner from '../../ui/spinner/Spinner';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { setUpdatedMeterReadings } from '../../../app/slices/propertiesState';
+import { setUpdatedMeterReadings } from '../../../features/properties/propertiesState';
 import IconButton from '../../ui/iconButton/IconButton';
-import type { IMeterReading } from '../../../types/billingTypes';
-import { useGetMeterReadings } from '../../../hooks/useGetMeterReadings';
+import type { IMeterReading } from '../../../features/billings/billingTypes';
+import { useGetMeterReadings } from '../../../features/meter_readings/useGetMeterReadings';
 
 interface IProps {
   propertyId: number;

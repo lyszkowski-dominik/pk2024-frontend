@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '../Properties.module.scss';
+import styles from '../../../pages/properties/Properties.module.scss';
 import IconButton from '../../ui/iconButton/IconButton';
 import Modal from '../../ui/modal/Modal';
 import { ModalType } from '../types';
@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import OwnershipList from './OwnershipList';
 import { selectRoles } from '../../loginForm/loginFormSlice';
 import OwnershipForm from './OwnershipForm';
-import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
-import { DeleteOwnership } from '../../../utils/DeleteOwnership';
+import { setUpdatedOwnerships } from '../../../features/properties/propertiesState';
+import { DeleteOwnership } from '../../../features/ownerships/DeleteOwnership';
 import { Button } from '@mui/material';
 
 /**

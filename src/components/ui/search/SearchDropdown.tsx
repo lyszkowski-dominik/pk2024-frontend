@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useField } from 'formik';
 import styles from './SearchDropdown.module.scss';
 import Spinner from '../spinner/Spinner';
-import axiosInstance from '../../../utils/axiosInstance';
+import axiosInstance from '../../../services/axiosInstance';
 
 export interface SearchDropdownOption {
   value: number | string;

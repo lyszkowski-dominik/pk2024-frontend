@@ -4,12 +4,12 @@ import Spinner from '../../ui/spinner/Spinner';
 import styles from '../AddPropertyForm.module.scss';
 import { useEffect, useState, type SetStateAction } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectSelectedCommunity } from '../../../app/slices/sharedDataSlice';
-import { setUpdatedMeterReadings } from '../../../app/slices/propertiesState';
-import { type IMeterReading } from '../../../types/billingTypes';
-import GetMeterReadingById from '../../../utils/GetMeterReadingById';
-import { UpdateMeterReading } from '../../../utils/UpdateMeterReadings';
-import { CreateMeterReading } from '../../../utils/CreateMeter';
+import { selectSelectedCommunity } from '../../../features/communities/sharedDataSlice';
+import { setUpdatedMeterReadings } from '../../../features/properties/propertiesState';
+import { type IMeterReading } from '../../../features/billings/billingTypes';
+import GetMeterReadingById from '../../../features/meter_readings/GetMeterReadingById';
+import { UpdateMeterReading } from '../../../features/meter_readings/UpdateMeterReadings';
+import { CreateMeterReading } from '../../../features/meters/CreateMeter';
 
 type FormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;

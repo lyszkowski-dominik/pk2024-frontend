@@ -5,7 +5,7 @@ import { Button, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
-import { EditResolution } from '../../utils/EditResolution';
+import { EditResolution } from '../../features/resolutions/EditResolution';
 import { useNotifications } from '../notifications/NotificationContext';
 
 /**

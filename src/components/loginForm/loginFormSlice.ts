@@ -1,5 +1,5 @@
 import { createAppSlice } from '../../app/createAppSlice';
-import type { LogInPayload, Token } from '../../types/loginFormTypes';
+import type { LogInPayload, Token } from '../../features/auth/loginFormTypes';
 import { jwtDecode } from 'jwt-decode';
 import { validateToken } from '../../utils/ValidateToken';
 

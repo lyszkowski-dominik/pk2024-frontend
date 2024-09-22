@@ -4,12 +4,12 @@ import Spinner from '../../ui/spinner/Spinner';
 import styles from '../AddPropertyForm.module.scss';
 import { useEffect, useState, type SetStateAction } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
-import { setUpdatedMeters } from '../../../app/slices/propertiesState';
-import GetMeterById from '../../../utils/GetMeterById';
-import type { IMeter } from '../../../types/billingTypes';
-import { MeterType } from '../../../types/billingTypes';
-import { UpdateMeter } from '../../../utils/UpdateMeter';
-import { CreateMeter } from '../../../utils/CreateMeterReading';
+import { setUpdatedMeters } from '../../../features/properties/propertiesState';
+import GetMeterById from '../../../features/meters/GetMeterById';
+import type { IMeter } from '../../../features/billings/billingTypes';
+import { MeterType } from '../../../features/billings/billingTypes';
+import { UpdateMeter } from '../../../features/meters/UpdateMeter';
+import { CreateMeter } from '../../../features/meter_readings/CreateMeterReading';
 import { getMeterType } from '../propertyUtils';
 
 type FormProps = {

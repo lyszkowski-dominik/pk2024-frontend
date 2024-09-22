@@ -5,11 +5,11 @@ import { selectRoles } from '../../components/loginForm/loginFormSlice';
 import { useAppSelector } from '../../app/hooks';
 import Modal from '../../components/ui/modal/Modal';
 import { useEffect, useState } from 'react';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { useNotifications } from '../../components/notifications/NotificationContext';
 import Spinner from '../../components/ui/spinner/Spinner';
-import { useGetRequest } from '../../hooks/useGetRequest';
-import { EditRequest } from '../../utils/EditRequest';
+import { useGetRequest } from '../../features/requests/useGetRequest';
+import { EditRequest } from '../../features/requests/EditRequest';
 import { useGetUserDataQuery } from '../../components/userProfile/userDataApiSlice';
 import Comments from '../../components/requests/Comments';
 /**

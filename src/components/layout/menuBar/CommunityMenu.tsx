@@ -3,10 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { useLocation, useNavigate } from 'react-router';
 import { selectLogInStatus } from '../../loginForm/loginFormSlice';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { setSelectedCommunity } from '../../../app/slices/sharedDataSlice';
-import { useGetCommunities } from '../../../hooks/useGetCommunities';
+import { setSelectedCommunity } from '../../../features/communities/sharedDataSlice';
+import { useGetCommunities } from '../../../features/communities/useGetCommunities';
 import styles from './Menu.module.scss';
-import type { Community } from '../../../types/communityTypes';
+import type { Community } from '../../../features/communities/communityTypes';
 
 /**
  *

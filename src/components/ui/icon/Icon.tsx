@@ -1,11 +1,11 @@
 import styles from './Icon.module.scss';
-import AddIcon from '../../../icons/add.svg?react';
-import ImportIcon from '../../../icons/upload.svg?react';
-import ExportIcon from '../../../icons/download.svg?react';
-import OpenIcon from '../../../icons/open.svg?react';
-import Logo from '../../../icons/neighbourlink-icon.svg?react';
-import Delete from '../../../icons/trash.svg?react';
-import Edit from '../../../icons/pen.svg?react';
+import AddIcon from '../../../assets/icons/add.svg?react'
+import ImportIcon from '../../../assets/icons/upload.svg?react';
+import ExportIcon from '../../../assets/icons/download.svg?react';
+import OpenIcon from '../../../assets/icons/open.svg?react';
+import Logo from '../../../assets/icons/neighbourlink-icon.svg?react';
+import Delete from '../../../assets/icons/trash.svg?react';
+import Edit from '../../../assets/icons/pen.svg?react';
 
 export const icons = {
   add: AddIcon,

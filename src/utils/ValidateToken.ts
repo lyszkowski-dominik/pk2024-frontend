@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode"
-import type { Token } from "../types/loginFormTypes"
+import type { Token } from "../features/auth/loginFormTypes"
 /**
  * The function `validateToken` checks if the stored access token is valid by comparing its expiration
  * time with the current time.

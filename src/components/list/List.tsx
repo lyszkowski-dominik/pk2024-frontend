@@ -1,4 +1,4 @@
-import styles from '../../global_styles/Table.module.scss';
+import styles from '../../styles/Table.module.scss';
 import styles2 from './List.module.scss';
 import ReactPaginate from 'react-paginate';
 import type { ApiPaginatedResult } from '../../types/types';

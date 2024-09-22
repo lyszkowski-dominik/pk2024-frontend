@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from '../Properties.module.scss';
+import styles from '../../../pages/properties/Properties.module.scss';
 import IconButton from '../../ui/iconButton/IconButton';
 import Modal from '../../ui/modal/Modal';
 import { ModalType } from '../types';
@@ -8,13 +8,13 @@ import { selectRoles } from '../../loginForm/loginFormSlice';
 import {
   setUpdatedMeterReadings,
   setUpdatedMeters,
-} from '../../../app/slices/propertiesState';
+} from '../../../features/properties/propertiesState';
 import MeterForm from './MeterForm';
-import { DeleteMeter } from '../../../utils/DeleteMeter';
+import { DeleteMeter } from '../../../features/meters/DeleteMeter';
 import MeterReadingForm from './MeterReadingForm';
-import { DeleteMeterReading } from '../../../utils/DeleteMeterReading';
-import { useGetMeters } from '../../../hooks/useGetMeters';
-import type { IMeter } from '../../../types/billingTypes';
+import { DeleteMeterReading } from '../../../features/meter_readings/DeleteMeterReading';
+import { useGetMeters } from '../../../features/meters/useGetMeters';
+import type { IMeter } from '../../../features/billings/billingTypes';
 import Meter from './Meter';
 import Spinner from '../../ui/spinner/Spinner';
 

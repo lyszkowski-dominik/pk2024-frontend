@@ -1,9 +1,9 @@
 import styles from './Notifications.module.scss';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import usePagination from '../../hooks/usePagiantion';
-import { useGetResolutions } from '../../hooks/useGetResolutions';
+import { useGetResolutions } from '../../features/resolutions/useGetResolutions';
 import List from '../../components/list/List';
 import Spinner from '../../components/ui/spinner/Spinner';
 import Modal from '../../components/ui/modal/Modal';
@@ -11,7 +11,7 @@ import { ModalType } from '../../components/property/types';
 import IconButton from '../../components/ui/iconButton/IconButton';
 import AddResolutionForm from '../../components/resolutions/AddResolutionForm';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
-import { useGetNotifications } from '../../hooks/useGetNotifications';
+import { useGetNotifications } from '../../features/notifications/useGetNotifications';
 import AddNotificationForm from '../../components/notifications/AddNotificationForm';
 
 const listColumns = [

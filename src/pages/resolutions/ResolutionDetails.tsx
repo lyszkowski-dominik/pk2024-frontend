@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router';
-import { useGetResolution } from '../../hooks/useGetResolution';
+import { useGetResolution } from '../../features/resolutions/useGetResolution';
 import styles from './Resolutions.module.scss';
 import { Button, CircularProgress } from '@mui/material';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
@@ -7,10 +7,10 @@ import { useAppSelector } from '../../app/hooks';
 import Modal from '../../components/ui/modal/Modal';
 import { useEffect, useState } from 'react';
 import EditResolutionForm from '../../components/resolutions/EditResolutionForm';
-import { DeleteResolution } from '../../utils/DeleteResolution';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { DeleteResolution } from '../../features/resolutions/DeleteResolution';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { useNotifications } from '../../components/notifications/NotificationContext';
-import { VoteResolution } from '../../utils/VoteResolution';
+import { VoteResolution } from '../../features/resolutions/VoteResolution';
 import Spinner from '../../components/ui/spinner/Spinner';
 
 /**

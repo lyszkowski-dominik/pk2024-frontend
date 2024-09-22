@@ -4,12 +4,12 @@ import Spinner from '../ui/spinner/Spinner';
 import styles from './AddRequestForm.module.scss';
 import { useState, type SetStateAction } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import type { SearchDropdownOption } from '../ui/search/SearchDropdown';
 import SearchDropdown from '../ui/search/SearchDropdown';
 import { Button } from '@mui/material';
 import { useNotifications } from '../notifications/NotificationContext';
-import { CreateRequest } from '../../utils/CreateRequest';
+import { CreateRequest } from '../../features/requests/CreateRequest';
 
 const propertySchema = Yup.object().shape({
   title: Yup.string().required('Podaj tytuł'),

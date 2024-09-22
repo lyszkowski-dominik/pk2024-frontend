@@ -1,4 +1,4 @@
-import { MeterType, RateType } from '../../types/billingTypes';
+import { MeterType, RateType } from '../../features/billings/billingTypes';
 
 export const getUnit = (rateType: RateType) => {
   switch (rateType) {

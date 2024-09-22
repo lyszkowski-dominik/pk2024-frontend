@@ -1,13 +1,13 @@
-import styles from '../../global_styles/Table.module.scss';
+import styles from '../../styles/Table.module.scss';
 import ReactPaginate from 'react-paginate';
 import styles2 from './UsersList.module.scss';
-import { RemoveUser } from '../../utils/RemoveUser';
+import { RemoveUser } from '../../features/users/RemoveUser';
 import { useState } from 'react';
 import Modal from '../ui/modal/Modal';
 import IconButton from '../ui/iconButton/IconButton';
 import { Button } from '@mui/material';
 import { useNotifications } from '../notifications/NotificationContext';
-import type { UsersResponse } from '../../types/usersTypes';
+import type { UsersResponse } from '../../features/users/usersTypes';
 
 /**
  * The type `OwnersListProps` defines the structure of the props for the `OwnersList` component.

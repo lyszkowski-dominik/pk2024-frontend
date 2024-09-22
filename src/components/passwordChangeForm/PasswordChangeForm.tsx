@@ -2,10 +2,10 @@ import styles from './PasswordChangeForm.module.scss';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { ChangePassword } from '../../utils/ChangePassword';
+import { ChangePassword } from '../../features/auth/ChangePassword';
 import { CircularProgress } from '@mui/material';
 import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
-import type { PasswordChangeFormProps } from '../../types/passwordChangeFormTypes';
+import type { PasswordChangeFormProps } from '../../features/auth/passwordChangeFormTypes';
 
 /**
  * 

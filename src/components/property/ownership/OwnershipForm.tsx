@@ -4,17 +4,17 @@ import Spinner from '../../ui/spinner/Spinner';
 import styles from '../AddPropertyForm.module.scss';
 import { useEffect, useState, type SetStateAction } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectSelectedCommunity } from '../../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../../features/communities/sharedDataSlice';
 import type { SearchDropdownOption } from '../../ui/search/SearchDropdown';
 import SearchDropdown from '../../ui/search/SearchDropdown';
-import { CreateOwnership } from '../../../utils/CreateOwnership';
-import type { IOwnership } from '../../../types/ownershipTypes';
-import GetOwnershipById from '../../../utils/GetOwnershipById';
-import { UpdateOwnership } from '../../../utils/UpdateOwnership';
-import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
+import { CreateOwnership } from '../../../features/ownerships/CreateOwnership';
+import type { IOwnership } from '../../../features/ownerships/ownershipTypes';
+import GetOwnershipById from '../../../features/ownerships/GetOwnershipById';
+import { UpdateOwnership } from '../../../features/ownerships/UpdateOwnership';
+import { setUpdatedOwnerships } from '../../../features/properties/propertiesState';
 import { Button } from '@mui/material';
 import { useNotifications } from '../../notifications/NotificationContext';
-import { User } from '../../../types/usersTypes';
+import type { User } from '../../../features/users/usersTypes';
 
 /**
  * @param {boolean} isModalOn - The `isModalOn` function is a callback function that closes the form.

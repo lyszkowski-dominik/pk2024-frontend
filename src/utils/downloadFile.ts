@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import axiosInstance from '../services/axiosInstance';
 
 /**
  * The `downloadFile` function in TypeScript downloads a file from a given URL and saves it with a

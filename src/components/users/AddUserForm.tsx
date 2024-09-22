@@ -4,9 +4,9 @@ import styles from '../passwordChangeForm/PasswordChangeForm.module.scss';
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { CreateNewUser } from '../../utils/CreateNewUser';
+import { CreateNewUser } from '../../features/users/CreateNewUser';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { useNotifications } from '../notifications/NotificationContext';
 import Spinner from '../ui/spinner/Spinner';
 

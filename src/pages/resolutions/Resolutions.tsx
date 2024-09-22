@@ -1,9 +1,9 @@
 import styles from './Resolutions.module.scss';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import usePagination from '../../hooks/usePagiantion';
-import { useGetResolutions } from '../../hooks/useGetResolutions';
+import { useGetResolutions } from '../../features/resolutions/useGetResolutions';
 import List from '../../components/list/List';
 import Spinner from '../../components/ui/spinner/Spinner';
 import Modal from '../../components/ui/modal/Modal';

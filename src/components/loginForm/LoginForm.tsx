@@ -2,7 +2,7 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import { Button, CircularProgress } from '@mui/material';
 import styles from './LoginForm.module.scss';
-import { useGetToken } from '../../hooks/useGetToken';
+import { useGetToken } from '../../features/auth/useGetToken';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectLogInStatus, logIn } from './loginFormSlice';
 import InputField from '../forms/inputField/InputField';

@@ -5,8 +5,8 @@ import { Button, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
-import { CreateNewResolution } from '../../utils/CreateNewResolution';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
+import { CreateNewResolution } from '../../features/resolutions/CreateNewResolution';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
 import { useNotifications } from '../notifications/NotificationContext';
 

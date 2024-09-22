@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import type { User } from '../../../types/usersTypes';
-import styles from '../../../global_styles/Table.module.scss';
-import propertiesStyles from '../Properties.module.scss';
+import type { User } from '../../../features/users/usersTypes';
+import styles from '../../../styles/Table.module.scss';
+import propertiesStyles from '../../../pages/properties/Properties.module.scss';
 import Spinner from '../../ui/spinner/Spinner';
-import { useGetOwnerships } from '../../../hooks/useGetOwnerships';
-import type { IOwnership } from '../../../types/ownershipTypes';
+import { useGetOwnerships } from '../../../features/ownerships/useGetOwnerships';
+import type { IOwnership } from '../../../features/ownerships/ownershipTypes';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { setUpdatedOwnerships } from '../../../app/slices/propertiesState';
+import { setUpdatedOwnerships } from '../../../features/properties/propertiesState';
 import IconButton from '../../ui/iconButton/IconButton';
 
 /**

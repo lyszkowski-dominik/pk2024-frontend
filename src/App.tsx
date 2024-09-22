@@ -1,4 +1,4 @@
-import './App.css';
+import './styles/App.css';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/auth/LoginPage';
 import HomePage from './pages/HomePage';
@@ -10,16 +10,16 @@ import PasswordResetEmailSent from './pages/auth/PassowrdResetEmailSent';
 import PasswordResetConfirmPage from './pages/auth/PasswordResetConfirmPage';
 import MainLayout from './components/layout/mainLayout/MainLayout';
 import NotFound404 from './pages/404';
-import Properties from './components/property/Properties';
+import Properties from './pages/properties/Properties';
 import Resolutions from './pages/resolutions/Resolutions';
 import ResolutionDetails from './pages/resolutions/ResolutionDetails';
 import Notifications from './pages/notifications/Notifications';
-import { PropertyTab } from './types/propertiesTypes';
-import Property from './components/property/Property';
-import Billing from './components/property/bills/Billing';
+import { PropertyTab } from './features/properties/propertiesTypes';
+import Property from './pages/properties/Property';
+import Billing from './pages/billings/Billing';
 import Requests from './pages/requests/Requests';
 import ReqeustDetails from './pages/requests/RequestDetails';
-import Users from './components/users/Users';
+import Users from './pages/users/Users';
 
 const App = () => {
   return (

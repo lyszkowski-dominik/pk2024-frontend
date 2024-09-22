@@ -4,7 +4,7 @@ import styles from './Sidebar.module.scss';
 import { useSidebar } from './SidebarProvider';
 import { selectRoles } from '../../loginForm/loginFormSlice';
 import { useEffect, useState } from 'react';
-import { selectSelectedCommunity } from '../../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../../features/communities/sharedDataSlice';
 import Icon from '../../ui/icon/Icon';
 
 /**

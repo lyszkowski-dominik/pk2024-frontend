@@ -3,22 +3,17 @@ import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { loginFormSlice } from '../components/loginForm/loginFormSlice';
 import { userDataApiSlice } from '../components/userProfile/userDataApiSlice';
-import { sharedDataSlice } from './slices/sharedDataSlice';
-import { propertiesSlice } from './slices/propertiesState';
+import { sharedDataSlice } from '../features/communities/sharedDataSlice';
+import { propertiesSlice } from '../features/properties/propertiesState';
 
-// `combineSlices` automatically combines the reducers using
-// their `reducerPath`s, therefore we no longer need to call `combineReducers`.
 const rootReducer = combineSlices(
   loginFormSlice,
   userDataApiSlice,
   sharedDataSlice,
   propertiesSlice,
 );
-// Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
 
-// The store setup is wrapped in `makeStore` to allow reuse
-// when setting up tests that need the same store config
 /**
  * 
  * @param {Partial<RootState>} preloadedState - The `makeStore` function creates a store with the provided preloaded state.

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import List from '../list/List';
-import { useGetRequests } from '../../hooks/useGetRequests';
+import { useGetRequests } from '../../features/requests/useGetRequests';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../app/slices/sharedDataSlice';
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import usePagination from '../../hooks/usePagiantion';
-import { useGetRequestTypes } from '../../hooks/useGetRequestTypes';
+import { useGetRequestTypes } from '../../features/request_types/useGetRequestTypes';
 import Spinner from '../ui/spinner/Spinner';
 import styles from './ManagerRequests.module.scss';
 
