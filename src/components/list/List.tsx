@@ -3,7 +3,6 @@ import styles2 from './List.module.scss';
 import ReactPaginate from 'react-paginate';
 import type { ApiPaginatedResult } from '../../types/types';
 import { useNavigate } from 'react-router';
-import { Button } from '@mui/material';
 import IconButton from '../ui/iconButton/IconButton';
 
 /**

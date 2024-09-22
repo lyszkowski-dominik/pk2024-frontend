@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { IPropertiesState } from '../../types/propertiesTypes';
+import type { IPropertiesState } from './propertiesTypes';
 
 const initialState: IPropertiesState = {
   updatedOwnerships: false,

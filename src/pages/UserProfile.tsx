@@ -9,7 +9,6 @@ import UserSettings from '../components/userSettings/UserSettings';
 import { useRefreshToken } from '../features/auth/useRefreshToken';
 import { useSidebar } from '../components/layout/sidebar/SidebarProvider';
 import { useGetUserDataQuery } from '../components/userProfile/userDataApiSlice';
-import MainLayout from '../components/layout/mainLayout/MainLayout';
 
 /**
  * The UserProfile component in TypeScript React handles user profile information, navigation, and

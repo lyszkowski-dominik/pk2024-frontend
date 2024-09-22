@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GetToken } from '../auth/GetToken';
-import type { Property } from '../types/propertiesTypes';
+import type { Property } from './propertiesTypes';
 
 /**
  * The function `CreateProperty` sends a POST request to a specified API endpoint with form data and

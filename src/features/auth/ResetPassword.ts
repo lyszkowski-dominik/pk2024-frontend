@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { GetToken } from '../features/auth/GetToken';
 
 /**
  * The type `Payload` defines the structure of an object containing user authentication data for

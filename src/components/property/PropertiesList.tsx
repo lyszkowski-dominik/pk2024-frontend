@@ -3,8 +3,7 @@ import ReactPaginate from 'react-paginate';
 import styles from '../../styles/Table.module.scss';
 import Spinner from '../ui/spinner/Spinner';
 import { PropertyTypeDisplayNames } from './types';
-import type { Property } from '../../types/propertiesTypes';
-import IconButton from '../ui/iconButton/IconButton';
+import type { Property } from '../../features/properties/propertiesTypes';
 import { useNavigate } from 'react-router';
 import { useGetProperties } from '../../features/properties/useGetProperties';
 

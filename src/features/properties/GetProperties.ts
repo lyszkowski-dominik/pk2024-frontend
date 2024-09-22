@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GetToken } from '../auth/GetToken';
-import type { PropertiesRequest } from '../types/propertiesTypes';
+import type { PropertiesRequest } from './propertiesTypes';
 
 /**
  * This function asynchronously fetches properties data based on the provided page, pageSize, and hoaId

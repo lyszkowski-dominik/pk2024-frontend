@@ -1,9 +1,6 @@
 import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 import type { ISidebarElement } from './Sidebar';
-import { useGetUserDataQuery } from '../../userProfile/userDataApiSlice';
-import { useAppSelector } from '../../../app/hooks';
-import { selectRoles } from '../../loginForm/loginFormSlice';
 
 /**
  * The `SidebarContextType` interface defines the structure of the sidebar context.

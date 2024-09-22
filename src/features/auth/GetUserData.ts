@@ -1,5 +1,5 @@
 import axios from "axios"
-import { GetToken } from "../features/auth/GetToken"
+import { GetToken } from "./GetToken"
 
 /**
  * This function retrieves user data from an API endpoint using an authorization token.

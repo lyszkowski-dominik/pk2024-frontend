@@ -1,7 +1,7 @@
 import styles from './Menu.module.scss';
 import { Link } from 'react-router-dom';
-import { selectLogInStatus, logOut } from '../../loginForm/loginFormSlice';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { logOut } from '../../loginForm/loginFormSlice';
+import { useAppDispatch } from '../../../app/hooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import UserMenu from './UserMenu';

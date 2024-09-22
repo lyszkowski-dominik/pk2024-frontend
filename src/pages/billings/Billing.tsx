@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
-import ReactPaginate from 'react-paginate';
 import styles from '../../styles/Table.module.scss';
 import propertiesStyles from '../properties/Properties.module.scss';
 import Spinner from '../../components/ui/spinner/Spinner';
-import { PropertyTypeDisplayNames } from '../../components/property/types';
-import { useGetProperties } from '../../features/properties/useGetProperties';
-import type { Property } from '../../features/properties/propertiesTypes';
-import IconButton from '../../components/ui/iconButton/IconButton';
 import { useNavigate, useParams } from 'react-router';
 import { useGetBillingById } from '../../features/billings/useGetBillingById';
 import type { IBill, IBilling } from '../../features/billings/billingTypes';

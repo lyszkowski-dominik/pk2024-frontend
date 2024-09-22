@@ -5,7 +5,7 @@ import { AddComment } from '../../features/comments/AddComment';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { useNotifications } from '../notifications/NotificationContext';
-import { Button, Divider, FormControl, InputLabel, List, ListItem, ListItemText, TextField, Typography } from '@mui/material';
+import { Button, FormControl, List, ListItem, ListItemText, TextField, Typography } from '@mui/material';
 
 /**
  * @property {Comment[]} comments - The `comments` property represents the list of comments.

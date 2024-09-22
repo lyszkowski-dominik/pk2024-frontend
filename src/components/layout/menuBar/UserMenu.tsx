@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
 import { useNavigate } from 'react-router';
 import { logOut } from '../../loginForm/loginFormSlice';

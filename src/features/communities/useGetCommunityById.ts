@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import GetCommunityById from '../utils/GetCommunityById';
+import GetCommunityById from './GetCommunityById';
 
 /**
  * 

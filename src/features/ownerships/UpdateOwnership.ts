@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GetToken } from '../auth/GetToken';
-import type { IOwnership } from '../types/ownershipTypes';
+import type { IOwnership } from './ownershipTypes';
 
 /**
  * The function `UpdateOwnership` sends a PATCH request to update ownership data using Axios.

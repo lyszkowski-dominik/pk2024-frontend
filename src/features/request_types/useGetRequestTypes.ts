@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { GetRequestTypesData } from './reqeustTypes';
+import type { GetRequestTypesData } from '../requests/reqeustTypes';
 import GetRequestTypes from './GetRequestTypes';
 
 /**

@@ -1,4 +1,3 @@
-import styles from './HomePage.module.scss';
 import Spinner from '../components/ui/spinner/Spinner';
 import { useGetUserDataQuery } from '../components/userProfile/userDataApiSlice';
 import MainLayout from '../components/layout/mainLayout/MainLayout';

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GetToken } from './GetToken';
+import { GetToken } from '../auth/GetToken';
 
 /**
  * The function `DeleteBilling` asynchronously deletes a billing record using an API endpoint and

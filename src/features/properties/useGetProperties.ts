@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { PropertiesRequest } from '../../types/propertiesTypes';
+import type { PropertiesRequest } from './propertiesTypes';
 import GetProperties from './GetProperties';
 
 /**

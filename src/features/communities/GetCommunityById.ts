@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GetToken } from './GetToken';
+import { GetToken } from '../auth/GetToken';
 
 /**
  * The function `GetCommunityById` asynchronously fetches data from an API endpoint using axios in a
