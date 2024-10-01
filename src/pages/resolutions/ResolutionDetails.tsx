@@ -1,20 +1,23 @@
 import { useNavigate, useParams } from 'react-router';
-import { useGetResolution } from '../../features/resolutions/useGetResolution';
 import styles from './Resolutions.module.scss';
 import { Button, CircularProgress } from '@mui/material';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Modal from '../../components/ui/modal/Modal';
 import { useEffect, useState } from 'react';
 import EditResolutionForm from '../../components/resolutions/EditResolutionForm';
-import { DeleteResolution } from '../../features/resolutions/DeleteResolution';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import { useNotifications } from '../../components/notifications/NotificationContext';
-import { VoteResolution } from '../../features/resolutions/VoteResolution';
 import Spinner from '../../components/ui/spinner/Spinner';
+import {
+  deleteResolution,
+  fetchResolution,
+  selectResolutionDetails,
+  selectResolutionsStatus,
+  voteResolution,
+} from '../../features/resolutions/resolutionsSlice';
 
 /**
- * 
+ *
  * @returns {React.FunctionComponent} The `ResolutionDetails` component is a functional component that displays the details of a resolution.
  */
 const ResolutionDetails = () => {
@@ -25,14 +28,13 @@ const ResolutionDetails = () => {
   const [isError, setIsError] = useState(false);
   const [selectedVoteOption, setSelectedVoteOption] = useState('none');
 
-  const { addNotification } = useNotifications();
-  const { resolutionID } = useParams();
-  const { data, refetch: refreshPage, isLoading } = useGetResolution({
-    id: parseInt(resolutionID || ''),
-  });
+  const resolutionID = parseInt(useParams().resolutionID || '');
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
+  const data = useAppSelector(selectResolutionDetails);
+  const isLoading = useAppSelector(selectResolutionsStatus);
   const hoaID = useAppSelector(selectSelectedCommunity);
   const role = useAppSelector(selectRoles);
   const isManager = role === 'manager';
@@ -42,8 +44,8 @@ const ResolutionDetails = () => {
   const haveResults = data?.results ?? false;
 
   useEffect(() => {
-    refreshPage();
-  }, [refreshPage, data]);
+    dispatch(fetchResolution({ id: resolutionID }));
+  }, [dispatch, resolutionID]);
 
   const onEdit = () => {
     setEditModalOpen(true);
@@ -55,17 +57,16 @@ const ResolutionDetails = () => {
 
   const onDeleteHadler = async () => {
     setIsWaiting(true);
-    const res = await DeleteResolution(data?.id || -1);
+
+    const res = await dispatch(deleteResolution({ id: resolutionID }));
 
     setIsWaiting(false);
-    if (res.status === 400) {
-      // setErrorMessages(res.data);
-      setIsError(true);
-    } else {
+    if (deleteResolution.fulfilled.match(res)) {
       setIsError(false);
       setDeleteModalOpen(false);
-      addNotification('Rekord został usunięty.', 'error');
       navigate('/hoa/' + hoaID + '/resolutions');
+    } else {
+      setIsError(true);
     }
   };
 
@@ -76,21 +77,21 @@ const ResolutionDetails = () => {
 
   const onVoteHandler = async () => {
     setIsWaiting(true);
-    const res = await VoteResolution({
-      id: data?.id || -1,
-      choice: selectedVoteOption,
-    });
+    const res = dispatch(
+      voteResolution({
+        id: resolutionID,
+        choice: selectedVoteOption,
+      }),
+    );
 
     setIsWaiting(false);
-    if (res.status === 400) {
-      // setErrorMessages(res.data);
-      setIsError(true);
-    } else {
+    if (voteResolution.fulfilled.match(res)) {
       setIsError(false);
       setVoteModalOpen(false);
-      addNotification('Oddano głos.', 'success');
+    } else {
+      setIsError(true);
     }
-    refreshPage();
+    dispatch(fetchResolution({ id: resolutionID }));
   };
 
   const editFormInitialData = {
@@ -111,7 +112,7 @@ const ResolutionDetails = () => {
     ? voteMap[data?.vote as 'for' | 'against' | 'abstain']
     : 'Wstrzymano się';
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
   return (
     <>
@@ -184,11 +185,14 @@ const ResolutionDetails = () => {
                     <br />
                   </>
                 )}
-                <b>Za: </b> {data?.results.total_for}({Math.round(data?.results.percentage_for)}%)
+                <b>Za: </b> {data?.results.total_for}(
+                {Math.round(data?.results.percentage_for)}%)
                 <br />
-                <b>Przeciw: </b> {data?.results.total_against}({Math.round(data?.results.percentage_against)}%)
+                <b>Przeciw: </b> {data?.results.total_against}(
+                {Math.round(data?.results.percentage_against)}%)
                 <br />
-                <b>Wstrzymało się:</b> {data?.results.total_abstain}({Math.round(data?.results.percentage_abstain)}%)
+                <b>Wstrzymało się:</b> {data?.results.total_abstain}(
+                {Math.round(data?.results.percentage_abstain)}%)
               </div>
             </>
           )}
@@ -204,7 +208,7 @@ const ResolutionDetails = () => {
             initialData={editFormInitialData}
             onCancel={() => setEditModalOpen(false)}
             onSubmit={() => {
-              refreshPage();
+              dispatch(fetchResolution({ id: resolutionID }));
             }}
           />
         </Modal>

@@ -5,17 +5,21 @@ import { loginFormSlice } from '../components/loginForm/loginFormSlice';
 import { userDataApiSlice } from '../components/userProfile/userDataApiSlice';
 import { sharedDataSlice } from '../features/communities/sharedDataSlice';
 import { propertiesSlice } from '../features/properties/propertiesState';
+import { resolutionsSlice } from '../features/resolutions/resolutionsSlice';
+import alertsSlice from '../features/alerts/alertsSlice';
 
 const rootReducer = combineSlices(
   loginFormSlice,
   userDataApiSlice,
   sharedDataSlice,
   propertiesSlice,
+  resolutionsSlice,
+  alertsSlice,
 );
 export type RootState = ReturnType<typeof rootReducer>;
 
 /**
- * 
+ *
  * @param {Partial<RootState>} preloadedState - The `makeStore` function creates a store with the provided preloaded state.
  * @remarks
  * The `makeStore` function creates a store with the provided preloaded state.

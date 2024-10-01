@@ -4,7 +4,7 @@ import styles from './Comments.module.scss';
 import { AddComment } from '../../features/comments/AddComment';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import { useNotifications } from '../notifications/NotificationContext';
+import { useNotifications } from '../alerts/NotificationContext';
 import { Button, FormControl, List, ListItem, ListItemText, TextField, Typography } from '@mui/material';
 
 /**

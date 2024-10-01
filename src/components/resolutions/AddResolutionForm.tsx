@@ -4,14 +4,13 @@ import styles from '../passwordChangeForm/PasswordChangeForm.module.scss';
 import { Button, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import { CreateNewResolution } from '../../features/resolutions/CreateNewResolution';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
-import { useNotifications } from '../notifications/NotificationContext';
+import { createResolution } from '../../features/resolutions/resolutionsSlice';
 
 /**
- * 
+ *
  * @param {function} onCancel The `onCancel` function is a callback function that closes the form.
  * @returns {JSX.Element} The `AddResolutionForm` component returns a form for adding a resolution.
  */
@@ -26,8 +25,8 @@ const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
     end_date?: string;
     hoaID?: number;
   } | null>(null);
-  const {addNotification } = useNotifications();
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
+  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -39,16 +38,14 @@ const AddResolutionForm = ({ onCancel }: { onCancel: () => void }) => {
     },
     onSubmit: async (values) => {
       setIsWaiting(true);
-      const res = await CreateNewResolution(values);
+      const res = await dispatch(createResolution(values));
 
-      if (res.status === 400) {
-        setErrorMessages(res.data);
-        setIsError(true);
-      } else {
+      if (createResolution.fulfilled.match(res)) {
         setIsError(false);
         setIsSuccess(true);
-        addNotification("Nowa uchwała została dodana.", 'success');
         onCancel();
+      } else {
+        setIsError(true);
       }
       setIsWaiting(false);
     },

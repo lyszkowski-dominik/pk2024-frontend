@@ -10,7 +10,7 @@ import SearchDropdown from '../ui/search/SearchDropdown';
 import { PropertyType, PropertyTypeDisplayNames } from './types';
 import { CreateProperty } from '../../features/properties/CreateProperty';
 import { Button } from '@mui/material';
-import { useNotifications } from '../notifications/NotificationContext';
+import { useNotifications } from '../alerts/NotificationContext';
 
 /**
  * @property {React.Dispatch<SetStateAction<boolean>>} isModalOn - The `isModalOn` property represents a function that sets the modal state.

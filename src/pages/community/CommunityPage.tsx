@@ -34,7 +34,7 @@ const CommunityPage = () => {
     <div className={styles.propertiesContainer}>
       <h1>Aktualności</h1>
       {data?.results?.map((notification: any) => (
-        <div className={styles.notification}>
+        <div key={notification.id} className={styles.notification}>
           <h2>{notification.message}</h2>
           <div className={styles.header}>
             <small>{new Date(notification.created_at).toLocaleString()}</small>

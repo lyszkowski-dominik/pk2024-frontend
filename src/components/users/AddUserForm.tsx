@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { CreateNewUser } from '../../features/users/CreateNewUser';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import { useNotifications } from '../notifications/NotificationContext';
+import { useNotifications } from '../alerts/NotificationContext';
 import Spinner from '../ui/spinner/Spinner';
 
 /**

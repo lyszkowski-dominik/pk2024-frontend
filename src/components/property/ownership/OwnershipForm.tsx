@@ -13,7 +13,7 @@ import GetOwnershipById from '../../../features/ownerships/GetOwnershipById';
 import { UpdateOwnership } from '../../../features/ownerships/UpdateOwnership';
 import { setUpdatedOwnerships } from '../../../features/properties/propertiesState';
 import { Button } from '@mui/material';
-import { useNotifications } from '../../notifications/NotificationContext';
+import { useNotifications } from '../../alerts/NotificationContext';
 import type { User } from '../../../features/users/usersTypes';
 
 /**

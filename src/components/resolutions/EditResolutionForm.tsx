@@ -5,8 +5,8 @@ import { Button, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
-import { EditResolution } from '../../features/resolutions/EditResolution';
-import { useNotifications } from '../notifications/NotificationContext';
+import { useAppDispatch } from '../../app/hooks';
+import { editResolution } from '../../features/resolutions/resolutionsSlice';
 
 /**
  * @property {function} onCancel The `onCancel` function is a callback function that closes the form.
@@ -20,7 +20,7 @@ export type EditResolutionFormProps = {
 };
 
 /**
- * 
+ *
  * @param {EditResolutionFormProps} params
  * @returns {JSX.Element} The `EditResolutionForm` component returns a form for editing a resolution.
  */
@@ -39,23 +39,22 @@ const EditResolutionForm = ({
     end_date?: string;
     hoaID?: number;
   } | null>(null);
-  const { addNotification } = useNotifications();
-
+  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     initialValues: initialData,
     onSubmit: async (values) => {
       setIsWaiting(true);
-      const res = await EditResolution(initialData.id, values);
+      const res = await dispatch(
+        editResolution({ ...values, id: initialData.id }),
+      );
 
-      if (res.status === 400) {
-        setErrorMessages(res.data);
-        setIsError(true);
-      } else {
+      if (editResolution.fulfilled.match(res)) {
         setIsError(false);
         setIsSuccess(true);
-        addNotification("Uchwałą zostałą edytowana.", 'success');
         onCancel();
+      } else {
+        setIsError(true);
       }
       setIsWaiting(false);
       onSubmitCallback && onSubmitCallback();

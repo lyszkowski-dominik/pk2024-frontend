@@ -4,14 +4,14 @@ import styles from '../passwordChangeForm/PasswordChangeForm.module.scss';
 import { Button, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
 import { CreateNewNotification } from '../../features/notifications/CreateNewNotification';
-import { useNotifications } from './NotificationContext';
+import { showAlert } from '../../features/alerts/alertsSlice';
 
 /**
- * 
+ *
  * @param {function} onCancel The `onCancel` function is a callback function that closes the form.
  * @returns {JSX.Element} The `AddNotificationForm` component returns a form for adding a new notification.
  */
@@ -25,8 +25,11 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
     link?: string;
     hoaID?: number;
   } | null>(null);
+  const dispatch = useAppDispatch();
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
-  const { addNotification } = useNotifications();
+  const addNotification = (message: string, type: string) => {
+    dispatch(showAlert({ message, type }));
+  };
   const formik = useFormik({
     initialValues: {
       message: '',
@@ -45,7 +48,7 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
         setIsError(false);
         setIsSuccess(true);
         onCancel();
-        addNotification("Powiadomienie zostało dodane.", "success");
+        addNotification('Powiadomienie zostało dodane.', 'success');
       }
       setIsWaiting(false);
     },
@@ -101,7 +104,7 @@ const AddNotificationForm = ({ onCancel }: { onCancel: () => void }) => {
                 <Button
                   className={styles.cancel}
                   type="reset"
-                  color='secondary'
+                  color="secondary"
                   onClick={onCancel}
                 >
                   Anuluj

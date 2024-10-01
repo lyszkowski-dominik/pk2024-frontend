@@ -6,7 +6,7 @@ import { useAppSelector } from '../../app/hooks';
 import Modal from '../../components/ui/modal/Modal';
 import { useEffect, useState } from 'react';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import { useNotifications } from '../../components/notifications/NotificationContext';
+import { useNotifications } from '../../components/alerts/NotificationContext';
 import Spinner from '../../components/ui/spinner/Spinner';
 import { useGetRequest } from '../../features/requests/useGetRequest';
 import { EditRequest } from '../../features/requests/EditRequest';

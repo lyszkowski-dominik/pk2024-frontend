@@ -3,7 +3,7 @@ import Menu from '../menuBar/Menu';
 import Sidebar from '../sidebar/Sidebar';
 import { SidebarProvider } from '../sidebar/SidebarProvider';
 import styles from './MainLayout.module.scss';
-import { NotificationProvider } from '../../notifications/NotificationContext';
+import Alerts from '../../alerts/Alerts';
 
 /**
  * The type `MainLayoutProps` defines props for the `MainLayout` component in TypeScript React.
@@ -14,13 +14,13 @@ export type MainLayoutProps = {
 };
 
 /**
- * 
+ *
  * @param {MainLayoutProps} props
  * @returns {JSX.Element} The `MainLayout` component returns the main layout of the application.
  */
 const MainLayout = (props: MainLayoutProps) => {
   return (
-    <NotificationProvider>
+    <>
       <SidebarProvider>
         <div className={styles.container}>
           <Sidebar />
@@ -32,7 +32,8 @@ const MainLayout = (props: MainLayoutProps) => {
           </div>
         </div>
       </SidebarProvider>
-    </NotificationProvider>
+      <Alerts />
+    </>
   );
 };
 

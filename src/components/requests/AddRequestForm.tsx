@@ -8,7 +8,7 @@ import { selectSelectedCommunity } from '../../features/communities/sharedDataSl
 import type { SearchDropdownOption } from '../ui/search/SearchDropdown';
 import SearchDropdown from '../ui/search/SearchDropdown';
 import { Button } from '@mui/material';
-import { useNotifications } from '../notifications/NotificationContext';
+import { useNotifications } from '../alerts/NotificationContext';
 import { CreateRequest } from '../../features/requests/CreateRequest';
 
 const propertySchema = Yup.object().shape({

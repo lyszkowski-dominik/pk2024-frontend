@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Modal from '../ui/modal/Modal';
 import IconButton from '../ui/iconButton/IconButton';
 import { Button } from '@mui/material';
-import { useNotifications } from '../notifications/NotificationContext';
+import { useNotifications } from '../alerts/NotificationContext';
 import type { UsersResponse } from '../../features/users/usersTypes';
 
 /**

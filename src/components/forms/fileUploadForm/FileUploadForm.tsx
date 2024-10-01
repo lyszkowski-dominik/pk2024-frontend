@@ -7,7 +7,7 @@ import {
   FormControl,
   Input,
 } from '@mui/material';
-import { useNotifications } from '../../notifications/NotificationContext';
+import { useNotifications } from '../../alerts/NotificationContext';
 
 /**
  * The type `FileUploadformProps` defines props for a file upload form component in TypeScript React.
