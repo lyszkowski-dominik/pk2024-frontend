@@ -86,7 +86,7 @@ const CommunityMenu = () => {
         <div className={styles['menu-dropdown']}>
           <ul className={styles['dropdown-list']}>
             {communityOptions?.map((community: any) => (
-              <li key={community.id}>
+              <li key={community.value}>
                 <button
                   onClick={() => {
                     handleCommunityChange(community);

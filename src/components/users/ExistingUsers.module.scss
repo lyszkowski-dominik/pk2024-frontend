@@ -1,0 +1,26 @@
+.checkboxesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 20rem;
+  overflow-y: scroll;
+  .checkbox{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    label{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+    input{
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+.error {
+  color: var(--pink);
+  margin-top: 5px;
+  font-size: 14px;
+};

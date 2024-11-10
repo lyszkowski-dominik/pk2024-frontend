@@ -13,6 +13,7 @@ import { downloadFile } from '../../utils/downloadFile';
 import FileUploadForm from '../../components/forms/fileUploadForm/FileUploadForm';
 import { UserRole } from '../../types/types';
 import UsersList from '../../components/users/UsersList';
+import { AddExistingUsersForm } from '../../components/users/AddExistingUsersForm';
 
 /**
  * @property {string} type The `type` property is a string that specifies the type of user.
@@ -29,7 +30,7 @@ export interface UsersProps {
 const Users = ({ type }: UsersProps) => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const userRole = useAppSelector(selectRoles);
-  const canAddManager = userRole === UserRole.Manager;
+  const canAddManager = userRole === UserRole.Manager || UserRole.Admin;
   const [page, setPage] = useState(1);
 
   const changePage = (pageNumber: number) => {
@@ -42,11 +43,11 @@ const Users = ({ type }: UsersProps) => {
     data,
     error,
     refetch: refreshPage,
-    isFetching,
+    isFetching
   } = useGetUsers({
     role: type,
     hoaID,
-    page,
+    page
   });
   const [isModalOn, setModalOn] = useState(false);
   const [openModal, setOpenModal] = useState({});
@@ -66,17 +67,19 @@ const Users = ({ type }: UsersProps) => {
   function handleExportClick() {
     downloadFile(`/auth/users/export?hoa=${hoaID}&role=${type}`, 'users.csv');
   }
-
   return (
     <div className={styles.propertiesContainer}>
       {isModalOn && (
         <Modal>
           {openModal === ModalType.Add && (
-            <AddUserForm
-              isModalOn={setModalOn}
-              refreshList={refreshPage}
-              role={type}
-            />
+            <div className={styles.addUsersFormContainer}>
+              <AddExistingUsersForm role={type} refreshList={refreshPage} isModalOn={setModalOn}/>
+              <AddUserForm
+                isModalOn={setModalOn}
+                refreshList={refreshPage}
+                role={type}
+              />
+            </div>
           )}
           {openModal === ModalType.Import && (
             <>

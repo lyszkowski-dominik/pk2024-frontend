@@ -8,6 +8,8 @@ import IconButton from '../ui/iconButton/IconButton';
 import { Button } from '@mui/material';
 import { useNotifications } from '../alerts/NotificationContext';
 import type { UsersResponse } from '../../features/users/usersTypes';
+import { useAppSelector } from '../../app/hooks';
+import { selectRoles } from '../loginForm/loginFormSlice';
 
 /**
  * The type `OwnersListProps` defines the structure of the props for the `OwnersList` component.
@@ -38,6 +40,8 @@ const UsersList = ({
   const [editModal, setEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(-1);
   const { addNotification } = useNotifications();
+  const userRole = useAppSelector(selectRoles);
+  const isManager = userRole === 'manager' || userRole === 'admin';
   function handlePageClick(selectedItem: { selected: number }) {
     changePage(selectedItem.selected + 1);
   }
@@ -91,16 +95,17 @@ const UsersList = ({
                 <td>{user.last_name}</td>
                 <td>{user.email}</td>
                 <td>
+                  {isManager &&
                   <IconButton
                     iconName="delete"
-                    onClick={(event: any) => {
+                    onClick={() => {
                       setSelectedUser(user.id);
                       setEditModal(true);
                     }}
                     altText="Delete user"
                     size={24}
                     color="var(--pink)"
-                  />
+                  />}
                 </td>
               </tr>
             ))}

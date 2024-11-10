@@ -46,10 +46,10 @@ const defaultSidebarValues: SidebarContextType = {
       title: 'Zarządcy',
       path: 'managers',
     },
-    {
-      title: 'Rachunki',
-      path: 'bills',
-    },
+    // {
+    //   title: 'Rachunki',
+    //   path: 'bills',
+    // },
      {
       title: 'Zapytania',
       path: 'requests',
