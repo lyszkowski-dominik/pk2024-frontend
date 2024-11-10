@@ -38,7 +38,10 @@ const CommunityMenu = () => {
       dispatch(setSelectedCommunity(parseInt(communityId)));
       navigate(`/hoa/${communityId}`);
     }else if (location.pathname.includes('user-profile')){
-      const communityId = communitiesData.results[0].id.toString();
+      const path = window.location.pathname;
+      const pathParts = path.split('/');
+      const communityId = pathParts[pathParts.indexOf('hoa') + 1];
+      // const communityId = communitiesData.results[0].id.toString();
       setSelectedCommunityState(communityId);
       dispatch(setSelectedCommunity(parseInt(communityId)));
     }
