@@ -23,7 +23,7 @@ const CommunityMenu = () => {
   const {
     data: communitiesData,
     isLoading,
-    isError,
+    isError
   } = useGetCommunities(isLoggedIn);
 
   useEffect(() => {
@@ -37,7 +37,8 @@ const CommunityMenu = () => {
       setSelectedCommunityState(communityId);
       dispatch(setSelectedCommunity(parseInt(communityId)));
       navigate(`/hoa/${communityId}`);
-    } else if (location.pathname !== '/') {
+    }
+    else if (location.pathname !== '/') {
       const path = window.location.pathname;
       const pathParts = path.split('/');
       const communityId = pathParts[pathParts.indexOf('hoa') + 1];
@@ -50,7 +51,7 @@ const CommunityMenu = () => {
     navigate,
     isLoggedIn,
     location.pathname,
-    selectedCommunity,
+    selectedCommunity
   ]);
 
   const handleCommunityChange = (selectedOption: any) => {
@@ -63,8 +64,8 @@ const CommunityMenu = () => {
   const communityOptions = communitiesData?.results.map(
     (community: Community) => ({
       value: community.id,
-      label: community.name,
-    }),
+      label: community.name
+    })
   );
 
   const haveManyOptions = (communityOptions?.length || 0) > 1;
@@ -77,7 +78,7 @@ const CommunityMenu = () => {
       >
         {
           communityOptions?.find(
-            (option: any) => option.value === parseInt(selectedCommunity),
+            (option: any) => option.value === parseInt(selectedCommunity)
           )?.label
         }
         {haveManyOptions && <ExpandMoreIcon />}

@@ -37,7 +37,7 @@ const App = () => {
       <Route element={<ProtectedRoutes />}>
         <Route path="/" element={<HomePage />} />
         <Route element={<MainLayout />}>
-          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/hoa/:communityID/user-profile" element={<UserProfile />} />
           <Route path="/hoa/:communityID" element={<CommunityPage />} />
           <Route
             path="/hoa/:communityID/owners"
