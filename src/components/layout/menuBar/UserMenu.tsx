@@ -8,6 +8,7 @@ import styles from './Menu.module.scss';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { selectSelectedCommunity } from '../../../features/communities/sharedDataSlice';
+import { Select, MenuItem } from '@mui/material';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +25,8 @@ const UserMenu = () => {
 
   const handleLogout = () => {
     dispatch(logOut());
-    navigate('/login', { replace: true });
     setIsOpen(false);
+    window.location.assign('/login');
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -50,32 +51,34 @@ const UserMenu = () => {
   }, [isOpen]);
 
   return (
-    <div style={{ position: 'relative' }} ref={menuRef}>
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className={styles['menu-button']}
-      >
-        <AccountCircleIcon />
-        {detailedData?.first_name} {detailedData?.last_name}
-        <ExpandMoreIcon />
-      </button>
-      {isOpen && (
-        <div className={styles['menu-dropdown']}>
-          <ul className={styles['dropdown-list']}>
-            <li>
-              <Link to={`/hoa/${communityId}/user-profile`} onClick={handleMenuItemClick}>
-                Mój profil
-              </Link>
-            </li>
-            <li>
-              <button onClick={handleLogout} className={styles['menu-button']}>
-                Wyloguj
-              </button>
-            </li>
-          </ul>
+    <Select
+      sx={{height: '50px'}}
+      value=""
+      onChange={(event) => {
+        const value = event.target.value;
+        if (value === 'profile') {
+          handleMenuItemClick();
+        } else if (value === 'logout') {
+          handleLogout();
+        }
+      }}
+      displayEmpty
+    >
+      <MenuItem value="" sx={{display:'none'}}>
+        <div className={styles.menuItem}>
+          <AccountCircleIcon />
+          {detailedData?.first_name} {detailedData?.last_name}
         </div>
-      )}
-    </div>
+      </MenuItem>
+      <MenuItem value="profile">
+        <Link to={`/hoa/${communityId}/user-profile`} onClick={handleMenuItemClick}>
+          Mój profil
+        </Link>
+      </MenuItem>
+      <MenuItem value="logout">
+        Wyloguj
+      </MenuItem>
+    </Select>
   );
 };
 

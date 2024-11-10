@@ -7,6 +7,7 @@ import { setSelectedCommunity } from '../../../features/communities/sharedDataSl
 import { useGetCommunities } from '../../../features/communities/useGetCommunities';
 import styles from './Menu.module.scss';
 import type { Community } from '../../../features/communities/communityTypes';
+import { Select, MenuItem } from '@mui/material';
 
 /**
  *
@@ -79,35 +80,38 @@ const CommunityMenu = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className={styles['menu-button']}
-      >
-        {
-          communityOptions?.find(
-            (option: any) => option.value === parseInt(selectedCommunity)
-          )?.label
-        }
-        {haveManyOptions && <ExpandMoreIcon />}
-      </button>
-      {isOpen && haveManyOptions && (
-        <div className={styles['menu-dropdown']}>
-          <ul className={styles['dropdown-list']}>
-            {communityOptions?.map((community: any) => (
-              <li key={community.value}>
-                <button
-                  onClick={() => {
-                    handleCommunityChange(community);
-                    setIsOpen(false);
-                  }}
-                  className={styles['menu-button']}
-                >
-                  {community.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {!haveManyOptions && (
+        <button
+          onClick={() => setIsOpen((prev) => !prev)}
+          className={styles['menu-button']}
+        >
+          {
+            communityOptions?.find(
+              (option: any) => option.value === parseInt(selectedCommunity)
+            )?.label
+          }
+          {haveManyOptions && <ExpandMoreIcon />}
+        </button>
+      )}
+      {haveManyOptions && (
+        <Select
+          sx={{ height: '50px' }}
+          value={selectedCommunity}
+          onChange={(event) => {
+            const communityId = event.target.value as string;
+            setSelectedCommunityState(communityId);
+            dispatch(setSelectedCommunity(parseInt(communityId)));
+            navigate(`/hoa/${communityId}`);
+            setIsOpen(false);
+          }}
+          className={styles['menu-button']}
+        >
+          {communityOptions?.map((community: any) => (
+            <MenuItem key={community.value} value={community.value}>
+              {community.label}
+            </MenuItem>
+          ))}
+        </Select>
       )}
     </div>
   );
