@@ -24,7 +24,6 @@
     "axios": "^1.6.8",
     "formik": "^2.4.6",
     "jwt-decode": "^4.0.0",
-    "options": "^0.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
