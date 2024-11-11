@@ -2,10 +2,10 @@ import axios from 'axios';
 import { GetToken } from '../../features/auth/GetToken';
 
 
-const EditUserData = async (id: number, data: any) => {
+const EditUserData = async ( data: any) => {
   try {
     return await axios.patch(
-      `${import.meta.env.VITE_APP_API_URL}/auth/users/${id}/`,
+      `${import.meta.env.VITE_APP_API_URL}/auth/users/current/`,
       data,
       {
         headers: {

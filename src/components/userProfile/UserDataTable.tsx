@@ -17,13 +17,12 @@ const UserDataTable = () => {
   const navigate = useNavigate();
   const { data: detailedData,isError, isLoading, isSuccess } = useGetUserDataQuery();
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const userId = detailedData?.id;
   const [isEditError , setIsEditError] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
 
   const handleEdit = async (newName: string, newSurname: string) => {
     setIsEditing(false);
-    const res = await EditUserData(userId!,{ first_name: newName, last_name: newSurname });
+    const res = await EditUserData({ first_name: newName, last_name: newSurname });
     console.log(res);
     if(res.status !== 200){
       setFirstName(initialFirstName);
