@@ -2,6 +2,7 @@ import styles from './UserSettings.module.scss';
 import Modal from '../ui/modal/Modal';
 import { useState } from 'react';
 import PasswordChangeForm from '../passwordChangeForm/PasswordChangeForm';
+import { Button } from '@mui/material';
 
 /**
  * 
@@ -20,15 +21,11 @@ const UserSettings = () => {
       <div className={styles.mainContent}>
         <h1>Ustawienia konta</h1>
         <ul>
-          <li
-            onClick={() => {
-              setIsChangingPassword(true);
-            }}
-          >
+          <Button variant="contained" color="primary"  onClick={() => {
+            setIsChangingPassword(true);
+          }}>
             Zmiana hasła
-          </li>
-          <li>Ustawienia powiadomień</li>
-          <li>Ustawienia prywatności</li>
+          </Button>
         </ul>
       </div>
     </>
