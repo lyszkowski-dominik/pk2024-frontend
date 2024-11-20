@@ -4,6 +4,15 @@ export enum UserRole {
   Owner = 'owner',
 }
 
+export enum ModalType {
+  Add,
+  Import,
+  Export,
+  Edit,
+  Delete,
+  Details,
+}
+
 export type ApiPaginatedResult<T> = {
   count: number;
   next: string;
@@ -11,8 +20,13 @@ export type ApiPaginatedResult<T> = {
   results: T[];
 };
 
-export interface ListRequest {
+export interface ListRequestProperty {
   page: number;
   pageSize: number;
   propertyId?: number;
+}
+
+export interface ListRequest {
+  page: number;
+  pageSize?: number;
 }

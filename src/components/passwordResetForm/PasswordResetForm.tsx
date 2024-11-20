@@ -3,15 +3,14 @@ import { Form, FormikProvider, useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { Button, CircularProgress } from '@mui/material';
-import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
+import TextInputLiveFeedback from '../common/forms/textInputLiveFeedback/TextInputLiveFeedback';
 import type { PasswordChangeFormProps } from '../../features/auth/passwordChangeFormTypes';
 import { ResetPassword } from '../../features/auth/ResetPassword';
 import { useNavigate, useParams } from 'react-router';
-import SubmitButton from '../forms/submitButton/SubmitButton';
-
+import SubmitButton from '../common/forms/submitButton/SubmitButton';
 
 /**
- * 
+ *
  * @param {PasswordChangeFormProps} params
  * @returns {JSX.Element} The `PasswordChangeForm` component returns a form for changing the password.
  */
@@ -76,14 +75,14 @@ const PasswordResetForm = ({ isModalOn }: PasswordChangeFormProps) => {
         <div className={styles.success}>
           Hasło zostało zmienione
           <div className={styles.buttons}>
-          <Button
-            onClick={() => {
-              navigate('/login')
-            }}
-            color="secondary"
-          >
-            Powrót do logowania
-          </Button>
+            <Button
+              onClick={() => {
+                navigate('/login');
+              }}
+              color="secondary"
+            >
+              Powrót do logowania
+            </Button>
           </div>
         </div>
       )}
@@ -115,7 +114,7 @@ const PasswordResetForm = ({ isModalOn }: PasswordChangeFormProps) => {
                 <SubmitButton text="Zmień hasło" />
                 <Button
                   onClick={() => {
-                    navigate('/login')
+                    navigate('/login');
                   }}
                   color="secondary"
                 >

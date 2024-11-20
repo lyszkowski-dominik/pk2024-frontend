@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useField } from 'formik';
 import styles from './SearchDropdown.module.scss';
+import formStyles from '../../common/forms/form/Form.module.scss';
 import Spinner from '../spinner/Spinner';
 import axiosInstance from '../../../services/axiosInstance';
 
@@ -118,7 +119,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={formStyles.form_control}>
       <label>{label}</label>
       <input
         type="text"

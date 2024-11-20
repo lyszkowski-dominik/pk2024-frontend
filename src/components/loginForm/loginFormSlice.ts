@@ -2,6 +2,7 @@ import { createAppSlice } from '../../app/createAppSlice';
 import type { LogInPayload, Token } from '../../features/auth/loginFormTypes';
 import { jwtDecode } from 'jwt-decode';
 import { validateToken } from '../../utils/ValidateToken';
+import { UserRole } from '../../types/types';
 
 export interface LoginSliceState {
   isLoggedIn: boolean;
@@ -24,7 +25,9 @@ export const loginFormSlice = createAppSlice({
       localStorage.setItem('refreshToken', action.payload.refresh);
 
       state.isLoggedIn = true;
-      state.tokenData = jwtDecode(localStorage.getItem('accessToken') as string);
+      state.tokenData = jwtDecode(
+        localStorage.getItem('accessToken') as string,
+      );
     }),
     logOut: create.reducer((state) => {
       state.isLoggedIn = false;
@@ -34,7 +37,7 @@ export const loginFormSlice = createAppSlice({
   }),
   selectors: {
     selectLogInStatus: (login) => login.isLoggedIn,
-    selectRoles: (login) => login.tokenData?.user_permissions[0],
+    selectRoles: (login) => login.tokenData?.user_permissions[0] as UserRole,
   },
 });
 export const { logIn, logOut } = loginFormSlice.actions;

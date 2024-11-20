@@ -1,12 +1,12 @@
 import { Form, FormikProvider, useFormik } from 'formik';
-import TextInputLiveFeedback from '../forms/textInputLiveFeedback/TextInputLiveFeedback';
+import TextInputLiveFeedback from '../common/forms/textInputLiveFeedback/TextInputLiveFeedback';
 import styles from '../passwordChangeForm/PasswordChangeForm.module.scss';
 import { Button, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import TextAreaLiveFeedback from '../forms/textInputLiveFeedback/TextAreaLiveFeedback';
+import TextAreaLiveFeedback from '../common/forms/textInputLiveFeedback/TextAreaLiveFeedback';
 import { CreateNewNotification } from '../../features/notifications/CreateNewNotification';
 import { showAlert } from '../../features/alerts/alertsSlice';
 

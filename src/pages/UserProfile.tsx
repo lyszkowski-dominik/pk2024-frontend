@@ -7,7 +7,7 @@ import UserInfo from '../components/userProfile/UserInfo';
 import { Module } from '../features/auth/userProfileTypes';
 import UserSettings from '../components/userSettings/UserSettings';
 import { useRefreshToken } from '../features/auth/useRefreshToken';
-import { useSidebar } from '../components/layout/sidebar/SidebarProvider';
+import { useSidebar } from '../components/common/layout/sidebar/SidebarProvider';
 import { useGetUserDataQuery } from '../components/userProfile/userDataApiSlice';
 
 /**

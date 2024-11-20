@@ -8,7 +8,7 @@ import ProtectedRoutes from './components/protectedRoutes/ProtectedRoutes';
 import PasswordResetPage from './pages/auth/PasswordResetPage';
 import PasswordResetEmailSent from './pages/auth/PassowrdResetEmailSent';
 import PasswordResetConfirmPage from './pages/auth/PasswordResetConfirmPage';
-import MainLayout from './components/layout/mainLayout/MainLayout';
+import MainLayout from './components/common/layout/mainLayout/MainLayout';
 import NotFound404 from './pages/404';
 import Properties from './pages/properties/Properties';
 import Resolutions from './pages/resolutions/Resolutions';
@@ -20,6 +20,7 @@ import Billing from './pages/billings/Billing';
 import Requests from './pages/requests/Requests';
 import ReqeustDetails from './pages/requests/RequestDetails';
 import Users from './pages/users/Users';
+import { UserRole } from './types/types';
 
 const App = () => {
   return (
@@ -37,15 +38,15 @@ const App = () => {
       <Route element={<ProtectedRoutes />}>
         <Route path="/" element={<HomePage />} />
         <Route element={<MainLayout />}>
-          <Route path="/hoa/:communityID/user-profile" element={<UserProfile />} />
+          <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/hoa/:communityID" element={<CommunityPage />} />
           <Route
             path="/hoa/:communityID/owners"
-            element={<Users key="owner" type={'owner'} />}
+            element={<Users key="owner" type={UserRole.Owner} />}
           />
           <Route
             path="/hoa/:communityID/managers"
-            element={<Users key="manager" type={'manager'} />}
+            element={<Users key="manager" type={UserRole.Manager} />}
           />
           <Route path="/hoa/:communityID/properties" element={<Properties />} />
           <Route

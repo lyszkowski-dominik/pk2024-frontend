@@ -1,6 +1,6 @@
 import Spinner from '../components/ui/spinner/Spinner';
 import { useGetUserDataQuery } from '../components/userProfile/userDataApiSlice';
-import MainLayout from '../components/layout/mainLayout/MainLayout';
+import MainLayout from '../components/common/layout/mainLayout/MainLayout';
 
 /**
  * The `HomePage` component in TypeScript React fetches user data and displays a welcome message or a

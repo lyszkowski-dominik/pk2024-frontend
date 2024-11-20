@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import usePagination from '../../hooks/usePagiantion';
-import List from '../../components/list/List';
+import List from '../../components/common/list/List';
 import Spinner from '../../components/ui/spinner/Spinner';
 import Modal from '../../components/ui/modal/Modal';
 import { ModalType } from '../../components/property/types';
@@ -25,7 +25,7 @@ const listColumns = [
   },
 ];
 /**
- * 
+ *
  * @returns {React.FunctionComponent} The `Resolutions` component is a functional component that displays a list of notifications.
  */
 const Notifications = () => {

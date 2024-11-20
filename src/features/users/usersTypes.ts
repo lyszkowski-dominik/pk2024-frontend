@@ -1,7 +1,8 @@
-export type GetUsersData = {
-  role: string;
-  hoaID: number;
-  page: number;
+import type { ListRequest, UserRole } from '../../types/types';
+
+export type GetUsersRequest = ListRequest & {
+  role: UserRole;
+  hoaId: number;
 };
 
 export type User = {

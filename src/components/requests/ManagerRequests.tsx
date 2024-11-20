@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import List from '../list/List';
+import List from '../common/list/List';
 import { useGetRequests } from '../../features/requests/useGetRequests';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
@@ -41,7 +41,7 @@ const listColumnsTypes = [
 ];
 
 /**
- * 
+ *
  * @returns {JSX.Element} The `ManagerRequests` component returns a list of requests.
  */
 const ManagerRequests = () => {

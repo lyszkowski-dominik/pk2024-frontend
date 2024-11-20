@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router';
 import { useAppSelector } from '../../app/hooks';
-import AuthLayout from '../../components/layout/authLayout/AuthLayout'
+import AuthLayout from '../../components/common/layout/authLayout/AuthLayout';
 import { selectLogInStatus } from '../../components/loginForm/loginFormSlice';
 import { useEffect } from 'react';
 import PasswordResetForm from '../../components/passwordResetForm/PasswordResetForm';
 
 /**
- * 
+ *
  * @returns {React.FunctionComponent} The `PasswordResetConfirmPage` component is a functional component that displays the password reset confirm page.
  */
 const PasswordResetConfirmPage = () => {
@@ -18,12 +18,12 @@ const PasswordResetConfirmPage = () => {
       navigate('/', { replace: true });
     }
   }, [navigate, isLoggedIn]);
-  
+
   return (
     <AuthLayout>
-      <PasswordResetForm isModalOn={() => false}/>
+      <PasswordResetForm isModalOn={() => false} />
     </AuthLayout>
   );
-}
+};
 
 export default PasswordResetConfirmPage;

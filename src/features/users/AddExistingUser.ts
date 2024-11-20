@@ -1,29 +1,23 @@
-import { GetToken } from '../auth/GetToken';
+import type { UserRole } from '../../types/types';
+import api from '../../services/axiosInstance';
 
-
-const AddExistingUser = async ({ role, hoaID, userID }: {role:string, hoaID: number, userID: string}) => {
+const AddExistingUser = async ({
+  role,
+  hoaId,
+  userId,
+}: {
+  role: UserRole;
+  hoaId: number;
+  userId: number;
+}) => {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL}/hoas/hoas/${hoaID}/${role}s/`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-        body: JSON.stringify({
-          user: userID,
-        }),
-      },
-    );
-    if (response.ok) {
-      return response.json();
-    } else {
-      return {message: "Nie udało się dodać użytkownika"};
-      // throw new Error('Failed to fetch owners');
-    }
-  } catch (err) {
-    return {message: "Nie udało się dodać użytkownika"};
+    const response = await api.post(`/hoas/hoas/${hoaId}/users/`, {
+      user: userId,
+      role: role,
+    });
+    return response.data;
+  } catch (err: any) {
+    return err.response.data;
   }
 };
 

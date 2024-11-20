@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import type { ListRequest } from '../../types/types';
+import type { ListRequestProperty } from '../../types/types';
 import GetBillings from './GetBillings';
 
 /**
- * 
- * @param {ListRequest} - The `useGetBillings` function fetches billing data using a query with caching enabled.
+ *
+ * @param {ListRequestProperty} - The `useGetBillings` function fetches billing data using a query with caching enabled.
  * @remarks
  * queryKey: ['useGetBillings'] - The `queryKey` is an array that specifies the query key for easy refetching.
  * queryFn: () => GetBillings({ page, pageSize }) - The `queryFn` is a function that fetches billing data.
@@ -18,7 +18,7 @@ import GetBillings from './GetBillings';
  * @link https://tanstack.com/query/v3/docs/framework/react/guides/queries
  * @returns the result of the useGetBillings hook.
  */
-export const useGetBillings = ({ page, pageSize }: ListRequest) => {
+export const useGetBillings = ({ page, pageSize }: ListRequestProperty) => {
   return useQuery({
     queryKey: ['useGetBillings'],
     queryFn: () =>

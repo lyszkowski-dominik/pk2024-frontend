@@ -1,4 +1,4 @@
-import type { ListRequest } from '../../types/types';
+import type { ListRequestProperty } from '../../types/types';
 
 export enum ModalType {
   Add,
@@ -27,7 +27,7 @@ export interface Property {
   parent?: number | null;
 }
 
-export interface PropertiesRequest extends ListRequest {
+export interface PropertiesRequest extends ListRequestProperty {
   hoaId?: number;
   propertyId?: number;
 }

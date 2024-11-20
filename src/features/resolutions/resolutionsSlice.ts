@@ -8,20 +8,7 @@ import type { ApiPaginatedResult } from '../../types/types';
 import type { AppDispatch, RootState } from '../../app/store';
 import { showAlert } from '../alerts/alertsSlice';
 import { localDateToISO } from '../../utils/date';
-
-export type Resolution = {
-  id: number;
-  title: string;
-  description: string;
-  created_at: string;
-  start_date: string;
-  end_date: string;
-  hoa: number;
-  vote: string;
-  can_vote: boolean;
-  can_edit: boolean;
-  results: any;
-};
+import { Resolution } from './resolutionsTypes';
 
 type ResolutionsState = {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';

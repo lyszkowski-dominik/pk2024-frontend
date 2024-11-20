@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { GetToken } from '../auth/GetToken';
-import type { ListRequest } from '../../types/types';
+import type { ListRequestProperty } from '../../types/types';
 
 const GetMeterReadings = async ({
   page,
   pageSize,
   propertyId,
-}: ListRequest) => {
+}: ListRequestProperty) => {
   try {
     const response = await axios.get(
       `${import.meta.env.VITE_APP_API_URL}/billings/meter_readings/?page=${page}&page_size=${pageSize}&property=${propertyId}`,

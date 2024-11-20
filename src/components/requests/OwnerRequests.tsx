@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import List from '../list/List';
+import List from '../common/list/List';
 import { useGetRequests } from '../../features/requests/useGetRequests';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
@@ -29,7 +29,7 @@ const listColumns = [
 ];
 
 /**
- * 
+ *
  * @returns {JSX.Element} The `ManagerRequests` component returns a list of requests.
  */
 const OwnerRequests = () => {
@@ -57,11 +57,11 @@ const OwnerRequests = () => {
   return (
     <div className={styles.propertiesContainer}>
       <div className={styles.content}>
-      {isModalOn && (
-        <Modal>
-          <AddRequestForm isModalOn={setModalOn} refreshList={refreshPage} />
-        </Modal>
-      )}
+        {isModalOn && (
+          <Modal>
+            <AddRequestForm isModalOn={setModalOn} refreshList={refreshPage} />
+          </Modal>
+        )}
         <div className={styles.iconButtons}>
           <IconButton
             iconName="add"
