@@ -1,14 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import GetResolution from './GetResolution';
-
-export const getResolutionKeys = {
-  all: ['getResolution'] as const,
-  specific: (id: number) => [...getResolutionKeys.all, `${id}`] as const,
-};
+import { resolutionsQueryKeys } from './resolutionsTypes';
 
 export const useGetResolution = (id: number) => {
   return useQuery({
-    queryKey: getResolutionKeys.specific(id),
+    queryKey: resolutionsQueryKeys.details(id),
     queryFn: () => GetResolution(id),
     retry: false,
     staleTime: 1000 * 60 * 60,

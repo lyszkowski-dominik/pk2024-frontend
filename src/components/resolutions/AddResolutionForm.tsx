@@ -31,7 +31,7 @@ const AddResolutionForm = ({ onClose }: { onClose: () => void }) => {
         {
           onSuccess: () => {
             onClose();
-            addNotification('Uchwałą została dodana.', 'success');
+            addNotification('Uchwała została dodana.', 'success');
           },
           onError: (error: any) => {
             setErrors(error);

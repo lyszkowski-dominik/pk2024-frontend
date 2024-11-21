@@ -10,7 +10,7 @@ import { UserRole } from '../../types/types';
 import OwnersActions from '../../components/resolutions/OwnersActions';
 
 const ResolutionDetails = () => {
-  const resolutionId = parseInt(useParams().resolutionID || '');
+  const resolutionId = parseInt(useParams().resolutionId || '');
   const { isLoading, data } = useGetResolution(resolutionId);
   const role = useAppSelector(selectRoles);
   const isManager = role === UserRole.Manager;

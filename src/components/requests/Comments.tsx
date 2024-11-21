@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import type { Comment } from '../../features/requests/reqeustTypes';
 import styles from './Comments.module.scss';
-import { AddComment } from '../../features/comments/AddComment';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { useNotifications } from '../alerts/NotificationContext';
-import { Button, FormControl, List, ListItem, ListItemText, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { useAddComment } from '../../features/comments/useAddComment';
+import Spinner from '../ui/spinner/Spinner';
+import { Comment } from '../../features/requests/requestTypes';
 
 /**
  * @property {Comment[]} comments - The `comments` property represents the list of comments.
@@ -16,102 +25,101 @@ import { Button, FormControl, List, ListItem, ListItemText, TextField, Typograph
  */
 export type CommentsProps = {
   comments: Comment[];
-  newCommentEndpoint: string;
   isDisabled: boolean;
-  refreshPage: () => void;
-  requestID: number;
+  requestId: number;
 };
 
 /**
- * 
+ *
  * @param {CommentsProps} params
  * @returns {JSX.Element} The `Comments` component returns a list of comments.
  */
-const Comments = ({
-  comments,
-  newCommentEndpoint,
-  isDisabled,
-  refreshPage,
-  requestID,
-}: CommentsProps) => {
+const Comments = ({ comments, isDisabled, requestId }: CommentsProps) => {
   const [text, setText] = useState('');
-  const [isWaiting, setIsWaiting] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const hoaID = useAppSelector(selectSelectedCommunity);
+  const hoaId = useAppSelector(selectSelectedCommunity) || -1;
   const { addNotification } = useNotifications();
+  const addComment = useAddComment(requestId);
 
   const onAddComment = async (event: React.FormEvent) => {
     event.preventDefault();
     setText('');
-    setIsWaiting(true);
-
-    const res = await AddComment({
-      hoa: hoaID || -1,
-      text: text,
-      request: Number(requestID),
-    });
-
-    setIsWaiting(false);
-
-    if (res.status === 400) {
-      setIsError(true);
-    } else {
-      setIsError(false);
-      addNotification('Dodano komentarz.', 'success');
-      refreshPage();
-    }
+    addComment.mutate(
+      { hoa: hoaId, text, request: requestId },
+      {
+        onSuccess: () => {
+          setIsError(false);
+          addNotification('Dodano komentarz.', 'success');
+        },
+        onError: () => {
+          setIsError(true);
+        },
+      },
+    );
   };
+
+  if (addComment.isPending) {
+    return <Spinner />;
+  }
 
   return (
     <div className={styles.comments}>
-      {!isDisabled && <div className={styles.new_comment}>
-        <form onSubmit={onAddComment} className={styles.comment_form}>
-          <FormControl>
-            <TextField
-              label="Nowy Komentarz"
-              multiline
-              size="small"
-              rows={4}
-              value={text}
-              onChange={(event) => setText(event.target.value)}
-            />
-            <div className={styles.comment_controls}>
-              <Button variant="contained" type="submit">
-                Prześlij
-              </Button>
-            </div>
-          </FormControl>
-        </form>
-      </div>}
+      {!isDisabled && (
+        <div className={styles.new_comment}>
+          <form onSubmit={onAddComment} className={styles.comment_form}>
+            <FormControl>
+              <TextField
+                label="Nowy Komentarz"
+                multiline
+                size="small"
+                rows={4}
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+              />
+              <div className={styles.comment_controls}>
+                <Button variant="contained" type="submit">
+                  Prześlij
+                </Button>
+              </div>
+              {isError && (
+                <p className={styles.error}>Nie udało się dodać komentarza.</p>
+              )}
+            </FormControl>
+          </form>
+        </div>
+      )}
       <div className={styles.comments_list}>
         <List>
-        {comments.map((comment) => (
-           <React.Fragment key={comment.id}>
-            <ListItem alignItems="flex-start">
-            <ListItemText
-              primary={comment.author_name}
-              secondary={
-                <>
-                 <Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
-                  {new Date(comment.created).toLocaleString()}
-                  </Typography>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    // className={classes.inline}
-                    color="textPrimary"
-                    style={{ whiteSpace:"pre-line"}}
-                  >
-                    {comment.text}
-                  </Typography>
-                </>
-              }
-            />
-          </ListItem>
+          {comments.map((comment) => (
+            <React.Fragment key={comment.id}>
+              <ListItem alignItems="flex-start">
+                <ListItemText
+                  primary={comment.author_name}
+                  secondary={
+                    <>
+                      <Typography
+                        variant="caption"
+                        gutterBottom
+                        sx={{ display: 'block' }}
+                      >
+                        {new Date(comment.created).toLocaleString()}
+                      </Typography>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        color="textPrimary"
+                        style={{ whiteSpace: 'pre-line' }}
+                      >
+                        {comment.text}
+                      </Typography>
+                    </>
+                  }
+                />
+              </ListItem>
             </React.Fragment>
           ))}
-          </List>
+        </List>
       </div>
     </div>
   );

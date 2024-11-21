@@ -1,46 +1,33 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import Spinner from '../ui/spinner/Spinner';
 import styles from './AddRequestForm.module.scss';
-import { useState, type SetStateAction } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import type { SearchDropdownOption } from '../ui/search/SearchDropdown';
 import SearchDropdown from '../ui/search/SearchDropdown';
-import { Button } from '@mui/material';
 import { useNotifications } from '../alerts/NotificationContext';
-import { CreateRequest } from '../../features/requests/CreateRequest';
+import FormikWrapper, {
+  FormikWrapperProps,
+} from '../common/forms/form/FormikWrapper';
+import { useCreateRequest } from '../../features/requests/useCreateRequest';
 
-const propertySchema = Yup.object().shape({
+import TextInputLiveFeedback from '../common/forms/textInputLiveFeedback/TextInputLiveFeedback';
+import TextAreaLiveFeedback from '../common/forms/textInputLiveFeedback/TextAreaLiveFeedback';
+import { Request } from '../../features/requests/requestTypes';
+
+const validationSchema = Yup.object({
   title: Yup.string().required('Podaj tytuł'),
   description: Yup.string(),
-  type: Yup.number(),
 });
 
-/**
- * @param {React.Dispatch<SetStateAction<boolean>>} isModalOn The `isModalOn` function is a callback function that closes the form.
- * @param {function} refreshList The `refreshList` function is a callback function that refreshes the list of requests.
- */
 export type RequestFormProps = {
-  isModalOn: React.Dispatch<SetStateAction<boolean>>;
-  refreshList: () => void;
+  onClose: () => void;
 };
 
-/**
- * 
- * @param {RequestFormProps} params
- * @returns {JSX.Element} The `AddRequestForm` component returns a form for adding a request.
- */
-const AddRequestForm = ({ isModalOn }: RequestFormProps) => {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMessages, setErrorMessages] = useState<{ errors: string } | null>(
-    null,
-  );
+const AddRequestForm = ({ onClose }: RequestFormProps) => {
   const { addNotification } = useNotifications();
-
-  const selectedCommunity = useAppSelector(selectSelectedCommunity);
+  const hoaId = useAppSelector(selectSelectedCommunity) || -1;
+  const createRequest = useCreateRequest(hoaId);
 
   const getParentOptions = (data: any): SearchDropdownOption[] => {
     return data.results?.map((type: any) => ({
@@ -49,107 +36,45 @@ const AddRequestForm = ({ isModalOn }: RequestFormProps) => {
     }));
   };
 
-  return (
-    <div className={styles.container}>
-      <h1>Dodaj Zapytanie</h1>
-      {!isSuccess && selectedCommunity && (
-        <Formik
-          initialValues={{
-            title: '',
-            description: '',
-            type: '',
-          }}
-          validationSchema={propertySchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            const numericValues = {
-              ...values,
-              type: Number(values.type),
-              hoa: selectedCommunity,
-            };
-
-            const res = await CreateRequest(numericValues);
-            if (res.status === 400) {
-              setErrorMessages(res.data);
-              console.log(res.data);
-              setIsError(true);
-            } else {
-              setIsError(false);
-              setIsSuccess(true);
-              addNotification('Nowy zapytanie zostało dodane', 'success');
-              isModalOn(false);
-            }
-            setIsWaiting(false);
+  const formikProps: FormikWrapperProps<Partial<Request>> = {
+    header: 'Dodaj Zapytanie',
+    submitLabel: 'Dodaj',
+    initialValues: {
+      title: '',
+      description: '',
+    },
+    onSubmit: (values, { setSubmitting, setErrors }) =>
+      createRequest.mutate(
+        { ...values, type: { id: Number(values.type) }, hoa: hoaId },
+        {
+          onSuccess: () => {
+            onClose();
+            addNotification('Nowy zapytanie zostało dodane', 'success');
+          },
+          onError: (error: any) => {
+            setErrors(error);
             setSubmitting(false);
-          }}
-        >
-          {({ isSubmitting, values }) => (
-            <Form className={styles.form}>
-              <div className={styles.fieldGroup}>
-                <SearchDropdown
-                  name="type"
-                  endpoint="/requests/request_types/"
-                  // queryParams={{ hoa: selectedCommunity }}
-                  label="Typ:"
-                  getOptions={getParentOptions}
-                  // disabled={[
-                  //   PropertyType.Flat,
-                  //   PropertyType.Common,
-                  //   PropertyType.Business,
-                  // ].includes(values.type)}
-                />
-                <ErrorMessage
-                  name="type"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
+          },
+        },
+      ),
+    onReset: onClose,
+    validationSchema: validationSchema,
+  };
 
-              <div className={styles.fieldGroup}>
-                <label htmlFor="title">Tytuł:</label>
-                <Field name="title" type="text" className={styles.field} />
-                <ErrorMessage
-                  name="title"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-
-              <div className={styles.fieldGroup}>
-                <label htmlFor="description">Opis:</label>
-                <Field
-                  name="description"
-                  as="textarea"
-                  className={styles.field}
-                />
-                <ErrorMessage
-                  name="description"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-
-              <Button type="submit" variant="contained" disabled={isSubmitting}>
-                Dodaj zapytanie
-              </Button>
-              <Button
-                color="secondary"
-                type="reset"
-                onClick={() => {
-                  isModalOn(false);
-                }}
-              >
-                Anuluj
-              </Button>
-              {isWaiting && (
-                <div className={styles.waiting}>
-                  <Spinner />
-                </div>
-              )}
-            </Form>
-          )}
-        </Formik>
-      )}
-    </div>
+  return (
+    <FormikWrapper {...formikProps}>
+      <div className={styles.fieldGroup}>
+        <SearchDropdown
+          name="type"
+          endpoint="/requests/request_types/"
+          label="Typ:"
+          getOptions={getParentOptions}
+        />
+        <ErrorMessage name="type" component="div" className={styles.error} />
+      </div>
+      <TextInputLiveFeedback label="Tytuł" type="text" name="title" />
+      <TextAreaLiveFeedback label="Opis" name="description" />
+    </FormikWrapper>
   );
 };
 

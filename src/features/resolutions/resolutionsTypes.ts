@@ -18,18 +18,21 @@ export type GetResolutionsRequest = ListRequest & {
   hoaId: number;
 };
 
-export type GetResolutionRequest = {
-  id: number;
-};
-
 export enum Vote {
-  for,
-  against,
-  abstain,
+  for = 'for',
+  against = 'against',
+  abstain = 'abstain',
 }
 
 export const voteDisplayMap = {
   [Vote.for]: 'Za',
   [Vote.against]: 'Przeciw',
   [Vote.abstain]: 'Wstrzymano się',
+};
+
+export const resolutionsQueryKeys = {
+  all: ['resolutions'] as const,
+  hoa: (hoa: number) => [...resolutionsQueryKeys.all, 'hoa', `${hoa}`] as const,
+  details: (id: number) =>
+    [...resolutionsQueryKeys.all, 'details', `${id}`] as const,
 };

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
+import api from '../../services/axiosInstance';
+import { Request } from './requestTypes';
 
 /**
  * The function `CreateRequest` sends a POST request to a specified API endpoint with form data and
@@ -10,21 +10,12 @@ import { GetToken } from '../auth/GetToken';
  * @returns The `CreateRequest` function is returning the data received from the POST request if
  * successful, and if there is an error, it returns the response from the error.
  */
-const CreateRequest = async (formData: any) => {
+const CreateRequest = async (formData: Partial<Request>) => {
   try {
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/requests/requests/`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
+    const { data } = await api.post(`/requests/requests/`, formData);
     return data;
   } catch (err: any) {
-    return err.response;
+    return err.response.data;
   }
 };
 

@@ -18,3 +18,9 @@ export type UsersResponse = {
   previous: string | null;
   results: User[];
 };
+
+export const usersQueryKeys = {
+  all: ['users'] as const,
+  hoa: (hoa: number, role: UserRole) =>
+    [...usersQueryKeys.all, 'hoa', `${hoa}`, 'role', `${role}`] as const,
+};

@@ -1,228 +1,170 @@
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import styles from './RequestDetails.module.scss';
-import { Button, CircularProgress, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
 import { useAppSelector } from '../../app/hooks';
 import Modal from '../../components/ui/modal/Modal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { useNotifications } from '../../components/alerts/NotificationContext';
 import Spinner from '../../components/ui/spinner/Spinner';
 import { useGetRequest } from '../../features/requests/useGetRequest';
-import { EditRequest } from '../../features/requests/EditRequest';
-import { useGetUserDataQuery } from '../../components/userProfile/userDataApiSlice';
 import Comments from '../../components/requests/Comments';
+import { useGetUserData } from '../../features/auth/useGetUserData';
+import Details from '../../components/requests/Details';
+import { useEditRequest } from '../../features/requests/useEditRequest';
+import { UserRole } from '../../types/types';
+import { RequestState } from '../../features/requests/requestTypes';
 /**
- * 
+ *
  * @returns {React.FunctionComponent} The `ReqeustDetails` component is a functional component that displays the details of a request.
  */
 const ReqeustDetails = () => {
   const [isCloseModalOpen, setCloseModalOpen] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isClosingError, setIsClosingError] = useState(false);
+  const [isAssignError, setIsAssignError] = useState(false);
 
   const { addNotification } = useNotifications();
-  const { requestID } = useParams();
-
-  const {
-    data,
-    refetch: refreshPage,
-    isLoading,
-  } = useGetRequest({
-    id: parseInt(requestID || ''),
-  });
-
-  const { data: userData, isSuccess } = useGetUserDataQuery();
-  const navigate = useNavigate();
-
-  const hoaID = useAppSelector(selectSelectedCommunity);
+  const requestId = parseInt(useParams().requestId || '');
+  const hoaId = useAppSelector(selectSelectedCommunity) || -1;
   const role = useAppSelector(selectRoles);
-  const isManager = role === 'manager';
-  const isOwner = role === 'owner';
-  const canEdit = isManager;
-  const isClosed = data?.state === 'closed';
+  const isManager = role === UserRole.Manager;
 
-  useEffect(() => {
-    refreshPage();
-  }, [refreshPage, data]);
+  const { data: request, isLoading } = useGetRequest(requestId);
+  const editRequest = useEditRequest(hoaId, requestId);
+  const { data: userData, isLoading: loadingUserData } = useGetUserData();
+  const isClosed = request?.state === RequestState.closed;
 
   const onAssignToMe = async () => {
-    if (!requestID) {
+    if (!requestId) {
       return;
     }
-    setIsWaiting(true);
-    const res = await EditRequest(Number(requestID), {
-      assigned_to: userData?.id,
-    });
 
-    setIsWaiting(false);
-    if (res.status === 400) {
-      // setErrorMessages(res.data);
-      setIsError(true);
-    } else {
-      setIsError(false);
-      setCloseModalOpen(false);
-      addNotification('Przypisano do ciebie.', 'success');
-      refreshPage();
-    }
+    editRequest.mutate(
+      { id: requestId, editedData: { assigned_to: userData?.id } },
+      {
+        onSuccess: () => {
+          setIsAssignError(false);
+          addNotification('Przypisano do ciebie.', 'success');
+        },
+        onError: () => {
+          setIsAssignError(true);
+        },
+      },
+    );
   };
 
-  const onChangeState = () => {
-    console.log('Change state');
-  };
-
-  const onClose = () => {
-    console.log('Close');
-    setCloseModalOpen(true);
-  };
-
-  const onCloseHadler = async () => {
-    if (!requestID) {
+  const onCloseHandler = async () => {
+    if (!requestId) {
       return;
     }
-    setIsWaiting(true);
-    const res = await EditRequest(Number(requestID), { state: 'closed' });
 
-    setIsWaiting(false);
-    if (res.status === 400) {
-      // setErrorMessages(res.data);
-      setIsError(true);
-    } else {
-      setIsError(false);
-      setCloseModalOpen(false);
-      addNotification('Zapytanie zostało zamkniete.', 'success');
-      refreshPage();
-    }
+    editRequest.mutate(
+      { id: requestId, editedData: { state: RequestState.closed } },
+      {
+        onSuccess: () => {
+          setCloseModalOpen(false);
+          setIsClosingError(false);
+          addNotification('Zapytanie zostało zamkniete.', 'success');
+        },
+        onError: () => {
+          setIsClosingError(true);
+        },
+      },
+    );
   };
 
-  const editFormInitialData = {
-    id: data?.id,
-    notes: data?.notes,
-    assigned_to: data?.assigned_to?.id,
-    state: data?.state,
-  };
-
-  const stateMap: any = {
-    new: 'Nowy',
-    work_in_progress: 'W trakcie',
-    pending: 'Oczekujący',
-    resolved: 'Rozwiązany',
-    closed: 'Zamknięty',
-    cancelled: 'Anulowany',
-  };
-
-  if (isLoading) {
+  if (isLoading || loadingUserData || editRequest.isPending) {
     return <Spinner />;
   }
   return (
-    <>
-      <div className={styles.propertiesContainer}>
-        <div className={styles.content}>
-          <div className={styles.header}>
-            {/* <h1>{data?.title}</h1> */}
-            <div className={styles.actions}>
-              {isManager && (
-                <>
-                  {!data?.assigned_to && !isClosed && (
+    request && (
+      <>
+        <div className={styles.propertiesContainer}>
+          <div className={styles.content}>
+            <div className={styles.header}>
+              <div className={styles.actions}>
+                {isManager && (
+                  <>
+                    {!request?.assigned_to && !isClosed && (
+                      <Button
+                        variant="outlined"
+                        type="button"
+                        onClick={onAssignToMe}
+                      >
+                        <span>Przypisz do mnie</span>
+                      </Button>
+                    )}
+                  </>
+                )}
+                {!isClosed && (
+                  <>
                     <Button
                       variant="outlined"
                       type="button"
-                      onClick={onAssignToMe}
+                      color="warning"
+                      onClick={() => setCloseModalOpen(true)}
                     >
-                      <span>Przypisz do mnie</span>
+                      <span>Zamknij</span>
                     </Button>
-                  )}
-                </>
-              )}
-              {!isClosed && (
-                <>
-                  <Button
-                    variant="outlined"
-                    type="button"
-                    color="warning"
-                    onClick={() => onClose()}
-                  >
-                    <span>Zamknij</span>
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
-          {/* <hr /> */}
-          <Typography variant="h4" component="h2">
-            {data?.title}
-          </Typography>
-          <Typography color="textPrimary" gutterBottom>
-            Stan: {stateMap[data?.state||"new"]}
-          </Typography>
-          <Typography color="textPrimary" gutterBottom>
-            Data dodania: {new Date(data?.created || '').toLocaleString()}
-          </Typography>
-          <Typography color="textPrimary" gutterBottom>
-            Autor: {data?.created_by?.name}
-          </Typography>
-          <Typography color="textPrimary" gutterBottom>
-            Zarządca: {data?.assigned_to?.name}
-          </Typography>
-          <Typography color="textPrimary" gutterBottom>
-            Typ zgłoszenia: {data?.type?.title || "Inne"}
-          </Typography>
-          <Typography color="textPrimary" gutterBottom>
-            Treść:
-          </Typography>
-          <Typography variant="body2">{data?.description}</Typography>
-          <br />
-          <Comments
-            comments={data?.comments || []}
-            newCommentEndpoint="/requests/comments/"
-            isDisabled={isClosed}
-            refreshPage={refreshPage}
-            requestID={Number(requestID)}
-          />
-        </div>
-      </div>
-      {isCloseModalOpen && (
-        <Modal>
-          {!isWaiting && (
-            <div>
-              <p>
-                Czy na pewno chcesz zamknąć <b>{data?.title}</b>?
-              </p>
-              <br />
-              {isError && (
-                <>
-                  <p className={styles.error}>Nie udało się zamknąć rekordu.</p>
-                  <br />
-                </>
-              )}
-              <div>
-                <Button
-                  onClick={() => onCloseHadler()}
-                  color="error"
-                  variant="contained"
-                >
-                  Zamknij
-                </Button>
-                <Button
-                  onClick={() => {
-                    setCloseModalOpen(false);
-                    setIsError(false);
-                  }}
-                  color="secondary"
-                >
-                  Anuluj
-                </Button>
+                  </>
+                )}
               </div>
+              {isAssignError && (
+                <p className={styles.error}>Nie udało się przypisać zadania.</p>
+              )}
             </div>
-          )}
-          {isWaiting && (
-            <div className={styles.waiting}>
-              <CircularProgress color="primary" sx={{ fontSize: 40 }} />
-            </div>
-          )}
-        </Modal>
-      )}
-    </>
+            <Details request={request} />
+            <br />
+            <Comments
+              comments={request?.comments || []}
+              isDisabled={isClosed}
+              requestId={requestId}
+            />
+          </div>
+        </div>
+        {isCloseModalOpen && (
+          <Modal>
+            {editRequest.isPending ? (
+              <Spinner />
+            ) : (
+              <div>
+                <p>
+                  Czy na pewno chcesz zamknąć <b>{request?.title}</b>?
+                </p>
+                <br />
+                {isClosingError && (
+                  <>
+                    <p className={styles.error}>
+                      Nie udało się zamknąć rekordu.
+                    </p>
+                    <br />
+                  </>
+                )}
+                <div>
+                  <Button
+                    onClick={() => onCloseHandler()}
+                    color="error"
+                    variant="contained"
+                  >
+                    Zamknij
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setCloseModalOpen(false);
+                      setIsClosingError(false);
+                    }}
+                    color="secondary"
+                  >
+                    Anuluj
+                  </Button>
+                </div>
+              </div>
+            )}
+          </Modal>
+        )}
+      </>
+    )
   );
 };
 

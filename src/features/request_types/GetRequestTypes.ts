@@ -1,5 +1,6 @@
-import type { GetRequestTypesData } from '../requests/reqeustTypes';
-import { GetToken } from '../auth/GetToken';
+import api from '../../services/axiosInstance';
+import { ApiPaginatedResult } from '../../types/types';
+import { GetRequestTypesData, RequestType } from '../requests/requestTypes';
 
 /**
  * This function makes an asynchronous GET request to fetch request types based on the provided
@@ -16,25 +17,17 @@ import { GetToken } from '../auth/GetToken';
  * it throws an error with the message 'Failed to fetch requests'.
  */
 const GetRequestTypes = async ({
-  hoaID,
+  hoaId,
   page,
   pageSize,
 }: GetRequestTypesData) => {
-  const response = await fetch(
-    `${import.meta.env.VITE_APP_API_URL}/requests/request_types?hoa=${hoaID}&page=${page}&page_size=${pageSize}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${GetToken()}`,
-      },
-    },
-  );
-
-  if (response.ok) {
-    return response.json();
-  } else {
-    throw new Error('Failed to fetch requests');
+  try {
+    const response = await api.get(
+      `/requests/request_types?hoa=${hoaId}&page=${page}&page_size=${pageSize}`,
+    );
+    return response.data as ApiPaginatedResult<RequestType>;
+  } catch (err: any) {
+    throw err.response.data;
   }
 };
 

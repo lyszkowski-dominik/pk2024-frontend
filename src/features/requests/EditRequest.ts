@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
+import api from '../../services/axiosInstance';
+import { Request } from './requestTypes';
 
 /**
  * The `EditRequest` function is an asynchronous function in TypeScript that sends a PATCH request to
@@ -12,21 +12,18 @@ import { GetToken } from '../auth/GetToken';
  * @returns The EditRequest function is returning either the response data from the PATCH request if
  * successful, or the error response if there was an error during the request.
  */
-const EditRequest = async (id: number, data: any) => {
+
+type EditRequestParams = {
+  id: number;
+  editedData: Partial<Request>;
+};
+
+const EditRequest = async ({ id, editedData }: EditRequestParams) => {
   try {
-    const res = await axios.patch(
-      `${import.meta.env.VITE_APP_API_URL}/requests/requests/${id}/`,
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
-    return res;
+    const res = await api.patch(`/requests/requests/${id}/`, editedData);
+    return res.data;
   } catch (err: any) {
-    return err.response;
+    return err.response.data;
   }
 };
 

@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
+import api from '../../services/axiosInstance';
 
 /**
  * The type `CreateCommentData` defines the structure of data required to create a comment, including
@@ -34,19 +33,10 @@ export type CreateCommentData = {
  */
 const AddComment = async (data: CreateCommentData) => {
   try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/requests/comments/`,
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
-    return res;
+    const res = await api.post(`/requests/comments/`, data);
+    return res.data;
   } catch (err: any) {
-    return err.response;
+    return err.response.data;
   }
 };
 

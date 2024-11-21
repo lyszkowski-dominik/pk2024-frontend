@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { VoteResolution } from './VoteResolution';
-import { getResolutionKeys } from './useGetResolution';
-import { getResolutionsKeys } from './useGetResolutions';
+import { resolutionsQueryKeys } from './resolutionsTypes';
 
 export const useVoteResolution = (hoa: number, id: number) => {
   const queryClient = useQueryClient();
@@ -10,10 +9,10 @@ export const useVoteResolution = (hoa: number, id: number) => {
     mutationFn: VoteResolution,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: getResolutionKeys.specific(id),
+        queryKey: resolutionsQueryKeys.details(id),
       });
       queryClient.invalidateQueries({
-        queryKey: getResolutionsKeys.specific(hoa),
+        queryKey: resolutionsQueryKeys.hoa(hoa),
       });
     },
     retry: false,

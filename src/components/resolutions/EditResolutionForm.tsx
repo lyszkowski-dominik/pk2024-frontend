@@ -21,7 +21,7 @@ const EditResolutionForm = ({
 }: EditResolutionFormProps) => {
   const { addNotification } = useNotifications();
   const hoaId = useAppSelector(selectSelectedCommunity) || -1;
-  const editResolution = useEditResolution(hoaId);
+  const editResolution = useEditResolution(hoaId, initialData.id);
 
   const formikProps: FormikWrapperProps<Partial<Resolution>> = {
     header: 'Edycja uchwały',

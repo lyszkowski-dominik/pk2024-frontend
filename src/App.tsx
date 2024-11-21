@@ -39,46 +39,46 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route element={<MainLayout />}>
           <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/hoa/:communityID" element={<CommunityPage />} />
+          <Route path="/hoa/:communityId" element={<CommunityPage />} />
           <Route
-            path="/hoa/:communityID/owners"
+            path="/hoa/:communityId/owners"
             element={<Users key="owner" type={UserRole.Owner} />}
           />
           <Route
-            path="/hoa/:communityID/managers"
+            path="/hoa/:communityId/managers"
             element={<Users key="manager" type={UserRole.Manager} />}
           />
-          <Route path="/hoa/:communityID/properties" element={<Properties />} />
+          <Route path="/hoa/:communityId/properties" element={<Properties />} />
           <Route
-            path="/hoa/:communityID/properties/:propertyId"
+            path="/hoa/:communityId/properties/:propertyId"
             element={<Property />}
           />
           <Route
-            path="/hoa/:communityID/billings"
+            path="/hoa/:communityId/billings"
             element={<Property currentTab={PropertyTab.billings} />}
           />
           <Route
-            path="/hoa/:communityID/billings/:billingId"
+            path="/hoa/:communityId/billings/:billingId"
             element={<Billing />}
           />
           <Route
-            path="/hoa/:communityID/resolutions"
+            path="/hoa/:communityId/resolutions"
             element={<Resolutions key="resolutions" />}
           />
           <Route
-            path="/hoa/:communityID/resolutions/:resolutionID"
+            path="/hoa/:communityId/resolutions/:resolutionId"
             element={<ResolutionDetails key="resolution" />}
           />
           <Route
-            path="/hoa/:communityID/notifications"
+            path="/hoa/:communityId/notifications"
             element={<Notifications key="notifications" />}
           />
           <Route
-            path="/hoa/:communityID/requests"
+            path="/hoa/:communityId/requests"
             element={<Requests key="requests" />}
           />
           <Route
-            path="/hoa/:communityID/requests/:requestID"
+            path="/hoa/:communityId/requests/:requestId"
             element={<ReqeustDetails key="request" />}
           />
           <Route path="*" element={<NotFound404 />} />

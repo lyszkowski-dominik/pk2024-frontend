@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { getUsersKeys } from './useGetUsers';
 import { RemoveUser } from './RemoveUser';
 import type { UserRole } from '../../types/types';
+import { usersQueryKeys } from './usersTypes';
 
 export const useRemoveUser = (hoa: number, role: UserRole) => {
   const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ export const useRemoveUser = (hoa: number, role: UserRole) => {
     mutationFn: RemoveUser,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: getUsersKeys.specific(hoa, role),
+        queryKey: usersQueryKeys.hoa(hoa, role),
       });
     },
     retry: false,

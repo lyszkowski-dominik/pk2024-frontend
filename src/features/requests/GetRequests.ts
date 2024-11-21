@@ -1,5 +1,6 @@
-import type { GetRequestsData } from './reqeustTypes';
-import { GetToken } from '../auth/GetToken';
+import type { GetRequestsData, Request } from './requestTypes';
+import api from '../../services/axiosInstance';
+import { ApiPaginatedResult } from '../../types/types';
 
 /**
  * The function `GetRequests` makes an asynchronous GET request to a specified API endpoint with
@@ -17,27 +18,19 @@ import { GetToken } from '../auth/GetToken';
  * an error with the message 'Failed to fetch requests'.
  */
 const GetRequests = async ({
-  hoaID,
+  hoaId,
   page,
   pageSize,
   state,
   assignedToMe,
 }: GetRequestsData) => {
-  const response = await fetch(
-    `${import.meta.env.VITE_APP_API_URL}/requests/requests?hoa=${hoaID}&page=${page}&page_size=${pageSize}${state ? '&state=' + state : ''}${assignedToMe ? '&assigned_to_me=' + assignedToMe : ''}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${GetToken()}`,
-      },
-    },
-  );
-
-  if (response.ok) {
-    return response.json();
-  } else {
-    throw new Error('Failed to fetch requests');
+  try {
+    const response = await api.get(
+      `/requests/requests?hoa=${hoaId}&page=${page}&page_size=${pageSize}${state ? '&state=' + state : ''}${assignedToMe ? '&assigned_to_me=' + assignedToMe : ''}`,
+    );
+    return response.data as ApiPaginatedResult<Request>;
+  } catch (err: any) {
+    throw err.response.data;
   }
 };
 
