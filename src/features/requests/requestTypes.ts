@@ -2,8 +2,9 @@ import { ListRequest } from '../../types/types';
 
 export type GetRequestsData = ListRequest & {
   hoaId: number;
-  state?: RequestState;
-  assignedToMe?: boolean;
+  states?: string[];
+  assignedTo?: number;
+  notAssigned?: boolean;
 };
 
 export type GetRequestTypesData = ListRequest & {
@@ -37,8 +38,8 @@ export type Request = {
   };
   assigned_to: {
     id: number;
-    name: string;
-    email: string;
+    name?: string;
+    email?: string;
   };
   state: RequestState;
   notes: string;
@@ -75,22 +76,31 @@ export const requestsQueryKeys = {
   all: ['requests'] as const,
   requestsTypes: ['requestsTypes'] as const,
   hoa: (hoa: number) => [...requestsQueryKeys.all, 'hoa', `${hoa}`] as const,
-  state: (hoa: number, state: RequestState) =>
-    [...requestsQueryKeys.hoa(hoa), 'state', `${state}`] as const,
-  assigned: (hoa: number, assignedToMe: boolean) =>
-    [...requestsQueryKeys.hoa(hoa), 'assigned', `${assignedToMe}`] as const,
+  state: (hoa: number, states: string[]) =>
+    [
+      ...requestsQueryKeys.hoa(hoa),
+      'state',
+      ...states.map((state) => `${state}`),
+    ] as const,
+  assigned: (hoa: number, assignedTo: number) =>
+    [...requestsQueryKeys.hoa(hoa), 'assigned', `${assignedTo}`] as const,
+  notAssigned: (hoa: number) =>
+    [...requestsQueryKeys.hoa(hoa), 'notAssigned'] as const,
   details: (id: number) =>
     [...requestsQueryKeys.all, 'details', `${id}`] as const,
 };
 
 export const getQueryKey = ({
   hoaId,
-  state,
-  assignedToMe,
+  states,
+  assignedTo,
+  notAssigned,
 }: GetRequestsData) => {
-  return state
-    ? requestsQueryKeys.state(hoaId, state)
-    : assignedToMe
-      ? requestsQueryKeys.assigned(hoaId, assignedToMe)
-      : requestsQueryKeys.hoa(hoaId);
+  return states && states.length > 0
+    ? requestsQueryKeys.state(hoaId, states)
+    : assignedTo
+      ? requestsQueryKeys.assigned(hoaId, assignedTo)
+      : notAssigned
+        ? requestsQueryKeys.notAssigned(hoaId)
+        : requestsQueryKeys.hoa(hoaId);
 };

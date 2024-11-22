@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import RequestsList from './RequestsList';
-import { RequestState } from '../../features/requests/requestTypes';
 import RequestsTypesList from './RequestsTypesList';
+import { allRequestsColumns } from './utils';
+import { useGetUserData } from '../../features/auth/useGetUserData';
+import Spinner from '../ui/spinner/Spinner';
 
 /**
  *
@@ -10,16 +12,30 @@ import RequestsTypesList from './RequestsTypesList';
  */
 const ManagerRequests = () => {
   const [tabIndex, setTabIndex] = useState(0);
+  const { data: userData, isLoading: loadingUserData } = useGetUserData();
+
   return (
     <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
       <TabList>
-        <Tab>Zapytania</Tab>
-        <Tab>Typy Zapytań</Tab>
+        <Tab>Zgłoszenia</Tab>
+        <Tab>Typy Zgłoszeń</Tab>
       </TabList>
       <TabPanel>
-        <RequestsList header="Twoje Zapytania" assignedToMe={true} />
-        <RequestsList header="Nowe Zapytania" state={RequestState.new} />
-        <RequestsList header="Wszystkie Zapytania" />
+        {loadingUserData ? (
+          <Spinner />
+        ) : (
+          <RequestsList
+            header="Twoje Zgłoszenia"
+            assignedTo={userData?.id}
+            closedCheckbox
+          />
+        )}
+        <RequestsList header="Nieprzypisane Zgłoszenia" notAssigned={true} />
+        <RequestsList
+          header="Wszystkie Zgłoszenia"
+          columns={allRequestsColumns}
+          closedCheckbox
+        />
       </TabPanel>
       <TabPanel>
         <RequestsTypesList />

@@ -50,8 +50,8 @@ const defaultSidebarValues: SidebarContextType = {
     //   title: 'Rachunki',
     //   path: 'bills',
     // },
-     {
-      title: 'Zapytania',
+    {
+      title: 'Zgłoszenia',
       path: 'requests',
     },
   ],

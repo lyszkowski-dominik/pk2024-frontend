@@ -27,32 +27,37 @@ import styles from './InputField.module.scss';
  * set
  */
 export type InputFieldProps = {
+  id?: string;
   label: string;
   type?: string | undefined;
   name: string;
   value: any;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
   placeholder?: string | undefined;
   error?: boolean;
   disabled?: boolean;
+  checked?: boolean;
 };
 
 /**
- * 
+ *
  * @param {InputFieldProps} params
  * @returns {JSX.Element} The `InputField` component returns a form control with a label and an input field.
  */
 const InputField = ({
+  id,
   label,
   type = 'text',
   name,
   value,
   onChange,
+  onFocus,
   placeholder,
   error,
   disabled,
+  checked,
 }: InputFieldProps) => {
-  
   const labelClassName = error
     ? styles.label + ' ' + styles['error-label']
     : styles.label;
@@ -62,8 +67,10 @@ const InputField = ({
     : styles.input;
 
   return (
-    <div className={styles['form-control']}>
-      <label className={labelClassName}>{label}</label>
+    <div className={`${styles['form-control']} ${styles[type]}`}>
+      <label htmlFor={id} className={labelClassName}>
+        {label}
+      </label>
 
       <input
         disabled={disabled}
@@ -71,8 +78,10 @@ const InputField = ({
         name={name}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
         placeholder={placeholder}
         className={inputClassName}
+        checked={checked}
       />
     </div>
   );

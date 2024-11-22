@@ -1,8 +1,9 @@
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
 import styles from './Form.module.scss';
 import FormButtons from './FormButtons';
+import { ReactNode } from 'react';
 
 export type FormikWrapperProps<T> = {
   header: string;
@@ -11,7 +12,7 @@ export type FormikWrapperProps<T> = {
   onSubmit: (values: T, { setSubmitting, setErrors }: FormikHelpers<T>) => void;
   onReset?: () => void;
   submitLabel?: string;
-  children?: React.ReactNode;
+  children?: ((formik: FormikProps<T>) => ReactNode) | ReactNode;
 };
 
 const FormikWrapper = <T extends object>({
@@ -32,14 +33,14 @@ const FormikWrapper = <T extends object>({
         onSubmit={onSubmit}
         onReset={onReset}
       >
-        {({ isSubmitting, isValid }) => (
+        {(formik) => (
           <Form>
-            {children}
+            {typeof children === 'function' ? children(formik) : children}
             <FormButtons
               submitLabel={submitLabel}
-              submitDisabled={isSubmitting || !isValid}
-              cancelDisabled={isSubmitting}
-              isLoading={isSubmitting}
+              submitDisabled={formik.isSubmitting || !formik.isValid}
+              cancelDisabled={formik.isSubmitting}
+              isLoading={formik.isSubmitting}
             />
           </Form>
         )}

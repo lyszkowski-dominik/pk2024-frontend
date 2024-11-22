@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import usePagination from '../../hooks/usePagiantion';
+import usePagination from '../../hooks/usePagination';
 import List from '../../components/common/list/List';
 import Spinner from '../../components/ui/spinner/Spinner';
 import { columns } from './utils';

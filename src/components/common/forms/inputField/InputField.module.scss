@@ -1,22 +1,30 @@
 .label {
-  display: block;
+  display: inline;
   margin-bottom: 0.1rem;
   padding-left: 5px;
-  width: 80%;
-  display: flex;
   justify-content: space-between;
   font-weight: 500;
 }
 
 .input {
-  width: 100%;
   padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
+.input[type='text'] {
+  width: 100%;
+}
+
 .form-control {
   margin-bottom: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.checkbox {
+  flex-direction: row;
 }
 
 .error-input {

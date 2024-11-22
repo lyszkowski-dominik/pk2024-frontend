@@ -1,4 +1,5 @@
 import api from '../../services/axiosInstance';
+import { User } from '../users/usersTypes';
 
 /**
  * This function retrieves user data from an API endpoint using an authorization token.
@@ -10,7 +11,7 @@ import api from '../../services/axiosInstance';
 export const GetUserData = async () => {
   try {
     const { data } = await api.get(`/auth/current/`);
-    return data;
+    return data as User;
   } catch (err: any) {
     throw err.response.data;
   }

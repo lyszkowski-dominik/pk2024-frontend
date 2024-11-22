@@ -21,12 +21,13 @@ const GetRequests = async ({
   hoaId,
   page,
   pageSize,
-  state,
-  assignedToMe,
+  states,
+  assignedTo,
+  notAssigned,
 }: GetRequestsData) => {
   try {
     const response = await api.get(
-      `/requests/requests?hoa=${hoaId}&page=${page}&page_size=${pageSize}${state ? '&state=' + state : ''}${assignedToMe ? '&assigned_to_me=' + assignedToMe : ''}`,
+      `/requests/requests?hoa=${hoaId}&page=${page}&page_size=${pageSize}${states && states.length > 0 ? '&state=[' + states.toString() + ']' : ''}${assignedTo ? '&assigned_to=' + assignedTo : notAssigned ? '&assigned_to=' : ''}`,
     );
     return response.data as ApiPaginatedResult<Request>;
   } catch (err: any) {

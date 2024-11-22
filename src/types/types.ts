@@ -20,12 +20,6 @@ export type ApiPaginatedResult<T> = {
   results: T[];
 };
 
-export interface ListRequestProperty {
-  page: number;
-  pageSize: number;
-  propertyId?: number;
-}
-
 export interface ListRequest {
   page: number;
   pageSize?: number;

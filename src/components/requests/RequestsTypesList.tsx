@@ -1,7 +1,7 @@
 import List from '../common/list/List';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import usePagination from '../../hooks/usePagiantion';
+import usePagination from '../../hooks/usePagination';
 import Spinner from '../ui/spinner/Spinner';
 import styles from './ManagerRequests.module.scss';
 import { requestTypesColumns } from './utils';
@@ -27,7 +27,7 @@ const RequestsTypesList = () => {
     <div className={styles.propertiesContainer}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <h1>Typy Zapytań</h1>
+          <h1>Typy Zgłoszeń</h1>
         </div>
         {isLoading ? (
           <Spinner />

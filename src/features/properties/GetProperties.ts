@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
-import type { PropertiesRequest } from './propertiesTypes';
+import type { PropertiesRequest, Property } from './propertiesTypes';
+import api from '../../services/axiosInstance';
+import { ApiPaginatedResult } from '../../types/types';
 
 /**
  * This function asynchronously fetches properties data based on the provided page, pageSize, and hoaId
@@ -16,19 +16,13 @@ import type { PropertiesRequest } from './propertiesTypes';
  */
 const GetProperties = async ({ page, pageSize, hoaId }: PropertiesRequest) => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/hoas/properties/?page=${page}&page_size=${pageSize}&hoa=${hoaId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${GetToken()}`
-      }
-    });
-
-    return response.data
+    const response = await api.get(
+      `/hoas/properties/?page=${page}&page_size=${pageSize}&hoa=${hoaId}`,
+    );
+    return response.data as ApiPaginatedResult<Property>;
+  } catch (err: any) {
+    throw err.response.data;
   }
-  catch (err: any) {
-    console.log(err)
-  }
-}
+};
 
 export default GetProperties;

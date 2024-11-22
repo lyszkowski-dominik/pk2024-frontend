@@ -2,7 +2,7 @@ import styles from './Notifications.module.scss';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import usePagination from '../../hooks/usePagiantion';
+import usePagination from '../../hooks/usePagination';
 import List from '../../components/common/list/List';
 import Spinner from '../../components/ui/spinner/Spinner';
 import Modal from '../../components/ui/modal/Modal';

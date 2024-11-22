@@ -1,16 +1,14 @@
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { useAppDispatch } from '../../../../app/hooks';
 import { logOut } from '../../../loginForm/loginFormSlice';
 import { useGetUserDataQuery } from '../../../userProfile/userDataApiSlice';
 import { Link } from 'react-router-dom';
 import styles from './Menu.module.scss';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { selectSelectedCommunity } from '../../../../features/communities/sharedDataSlice';
 import { MenuItem, Select } from '@mui/material';
 
 const UserMenu = () => {
   const dispatch = useAppDispatch();
   const { data: detailedData } = useGetUserDataQuery();
-  const communityId = useAppSelector(selectSelectedCommunity);
 
   const handleLogout = () => {
     dispatch(logOut());

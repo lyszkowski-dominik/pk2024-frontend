@@ -37,7 +37,7 @@ const AddRequestForm = ({ onClose }: RequestFormProps) => {
   };
 
   const formikProps: FormikWrapperProps<Partial<Request>> = {
-    header: 'Dodaj Zapytanie',
+    header: 'Dodaj Zgłoszenie',
     submitLabel: 'Dodaj',
     initialValues: {
       title: '',
@@ -49,7 +49,7 @@ const AddRequestForm = ({ onClose }: RequestFormProps) => {
         {
           onSuccess: () => {
             onClose();
-            addNotification('Nowy zapytanie zostało dodane', 'success');
+            addNotification('Nowe zgłoszenie zostało dodane', 'success');
           },
           onError: (error: any) => {
             setErrors(error);

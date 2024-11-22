@@ -4,7 +4,7 @@ import { useAppSelector } from '../../app/hooks';
 import { selectRoles } from '../loginForm/loginFormSlice';
 import { UserRole } from '../../types/types';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import usePagination from '../../hooks/usePagiantion';
+import usePagination from '../../hooks/usePagination';
 import { useGetUsers } from '../../features/users/useGetUsers';
 import List from '../common/list/List';
 import { columns } from './utils';

@@ -1,4 +1,4 @@
-import type { ListRequestProperty } from '../../types/types';
+import type { ListRequest } from '../../types/types';
 
 export enum ModalType {
   Add,
@@ -13,7 +13,7 @@ export interface IPropertiesState {
   updatedMeterReadings: boolean;
 }
 
-export interface Property {
+export type Property = {
   id: number;
   type: PropertyType;
   building: string;
@@ -25,12 +25,11 @@ export interface Property {
   inhabitants?: number | null;
   hoa: number;
   parent?: number | null;
-}
+};
 
-export interface PropertiesRequest extends ListRequestProperty {
-  hoaId?: number;
-  propertyId?: number;
-}
+export type PropertiesRequest = ListRequest & {
+  hoaId: number;
+};
 
 export interface PropertiesResponse {
   count: number;
@@ -64,3 +63,10 @@ export enum PropertyTab {
   meters,
   owners,
 }
+
+export const propertiesQueryKeys = {
+  all: ['properies'] as const,
+  hoa: (hoa: number) => [...propertiesQueryKeys.all, 'hoa', `${hoa}`] as const,
+  details: (id: number) =>
+    [...propertiesQueryKeys.all, 'details', `${id}`] as const,
+};

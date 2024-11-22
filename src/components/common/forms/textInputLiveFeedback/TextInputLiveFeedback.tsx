@@ -1,6 +1,7 @@
 import { useField } from 'formik';
 import { useState } from 'react';
 import styles from '../form/Form.module.scss';
+import InputField from '../inputField/InputField';
 
 /**
  * The type `TextInputLiveFeedbackProps` defines props for a text input field component in TypeScript React.
@@ -18,6 +19,7 @@ export type TextInputLiveFeedbackProps = {
   id?: string;
   name: string;
   className?: string;
+  disabled?: boolean;
 };
 
 /**
@@ -26,7 +28,6 @@ export type TextInputLiveFeedbackProps = {
  * @returns {JSX.Element} The `TextInputLiveFeedback` component returns a text input field with live feedback based on user input and validation status.
  */
 const TextInputLiveFeedback = ({
-  label,
   helpText,
   ...props
 }: TextInputLiveFeedbackProps) => {
@@ -43,13 +44,15 @@ const TextInputLiveFeedback = ({
     <div
       className={`${styles.form_control} ${showFeedback && meta.error && styles.invalid}`}
     >
-      <label htmlFor={props.id}>{label}</label>
-      <input
+      {/* <label htmlFor={props.id}>{label}</label> */}
+      <InputField
+        // <input
         {...props}
         {...field}
         aria-describedby={`${props.id}-feedback ${props.id}-help`}
         onFocus={handleFocus}
-        className={props.className}
+        // className={props.className}
+        disabled={props.disabled}
       />
       {/*@ts-ignore*/}
       <div className={styles.text_xs} id={`${props.id}-help`} tabIndex="-1">

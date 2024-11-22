@@ -8,5 +8,6 @@ export const useGetResolution = (id: number) => {
     queryFn: () => GetResolution(id),
     retry: false,
     staleTime: 1000 * 60 * 60,
+    enabled: id > 0,
   });
 };

@@ -8,5 +8,6 @@ export const useGetRequests = (params: GetRequestsData) => {
     queryFn: () => GetRequests(params),
     retry: false,
     staleTime: 1000 * 60 * 60,
+    enabled: params.hoaId > 0,
   });
 };

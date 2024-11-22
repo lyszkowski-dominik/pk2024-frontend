@@ -10,7 +10,7 @@ import { selectSelectedCommunity } from '../../features/communities/sharedDataSl
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
 
 /**
- * 
+ *
  * @returns {JSX.Element} The `Properties` component returns a list of properties.
  */
 const Properties = () => {
@@ -37,7 +37,7 @@ const Properties = () => {
       {isModalOn && (
         <Modal>
           {openModal === ModalType.Add && (
-            <AddPropertyForm isModalOn={setModalOn} />
+            <AddPropertyForm onClose={() => setModalOn(false)} />
           )}
         </Modal>
       )}

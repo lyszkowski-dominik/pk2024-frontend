@@ -7,7 +7,7 @@ export enum ModalType {
   Details,
 }
 
-export interface Property {
+export type PropertyForm = {
   id: number;
   type: PropertyType;
   building: string;
@@ -19,14 +19,7 @@ export interface Property {
   inhabitants?: number | null;
   hoa: number;
   parent?: number | null;
-}
-
-export interface PropertiesResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Property[];
-}
+};
 
 export enum PropertyType {
   Flat = 'flat',

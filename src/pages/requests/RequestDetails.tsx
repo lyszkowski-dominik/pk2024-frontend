@@ -36,12 +36,12 @@ const ReqeustDetails = () => {
   const isClosed = request?.state === RequestState.closed;
 
   const onAssignToMe = async () => {
-    if (!requestId) {
+    if (!requestId || !userData) {
       return;
     }
 
     editRequest.mutate(
-      { id: requestId, editedData: { assigned_to: userData?.id } },
+      { id: requestId, editedData: { assigned_to: { id: userData.id } } },
       {
         onSuccess: () => {
           setIsAssignError(false);
@@ -65,7 +65,7 @@ const ReqeustDetails = () => {
         onSuccess: () => {
           setCloseModalOpen(false);
           setIsClosingError(false);
-          addNotification('Zapytanie zostało zamkniete.', 'success');
+          addNotification('Zgłoszenie zostało zamknięte.', 'success');
         },
         onError: () => {
           setIsClosingError(true);

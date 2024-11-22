@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import type { PropertiesRequest } from './propertiesTypes';
+import { propertiesQueryKeys, type PropertiesRequest } from './propertiesTypes';
 import GetProperties from './GetProperties';
 
 /**
- * 
+ *
  * @param {PropertiesRequest} - The `useGetProperties` function fetches property data using a query with caching enabled.
  * @remarks
  * queryKey: ['loginCheck'] - The `queryKey` is an array that specifies the query key for easy refetching.
@@ -15,19 +15,23 @@ import GetProperties from './GetProperties';
  * ```tsx
  * const { data, isLoading, error } = useGetProperties({ page: 1, pageSize: 10, hoaId: 1 });
  * ```
- * @returns the result of the useGetProperties hook. 
+ * @returns the result of the useGetProperties hook.
  */
-export const useGetProperties = ({ page, pageSize, hoaId }: PropertiesRequest) => {
-
+export const useGetProperties = ({
+  page,
+  pageSize,
+  hoaId,
+}: PropertiesRequest) => {
   return useQuery({
-    queryKey: ['loginCheck'],
+    queryKey: propertiesQueryKeys.hoa(hoaId),
     queryFn: () =>
       GetProperties({
         page,
         pageSize,
-        hoaId
+        hoaId,
       }),
     retry: false,
-    staleTime: 1000 * 60 * 60
+    staleTime: 1000 * 60 * 60,
+    enabled: hoaId > 0,
   });
 };

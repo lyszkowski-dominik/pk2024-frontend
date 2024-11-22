@@ -1,6 +1,5 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
 import type { Property } from './propertiesTypes';
+import api from '../../services/axiosInstance';
 
 /**
  * The function `CreateProperty` sends a POST request to a specified API endpoint with form data and
@@ -10,21 +9,12 @@ import type { Property } from './propertiesTypes';
  * @returns The `CreateProperty` function is returning the data received from the POST request if the
  * request is successful. If there is an error, it will return the response from the error.
  */
-const CreateProperty = async (formData: Omit<Property, 'id'>) => {
+const CreateProperty = async (formData: Partial<Property>) => {
   try {
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/hoas/properties/`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
+    const { data } = await api.post(`/hoas/properties/`, formData);
     return data;
   } catch (err: any) {
-    return err.response;
+    return err.response.data;
   }
 };
 

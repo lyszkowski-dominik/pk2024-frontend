@@ -8,5 +8,6 @@ export const useGetRequest = (id: number) => {
     queryFn: () => GetRequest(id),
     retry: false,
     staleTime: 1000 * 60 * 60,
+    enabled: id > 0,
   });
 };

@@ -1,16 +1,19 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
-import Spinner from '../ui/spinner/Spinner';
 import styles from './AddPropertyForm.module.scss';
-import { useState, type SetStateAction } from 'react';
+import { type SetStateAction } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import type { SearchDropdownOption } from '../ui/search/SearchDropdown';
 import SearchDropdown from '../ui/search/SearchDropdown';
-import { PropertyType, PropertyTypeDisplayNames } from './types';
-import { CreateProperty } from '../../features/properties/CreateProperty';
-import { Button } from '@mui/material';
+import { PropertyForm, PropertyType, PropertyTypeDisplayNames } from './types';
 import { useNotifications } from '../alerts/NotificationContext';
+import { useCreateProperty } from '../../features/properties/useCreateProperty';
+import FormikWrapper, {
+  FormikWrapperProps,
+} from '../common/forms/form/FormikWrapper';
+import TextInputLiveFeedback from '../common/forms/textInputLiveFeedback/TextInputLiveFeedback';
+import TextAreaLiveFeedback from '../common/forms/textInputLiveFeedback/TextAreaLiveFeedback';
 
 /**
  * @property {React.Dispatch<SetStateAction<boolean>>} isModalOn - The `isModalOn` property represents a function that sets the modal state.
@@ -46,20 +49,14 @@ const propertySchema = Yup.object().shape({
 });
 
 /**
- * 
+ *
  * @param {PropertyFormProps} params
  * @returns {JSX.Element} The `AddPropertyForm` component returns a form for adding a new property.
  */
-const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMessages, setErrorMessages] = useState<{ errors: string } | null>(
-    null,
-  );
+const AddPropertyForm = ({ onClose }: { onClose: () => void }) => {
   const { addNotification } = useNotifications();
-
-  const selectedCommunity = useAppSelector(selectSelectedCommunity);
+  const hoaId = useAppSelector(selectSelectedCommunity) || -1;
+  const createProperty = useCreateProperty(hoaId);
 
   const getParentOptions = (data: any): SearchDropdownOption[] => {
     return data.results?.map((property: any) => ({
@@ -68,205 +65,111 @@ const AddPropertyForm = ({ isModalOn }: PropertyFormProps) => {
     }));
   };
 
-  return (
-    <div className={styles.container}>
-      <h1>Dodaj lokal</h1>
-      {/* {isSuccess && (<>
-        <div className={styles.success}>
-          Dodano lokal
-          <div className={styles.buttons}>
-            <Button
-              className={styles.cancel_button}
-              type="button"
-              variant='outlined'
-              color="secondary"
-              onClick={() => {
-                isModalOn(false);
-              }}
-              >
-              Zamknij
-            </Button>
-          </div>
-        </div>
-      </>)} */}
-      {!isSuccess && selectedCommunity && (
-        <Formik
-          initialValues={{
-            type: '' as PropertyType,
-            building: '',
-            number: '',
-            floor: '',
-            total_area: '',
-            usable_area: '',
-            inhabitants: '',
-            parent: '',
-            description: '',
-          }}
-          validationSchema={propertySchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            const numericValues = {
-              ...values,
-              floor: Number(values.floor),
-              total_area: Number(values.total_area),
-              usable_area: Number(values.usable_area),
-              inhabitants:
-                values.type === PropertyType.Flat
-                  ? Number(values.inhabitants)
-                  : null,
-              parent: values.parent ? Number(values.parent) : null,
-              hoa: selectedCommunity,
-            };
+  const formikProps: FormikWrapperProps<Partial<PropertyForm>> = {
+    header: 'Dodaj lokal',
+    submitLabel: 'Dodaj',
+    initialValues: {
+      type: '' as PropertyType,
+      building: '',
+      number: '',
+      description: '',
+    },
+    onSubmit: (values, { setSubmitting, setErrors }) => {
+      const numericValues = {
+        ...values,
+        floor: Number(values.floor),
+        total_area: Number(values.total_area),
+        usable_area: Number(values.usable_area),
+        inhabitants:
+          values.type === PropertyType.Flat ? Number(values.inhabitants) : null,
+        parent: values.parent ? Number(values.parent) : null,
+        hoa: hoaId,
+      };
 
-            const res = await CreateProperty(numericValues);
-            if (res.status === 400) {
-              setErrorMessages(res.data);
-              console.log(res.data);
-              setIsError(true);
-            } else {
-              setIsError(false);
-              setIsSuccess(true);
-              addNotification("Nowy lokal został dodany", 'success');
-              isModalOn(false);
-            }
-            setIsWaiting(false);
+      createProperty.mutate(
+        { ...numericValues },
+        {
+          onSuccess: () => {
+            onClose();
+            addNotification('Nowy lokal został dodany', 'success');
+          },
+          onError: (error: any) => {
+            setErrors(error);
             setSubmitting(false);
-          }}
-        >
-          {({ isSubmitting, values }) => (
-            <Form className={styles.form}>
-              <div className={styles.fieldGroup}>
-                <label htmlFor="type">Typ:</label>
-                <Field as="select" name="type" className={styles.field}>
-                  <option value="">Wybierz rodzaj</option>
-                  {Object.values(PropertyType).map((type) => (
-                    <option key={type} value={type}>
-                      {PropertyTypeDisplayNames[type]}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage
-                  name="type"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label htmlFor="building">Budynek:</label>
-                <Field name="building" type="text" className={styles.field} />
-                <ErrorMessage
-                  name="building"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label htmlFor="number">Numer:</label>
-                <Field name="number" type="text" className={styles.field} />
-                <ErrorMessage
-                  name="number"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label htmlFor="floor">Piętro:</label>
-                <Field name="floor" type="number" className={styles.field} />
-                <ErrorMessage
-                  name="floor"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label htmlFor="total_area">Powierzchnia całkowita:</label>
-                <Field name="total_area" type="text" className={styles.field} />
-                <ErrorMessage
-                  name="total_area"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label htmlFor="usable_area">Powierzchnia użytkowa:</label>
-                <Field
-                  name="usable_area"
-                  type="text"
-                  className={styles.field}
-                />
-                <ErrorMessage
-                  name="usable_area"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label htmlFor="inhabitants">Liczba mieszkańców:</label>
-                <Field
-                  name="inhabitants"
-                  type="number"
-                  className={styles.field}
-                  disabled={values.type !== PropertyType.Flat}
-                />
-                <ErrorMessage
-                  name="inhabitants"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div className={styles.fieldGroup}>
-                <SearchDropdown
-                  name="parent"
-                  endpoint="/hoas/properties"
-                  queryParams={{ hoa: selectedCommunity }}
-                  label="Przynależy do lokalu:"
-                  getOptions={getParentOptions}
-                  disabled={[
-                    PropertyType.Flat,
-                    PropertyType.Common,
-                    PropertyType.Business,
-                  ].includes(values.type)}
-                />
-                <ErrorMessage
-                  name="parent"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div className={styles.fieldGroup}>
-                <label htmlFor="description">Opis:</label>
-                <Field
-                  name="description"
-                  as="textarea"
-                  className={styles.field}
-                />
-                <ErrorMessage
-                  name="description"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <Button type="submit" variant="contained" disabled={isSubmitting}>
-                Dodaj lokal
-              </Button>
-              <Button
-                color='secondary'
-                type="reset"
-                onClick={() => {
-                  isModalOn(false);
-                }}
-              >
-                Anuluj
-              </Button>
-              {isWaiting && (
-                <div className={styles.waiting}>
-                  <Spinner />
-                </div>
-              )}
-            </Form>
-          )}
-        </Formik>
+          },
+        },
+      );
+    },
+    onReset: onClose,
+    validationSchema: propertySchema,
+  };
+
+  return (
+    <FormikWrapper {...formikProps}>
+      {(formik) => (
+        <>
+          <div className={styles.fieldGroup}>
+            <label htmlFor="type">Typ:</label>
+            <Field as="select" name="type" className={styles.field}>
+              <option value="">Wybierz rodzaj</option>
+              {Object.values(PropertyType).map((type) => (
+                <option key={type} value={type}>
+                  {PropertyTypeDisplayNames[type]}
+                </option>
+              ))}
+            </Field>
+            <ErrorMessage
+              name="type"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+          <TextInputLiveFeedback label="Budynek" type="text" name="building" />
+          <TextInputLiveFeedback label="Numer" type="text" name="number" />
+          <TextInputLiveFeedback label="Piętro" type="text" name="floor" />
+          <TextInputLiveFeedback
+            label="Powierzchnia całkowita"
+            type="text"
+            name="total_area"
+          />
+          <TextInputLiveFeedback
+            label="Powierzchnia użytkowa"
+            type="text"
+            name="usable_area"
+          />
+          <TextInputLiveFeedback
+            label="Liczba mieszkańców"
+            type="number"
+            name="inhabitants"
+            disabled={formik.values.type !== PropertyType.Flat}
+          />
+
+          <div className={styles.fieldGroup}>
+            <SearchDropdown
+              name="parent"
+              endpoint="/hoas/properties"
+              queryParams={{ hoa: hoaId }}
+              label="Przynależy do lokalu:"
+              getOptions={getParentOptions}
+              disabled={
+                !formik.values.type ||
+                [
+                  PropertyType.Flat,
+                  PropertyType.Common,
+                  PropertyType.Business,
+                ].includes(formik.values.type)
+              }
+            />
+            <ErrorMessage
+              name="parent"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+          <TextAreaLiveFeedback label="Opis" name="description" />
+        </>
       )}
-    </div>
+    </FormikWrapper>
   );
 };
 
