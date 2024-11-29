@@ -7,7 +7,10 @@ import GetResolutions from './GetResolutions';
 
 export const useGetResolutions = (params: GetResolutionsRequest) => {
   return useQuery({
-    queryKey: resolutionsQueryKeys.hoa(params.hoaId),
+    queryKey: [
+      ...resolutionsQueryKeys.hoa(params.hoaId),
+      ...resolutionsQueryKeys.page(params.page, params.pageSize),
+    ],
     queryFn: () => GetResolutions(params),
     retry: false,
     staleTime: 1000 * 60 * 60,

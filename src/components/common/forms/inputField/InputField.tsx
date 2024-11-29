@@ -38,6 +38,7 @@ export type InputFieldProps = {
   error?: boolean;
   disabled?: boolean;
   checked?: boolean;
+  autoFocus?: boolean;
 };
 
 /**
@@ -57,6 +58,7 @@ const InputField = ({
   error,
   disabled,
   checked,
+  autoFocus,
 }: InputFieldProps) => {
   const labelClassName = error
     ? styles.label + ' ' + styles['error-label']
@@ -82,6 +84,7 @@ const InputField = ({
         placeholder={placeholder}
         className={inputClassName}
         checked={checked}
+        autoFocus={autoFocus}
       />
     </div>
   );

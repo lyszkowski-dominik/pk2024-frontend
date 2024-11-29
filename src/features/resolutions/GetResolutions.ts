@@ -9,7 +9,7 @@ const GetResolutions = async ({
 }: GetResolutionsRequest) => {
   try {
     const response = await api.get(
-      `/resolutions/resolutions/?hoa=${hoaId}&page=${page}&page_size=${pageSize}`,
+      `/resolutions/resolutions/?hoa=${hoaId}&page=${page}&page_size=${pageSize}&order_by=[-start_date]`,
     );
     return response.data as ApiPaginatedResult<Resolution>;
   } catch (err: any) {

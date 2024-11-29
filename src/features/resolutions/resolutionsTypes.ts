@@ -1,4 +1,4 @@
-import { ListRequest } from '../../types/types';
+import { ApiFile, ListRequest } from '../../types/types';
 
 export type Resolution = {
   id: number;
@@ -12,6 +12,7 @@ export type Resolution = {
   can_vote: boolean;
   can_edit: boolean;
   results: any;
+  files: ApiFile[];
 };
 
 export type GetResolutionsRequest = ListRequest & {
@@ -32,7 +33,8 @@ export const voteDisplayMap = {
 
 export const resolutionsQueryKeys = {
   all: ['resolutions'] as const,
-  hoa: (hoa: number) => [...resolutionsQueryKeys.all, 'hoa', `${hoa}`] as const,
+  page: (page: number, pageSize?: number) => ['page', page, 'pageSize', pageSize],
+  hoa: (hoa: number) => [...resolutionsQueryKeys.all, 'hoa', `${hoa}`],
   details: (id: number) =>
     [...resolutionsQueryKeys.all, 'details', `${id}`] as const,
 };

@@ -24,3 +24,12 @@ export interface ListRequest {
   page: number;
   pageSize?: number;
 }
+
+export type ApiFile = {
+  id?: number;
+  file_name: string;
+  file_type: string;
+  file_content?: string;
+  created?: string;
+  url?: string;
+};

@@ -15,14 +15,6 @@ const Resolutions = () => {
   const [isModalOn, setModalOn] = useState(false);
   const [openModal, setOpenModal] = useState({});
 
-  function handleImportClick() {
-    console.log('Import clicked');
-  }
-
-  function handleExportClick() {
-    console.log('Export clicked');
-  }
-
   return (
     <div className={styles.propertiesContainer}>
       {isModalOn && (
@@ -44,31 +36,12 @@ const Resolutions = () => {
               setOpenModal(ModalType.Add);
               setModalOn(true);
             }}
-            altText="Add User"
-            size={24}
-            color="var(--pink)"
-          />
-        )}
-        {canAddResolution && (
-          <IconButton
-            iconName="import"
-            onClick={handleImportClick}
-            altText="Import Properties"
-            size={24}
-            color="var(--pink)"
-          />
-        )}
-        {canAddResolution && (
-          <IconButton
-            iconName="export"
-            onClick={handleExportClick}
-            altText="Export Properties"
+            altText="Dodaj uchwałę"
             size={24}
             color="var(--pink)"
           />
         )}
       </div>
-
       <ResolutionsList />
     </div>
   );

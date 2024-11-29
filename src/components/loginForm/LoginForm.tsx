@@ -52,6 +52,7 @@ const LoginForm = () => {
           onChange={(e) => setUsername(e.target.value)}
           error={isError}
           disabled={isFetching}
+          autoFocus={true}
         />
         <InputField
           label="Hasło"

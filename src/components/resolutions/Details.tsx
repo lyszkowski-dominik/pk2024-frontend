@@ -1,9 +1,11 @@
 import styles from './Resolutions.module.scss';
 import {
   Resolution,
+  resolutionsQueryKeys,
   voteDisplayMap,
 } from '../../features/resolutions/resolutionsTypes';
 import { UserRole } from '../../types/types';
+import { FileList } from '../common/files/FileList';
 
 const Details = ({
   resolution,
@@ -59,6 +61,13 @@ const Details = ({
       <div className={styles.description}>
         <p>{resolution?.description}</p>
       </div>
+      <FileList
+        tableName="Resolution"
+        recordId={resolution.id}
+        files={resolution.files}
+        canEditFiles={!isOwner}
+        invalidateQuery={resolutionsQueryKeys.details(resolution.id)}
+      />
     </>
   );
 };
