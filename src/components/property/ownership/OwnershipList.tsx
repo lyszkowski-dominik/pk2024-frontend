@@ -121,9 +121,7 @@ const OwnershipList = ({
                       event.stopPropagation();
                       onRowDelete(ownership.id);
                     }}
-                    altText="Delete Ownership"
-                    size={24}
-                    color="var(--pink)"
+                    altText="Usuń właściciela"
                   />
                 </td>
               )}

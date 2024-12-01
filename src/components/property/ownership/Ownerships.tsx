@@ -10,6 +10,7 @@ import OwnershipForm from './OwnershipForm';
 import { setUpdatedOwnerships } from '../../../features/properties/propertiesState';
 import { DeleteOwnership } from '../../../features/ownerships/DeleteOwnership';
 import { Button } from '@mui/material';
+import { UserRole } from '../../../types/types';
 
 /**
  * @property {number} propertyId - The `propertyId` property represents the id of the property.
@@ -19,7 +20,7 @@ export interface IProps {
 }
 
 /**
- * 
+ *
  * @param {IProps} params
  * @returns {JSX.Element} The `Ownerships` component returns a list of ownerships.
  */
@@ -31,15 +32,7 @@ const Ownerships = ({ propertyId }: IProps) => {
     number | undefined
   >();
   const role = useAppSelector(selectRoles);
-  const isManager = role === 'manager';
-
-  const handleImportClick = () => {
-    console.log('Import clicked');
-  };
-
-  const handleExportClick = () => {
-    console.log('Export clicked');
-  };
+  const isManager = role === UserRole.Manager;
 
   return (
     <div className={styles.propertiesContainer}>
@@ -60,8 +53,8 @@ const Ownerships = ({ propertyId }: IProps) => {
               <h2>Czy na pewno chcesz usunąć tego właściciela?</h2>
               <div className={styles.modalButtons}>
                 <Button
-                variant='contained'
-                color='error'
+                  variant="contained"
+                  color="error"
                   onClick={async () => {
                     await DeleteOwnership(selectedOwnership || -1);
                     setModalOn(false);
@@ -71,7 +64,7 @@ const Ownerships = ({ propertyId }: IProps) => {
                   Usuń
                 </Button>
                 <Button
-                color='secondary'
+                  color="secondary"
                   onClick={() => {
                     setModalOn(false);
                   }}
@@ -91,23 +84,7 @@ const Ownerships = ({ propertyId }: IProps) => {
               setOpenModal(ModalType.Add);
               setModalOn(true);
             }}
-            altText="Add Ownership"
-            size={24}
-            color="var(--pink)"
-          />
-          <IconButton
-            iconName="import"
-            onClick={handleImportClick}
-            altText="Import Properties"
-            size={24}
-            color="var(--pink)"
-          />
-          <IconButton
-            iconName="export"
-            onClick={handleExportClick}
-            altText="Export Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Dodaj właściciela"
           />
         </div>
       )}

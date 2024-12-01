@@ -89,9 +89,7 @@ const MeterReadingList = ({
                       event.stopPropagation();
                       onRowDelete(reading.id);
                     }}
-                    altText="Delete Reading"
-                    size={24}
-                    color="var(--pink)"
+                    altText="Usuń odczyt"
                   />
                 </td>
               )}

@@ -61,14 +61,6 @@ const Notifications = () => {
   if (isLoading) return <Spinner />;
   if (error) return <div>Błąd ładowania danych</div>;
 
-  function handleImportClick() {
-    console.log('Import clicked');
-  }
-
-  function handleExportClick() {
-    console.log('Export clicked');
-  }
-
   return (
     <div className={styles.propertiesContainer}>
       {isModalOn && (
@@ -83,38 +75,18 @@ const Notifications = () => {
           )}
         </Modal>
       )}
-      <div className={styles.iconButtons}>
-        {canAddNotification && (
+      {canAddNotification && (
+        <div className={styles.iconButtons}>
           <IconButton
             iconName="add"
             onClick={() => {
               setOpenModal(ModalType.Add);
               setModalOn(true);
             }}
-            altText="Add User"
-            size={24}
-            color="var(--pink)"
+            altText="Dodaj powiadomienie"
           />
-        )}
-        {canAddNotification && (
-          <IconButton
-            iconName="import"
-            onClick={handleImportClick}
-            altText="Import Properties"
-            size={24}
-            color="var(--pink)"
-          />
-        )}
-        {canAddNotification && (
-          <IconButton
-            iconName="export"
-            onClick={handleExportClick}
-            altText="Export Properties"
-            size={24}
-            color="var(--pink)"
-          />
-        )}
-      </div>
+        </div>
+      )}
 
       {isFetching && <Spinner />}
       <List

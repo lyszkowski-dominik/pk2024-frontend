@@ -22,9 +22,7 @@ const OwnerRequests = () => {
           onClick={() => {
             setModalOn(true);
           }}
-          altText="Add Request"
-          size={24}
-          color="var(--pink)"
+          altText="Dodaj zgłoszenie"
         />
       </div>
       <RequestsList />

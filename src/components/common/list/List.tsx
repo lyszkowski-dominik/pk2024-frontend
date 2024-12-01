@@ -84,8 +84,6 @@ const List = <T,>({
               iconName="delete"
               onClick={() => onDelete(record)}
               altText="Usuń"
-              size={24}
-              color="var(--pink)"
             />
           </td>
         ) : (

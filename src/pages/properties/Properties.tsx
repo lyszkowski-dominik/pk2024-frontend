@@ -49,23 +49,17 @@ const Properties = () => {
               setOpenModal(ModalType.Add);
               setModalOn(true);
             }}
-            altText="Add Property"
-            size={24}
-            color="var(--pink)"
+            altText="Dodaj lokal"
           />
           <IconButton
             iconName="import"
             onClick={handleImportClick}
-            altText="Import Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Importuj lokale"
           />
           <IconButton
             iconName="export"
             onClick={handleExportClick}
-            altText="Export Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Eksportuj lokale"
           />
         </div>
       )}

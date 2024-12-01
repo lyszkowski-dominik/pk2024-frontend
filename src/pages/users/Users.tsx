@@ -71,38 +71,28 @@ const Users = ({ type }: UsersProps) => {
           )}
         </Modal>
       )}
-      <div className={styles.iconButtons}>
-        {canAddManager && (
+      {canAddManager && (
+        <div className={styles.iconButtons}>
           <IconButton
             iconName="add"
             onClick={() => {
               setOpenModal(ModalType.Add);
               setModalOn(true);
             }}
-            altText="Add User"
-            size={24}
-            color="var(--pink)"
+            altText="Dodaj użytkownika"
           />
-        )}
-        {canAddManager && (
           <IconButton
             iconName="import"
             onClick={handleImportClick}
-            altText="Import Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Importuj użytkowników"
           />
-        )}
-        {canAddManager && (
           <IconButton
             iconName="export"
             onClick={handleExportClick}
-            altText="Export Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Eksportuj użytkowników"
           />
-        )}
-      </div>
+        </div>
+      )}
 
       <UsersList type={type} />
     </div>

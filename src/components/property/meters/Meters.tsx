@@ -17,6 +17,7 @@ import { useGetMeters } from '../../../features/meters/useGetMeters';
 import type { IMeter } from '../../../features/billings/billingTypes';
 import Meter from './Meter';
 import Spinner from '../../ui/spinner/Spinner';
+import { UserRole } from '../../../types/types';
 
 interface IProps {
   propertyId: number;
@@ -39,7 +40,7 @@ const Meters = ({ propertyId }: IProps) => {
   );
   const [meters, setMeters] = useState([]);
   const role = useAppSelector(selectRoles);
-  const isManager = role === 'manager';
+  const isManager = role === UserRole.Manager;
 
   const { data, error, isLoading, refetch: refreshPage } = useGetMeters();
 
@@ -174,23 +175,7 @@ const Meters = ({ propertyId }: IProps) => {
               setFormType(FormType.Meter);
               setModalOn(true);
             }}
-            altText="Add Meter"
-            size={24}
-            color="var(--pink)"
-          />
-          <IconButton
-            iconName="import"
-            onClick={handleImportClick}
-            altText="Import Meters"
-            size={24}
-            color="var(--pink)"
-          />
-          <IconButton
-            iconName="export"
-            onClick={handleExportClick}
-            altText="Export Meters"
-            size={24}
-            color="var(--pink)"
+            altText="Dodaj licznik"
           />
         </div>
       )}

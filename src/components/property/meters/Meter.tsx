@@ -73,23 +73,12 @@ const Meter = ({
               <IconButton
                 iconName="add"
                 onClick={handleAddReading}
-                altText="Add Meter"
-                size={24}
-                color="var(--pink)"
-              />
-              <IconButton
-                iconName="import"
-                onClick={handleImportReadings}
-                altText="Import Meters"
-                size={24}
-                color="var(--pink)"
+                altText="Dodaj odczyt"
               />
               <IconButton
                 iconName="export"
                 onClick={handleExportReadings}
-                altText="Export Meters"
-                size={24}
-                color="var(--pink)"
+                altText="Eksportuj odczyty"
               />
             </div>
           )}
