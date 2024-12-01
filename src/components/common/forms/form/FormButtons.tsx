@@ -4,11 +4,13 @@ import styles from './Form.module.scss';
 import Spinner from '../../../ui/spinner/Spinner';
 
 const FormButtons = ({
+  onCancel,
   submitLabel = 'Zapisz',
   submitDisabled,
   cancelDisabled,
   isLoading,
 }: {
+  onCancel: () => void;
   submitLabel?: string;
   submitDisabled: boolean;
   cancelDisabled: boolean;
@@ -27,7 +29,7 @@ const FormButtons = ({
       <Button
         color="secondary"
         className={styles.cancel}
-        type="reset"
+        onClick={onCancel}
         disabled={cancelDisabled}
       >
         Anuluj

@@ -1,19 +1,23 @@
 import { ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+
 import styles from './AddRequestForm.module.scss';
+
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import type { SearchDropdownOption } from '../ui/search/SearchDropdown';
-import SearchDropdown from '../ui/search/SearchDropdown';
+import { useCreateRequest } from '../../features/requests/useCreateRequest';
+import { useGetRequestTypes } from '../../features/request_types/useGetRequestTypes';
 import { useNotifications } from '../alerts/NotificationContext';
+
+import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
+import SearchDropdown, {
+  type SearchDropdownOption,
+} from '../ui/search/SearchDropdown';
 import FormikWrapper, {
   FormikWrapperProps,
 } from '../common/forms/form/FormikWrapper';
-import { useCreateRequest } from '../../features/requests/useCreateRequest';
-
 import TextInputLiveFeedback from '../common/forms/textInputLiveFeedback/TextInputLiveFeedback';
 import TextAreaLiveFeedback from '../common/forms/textInputLiveFeedback/TextAreaLiveFeedback';
-import { Request } from '../../features/requests/requestTypes';
+import { Request, RequestType } from '../../features/requests/requestTypes';
 
 const validationSchema = Yup.object({
   title: Yup.string().required('Podaj tytuł'),
@@ -29,12 +33,19 @@ const AddRequestForm = ({ onClose }: RequestFormProps) => {
   const hoaId = useAppSelector(selectSelectedCommunity) || -1;
   const createRequest = useCreateRequest(hoaId);
 
-  const getParentOptions = (data: any): SearchDropdownOption[] => {
-    return data.results?.map((type: any) => ({
-      value: type.id,
-      label: `${type.title}`,
-    }));
-  };
+  const { isLoading, data } = useGetRequestTypes({
+    page: 1,
+    pageSize: 50,
+    hoaId,
+  });
+
+  const requestTypesOptions: SearchDropdownOption[] = data
+    ? data.results?.map((type: RequestType) => ({
+        value: type.id,
+        label: `${type.title}`,
+        key: type.id,
+      }))
+    : [];
 
   const formikProps: FormikWrapperProps<Partial<Request>> = {
     header: 'Dodaj Zgłoszenie',
@@ -57,7 +68,7 @@ const AddRequestForm = ({ onClose }: RequestFormProps) => {
           },
         },
       ),
-    onReset: onClose,
+    onCancel: onClose,
     validationSchema: validationSchema,
   };
 
@@ -66,9 +77,9 @@ const AddRequestForm = ({ onClose }: RequestFormProps) => {
       <div className={styles.fieldGroup}>
         <SearchDropdown
           name="type"
-          endpoint="/requests/request_types/"
+          isLoading={isLoading}
+          options={requestTypesOptions}
           label="Typ:"
-          getOptions={getParentOptions}
         />
         <ErrorMessage name="type" component="div" className={styles.error} />
       </div>

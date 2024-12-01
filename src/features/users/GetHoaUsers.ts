@@ -1,8 +1,13 @@
-import type { GetUsersRequest, User } from './usersTypes';
+import type { GetHoaUsersRequest, User } from './usersTypes';
 import api from '../../services/axiosInstance';
 import type { ApiPaginatedResult } from '../../types/types';
 
-const GetUsers = async ({ role, hoaId, page, pageSize }: GetUsersRequest) => {
+const GetHoaUsers = async ({
+  role,
+  hoaId,
+  page,
+  pageSize,
+}: GetHoaUsersRequest) => {
   try {
     const response = await api.get(
       `/hoas/hoas/${hoaId}/users/?role=${role}&page=${page}&page_size=${pageSize}`,
@@ -13,4 +18,4 @@ const GetUsers = async ({ role, hoaId, page, pageSize }: GetUsersRequest) => {
   }
 };
 
-export default GetUsers;
+export default GetHoaUsers;

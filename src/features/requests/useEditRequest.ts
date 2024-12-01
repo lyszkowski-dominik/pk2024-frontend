@@ -12,7 +12,7 @@ export const useEditRequest = (hoa: number, id: number) => {
         queryKey: requestsQueryKeys.details(id),
       });
       queryClient.invalidateQueries({
-        queryKey: requestsQueryKeys.hoa(hoa),
+        queryKey: requestsQueryKeys.filters({ hoaId: hoa }),
       });
     },
     retry: false,

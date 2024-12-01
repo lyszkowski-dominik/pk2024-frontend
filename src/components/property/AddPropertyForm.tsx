@@ -100,7 +100,7 @@ const AddPropertyForm = ({ onClose }: { onClose: () => void }) => {
         },
       );
     },
-    onReset: onClose,
+    onCancel: onClose,
     validationSchema: propertySchema,
   };
 

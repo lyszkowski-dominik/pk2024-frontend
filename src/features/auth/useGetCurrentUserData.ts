@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { GetUserData } from './GetUserData';
+import { GetCurrentUserData } from './GetCurrentUserData';
 import { userDataQueryKeys } from './userProfileTypes';
 
-export const useGetUserData = () => {
+export const useGetCurrentUserData = () => {
   return useQuery({
     queryKey: userDataQueryKeys.all,
-    queryFn: () => GetUserData(),
+    queryFn: () => GetCurrentUserData(),
     retry: false,
     staleTime: 1000 * 60 * 60,
   });

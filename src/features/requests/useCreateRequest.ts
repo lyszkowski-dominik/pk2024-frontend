@@ -9,7 +9,10 @@ export const useCreateRequest = (hoa: number) => {
     mutationFn: CreateRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: requestsQueryKeys.state(hoa, RequestState.new),
+        queryKey: requestsQueryKeys.filters({
+          hoaId: hoa,
+          states: [RequestState.new],
+        }),
       });
     },
     retry: false,

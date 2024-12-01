@@ -11,6 +11,7 @@ import { ModalType, UserRole } from '../../types/types';
 import UsersList from '../../components/users/UsersList';
 import { AddExistingUsersForm } from '../../components/users/AddExistingUsersForm';
 import AddUserForm from '../../components/users/AddUserForm';
+import InputField from '../../components/common/forms/inputField/InputField';
 
 export interface UsersProps {
   type: UserRole;
@@ -20,7 +21,7 @@ const Users = ({ type }: UsersProps) => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const userRole = useAppSelector(selectRoles);
   const canAddManager = userRole === UserRole.Manager || UserRole.Admin;
-
+  const [addingNew, setAddingNew] = useState(false);
   const [isModalOn, setModalOn] = useState(false);
   const [openModal, setOpenModal] = useState({});
 
@@ -39,8 +40,24 @@ const Users = ({ type }: UsersProps) => {
         <Modal>
           {openModal === ModalType.Add && (
             <div className={styles.addUsersFormContainer}>
-              <AddExistingUsersForm role={type} isModalOn={setModalOn} />
-              <AddUserForm onClose={() => setModalOn(false)} role={type} />
+              <AddExistingUsersForm
+                role={type}
+                onClose={() => setModalOn(false)}
+                disabled={addingNew}
+              />
+              <InputField
+                label="Dodaj nowego użytkownika"
+                name="addingNew"
+                value={addingNew}
+                type="checkbox"
+                checked={addingNew}
+                onChange={() => {
+                  setAddingNew(!addingNew);
+                }}
+              />
+              {addingNew && (
+                <AddUserForm onClose={() => setModalOn(false)} role={type} />
+              )}
             </div>
           )}
           {openModal === ModalType.Import && (

@@ -39,7 +39,7 @@ const AddResolutionForm = ({ onClose }: { onClose: () => void }) => {
           },
         },
       ),
-    onReset: onClose,
+    onCancel: onClose,
     validationSchema: validationSchema,
   };
 

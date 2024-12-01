@@ -25,7 +25,9 @@ const EditResolutionForm = ({
 
   const formikProps: FormikWrapperProps<Partial<Resolution>> = {
     header: 'Edycja uchwały',
-    initialValues: initialData,
+    initialValues: {
+      ...initialData,
+    },
     onSubmit: (values, { setSubmitting, setErrors }) => {
       editResolution.mutate(
         { id: initialData.id, editedData: { ...(values as Resolution) } },
@@ -41,7 +43,7 @@ const EditResolutionForm = ({
         },
       );
     },
-    onReset: onClose,
+    onCancel: onClose,
     validationSchema: validationSchema,
   };
 
@@ -51,12 +53,12 @@ const EditResolutionForm = ({
       <TextAreaLiveFeedback label="Opis" name="description" />
       <TextInputLiveFeedback
         label="Data rozpoczęcia"
-        type="datetime"
+        type="date"
         name="start_date"
       />
       <TextInputLiveFeedback
         label="Data zakończenia"
-        type="datetime"
+        type="date"
         name="end_date"
       />
     </FormikWrapper>

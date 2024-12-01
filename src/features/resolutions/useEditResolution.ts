@@ -12,7 +12,7 @@ export const useEditResolution = (hoa: number, id: number) => {
         queryKey: resolutionsQueryKeys.details(id),
       });
       queryClient.invalidateQueries({
-        queryKey: resolutionsQueryKeys.hoa(hoa),
+        queryKey: resolutionsQueryKeys.filters({ hoaId: hoa }),
       });
     },
     retry: false,

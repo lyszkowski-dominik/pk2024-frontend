@@ -2,12 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import GetRequestTypes from './GetRequestTypes';
 import {
   GetRequestTypesData,
-  requestsQueryKeys,
+  requestTypesQueryKeys,
 } from '../requests/requestTypes';
 
 export const useGetRequestTypes = (params: GetRequestTypesData) => {
   return useQuery({
-    queryKey: requestsQueryKeys.requestsTypes,
+    queryKey: requestTypesQueryKeys.filters(params),
     queryFn: () => GetRequestTypes(params),
     retry: false,
     staleTime: 1000 * 60 * 60,

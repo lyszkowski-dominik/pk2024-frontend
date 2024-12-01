@@ -15,9 +15,9 @@ import { useSearchParams } from 'react-router-dom';
  * - `pageSize`: the number of items per page
  * - `setPageSize`: a function to set the number of items per page
  */
-const usePagination = (initialPage = 1) => {
+const usePagination = (initialPage = 1, initialPageSize = 3) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(initialPageSize);
   const page = parseInt(searchParams.get('page') || initialPage.toString(), 10);
 
   const setPage = (newPage: number) => {

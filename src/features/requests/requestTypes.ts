@@ -74,33 +74,34 @@ export const stateDisplayMap = {
 
 export const requestsQueryKeys = {
   all: ['requests'] as const,
-  requestsTypes: ['requestsTypes'] as const,
-  hoa: (hoa: number) => [...requestsQueryKeys.all, 'hoa', `${hoa}`] as const,
-  state: (hoa: number, states: string[]) =>
+  filters: ({
+    hoaId,
+    page,
+    pageSize,
+    states,
+    assignedTo,
+    notAssigned,
+  }: Partial<GetRequestsData>) =>
     [
-      ...requestsQueryKeys.hoa(hoa),
-      'state',
-      ...states.map((state) => `${state}`),
+      ...requestsQueryKeys.all,
+      ...(hoaId ? ['hoa', `${hoaId}`] : []),
+      ...(page ? ['page', `${page}`] : []),
+      ...(pageSize ? ['pageSize', `${pageSize}`] : []),
+      ...(states ? ['state', `${states.map((state) => state)}`] : []),
+      ...(assignedTo ? ['assigned', `${assignedTo}`] : []),
+      ...(notAssigned ? ['notAssigned'] : []),
     ] as const,
-  assigned: (hoa: number, assignedTo: number) =>
-    [...requestsQueryKeys.hoa(hoa), 'assigned', `${assignedTo}`] as const,
-  notAssigned: (hoa: number) =>
-    [...requestsQueryKeys.hoa(hoa), 'notAssigned'] as const,
   details: (id: number) =>
     [...requestsQueryKeys.all, 'details', `${id}`] as const,
 };
 
-export const getQueryKey = ({
-  hoaId,
-  states,
-  assignedTo,
-  notAssigned,
-}: GetRequestsData) => {
-  return states && states.length > 0
-    ? requestsQueryKeys.state(hoaId, states)
-    : assignedTo
-      ? requestsQueryKeys.assigned(hoaId, assignedTo)
-      : notAssigned
-        ? requestsQueryKeys.notAssigned(hoaId)
-        : requestsQueryKeys.hoa(hoaId);
+export const requestTypesQueryKeys = {
+  all: ['requestsTypes'] as const,
+  filters: ({ hoaId, page, pageSize }: Partial<GetRequestTypesData>) =>
+    [
+      ...requestTypesQueryKeys.all,
+      ...(hoaId ? ['hoa', `${hoaId}`] : []),
+      ...(page ? ['page', `${page}`] : []),
+      ...(pageSize ? ['pageSize', `${pageSize}`] : []),
+    ] as const,
 };

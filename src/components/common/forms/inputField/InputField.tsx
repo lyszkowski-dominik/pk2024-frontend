@@ -1,4 +1,6 @@
 import type React from 'react';
+import dayjs from 'dayjs';
+
 import styles from './InputField.module.scss';
 
 /**
@@ -68,6 +70,9 @@ const InputField = ({
     ? styles.input + ' ' + styles['error-input']
     : styles.input;
 
+  const formattedValue =
+    value && type === 'date' ? dayjs(value).format('YYYY-MM-DD') : value;
+
   return (
     <div className={`${styles['form-control']} ${styles[type]}`}>
       <label htmlFor={id} className={labelClassName}>
@@ -78,7 +83,7 @@ const InputField = ({
         disabled={disabled}
         type={type}
         name={name}
-        value={value}
+        value={formattedValue}
         onChange={onChange}
         onFocus={onFocus}
         placeholder={placeholder}
