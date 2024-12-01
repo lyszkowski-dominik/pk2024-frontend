@@ -11,6 +11,7 @@ import IconButton from '../../components/ui/iconButton/IconButton';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
 import { useGetNotifications } from '../../features/notifications/useGetNotifications';
 import AddNotificationForm from '../../components/notifications/AddNotificationForm';
+import { UserRole } from '../../types/types';
 
 const listColumns = [
   {
@@ -32,7 +33,7 @@ const Notifications = () => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const { page, setPage, pageSize } = usePagination();
   const userRole = useAppSelector(selectRoles);
-  const canAddNotification = userRole === 'manager';
+  const canAddNotification = userRole === UserRole.Manager;
 
   const changePage = (pageNumber: number) => {
     setPage(pageNumber);

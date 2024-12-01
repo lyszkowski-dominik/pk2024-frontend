@@ -8,6 +8,7 @@ import { ModalType } from '../../components/property/types';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
+import { UserRole } from '../../types/types';
 
 /**
  *
@@ -18,7 +19,7 @@ const Properties = () => {
   const [isModalOn, setModalOn] = useState(false);
   const selectedCommunityId = useAppSelector(selectSelectedCommunity);
   const role = useAppSelector(selectRoles);
-  const isManager = role === 'manager';
+  const isManager = role === UserRole.Manager;
 
   if (!selectedCommunityId) {
     return <div>No community selected</div>;

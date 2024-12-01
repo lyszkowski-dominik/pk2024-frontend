@@ -62,7 +62,9 @@ const Users = ({ type }: UsersProps) => {
           )}
           {openModal === ModalType.Import && (
             <>
-              <h1>Import {type === 'owner' ? 'właścicieli' : 'zarządców'}</h1>
+              <h1>
+                Import {type === UserRole.Owner ? 'właścicieli' : 'zarządców'}
+              </h1>
               <FileUploadForm
                 url={`/auth/users/import/?hoa=${hoaID}&role=${type}`}
                 setModalOn={setModalOn}
