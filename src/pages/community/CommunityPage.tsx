@@ -18,7 +18,7 @@ const CommunityPage = () => {
     error,
     refetch: refreshPage,
   } = useGetNotifications({
-    hoaID,
+    hoaId: hoaID,
     page: 1,
     pageSize: 10,
   });
