@@ -17,7 +17,7 @@ import { useSearchParams } from 'react-router-dom';
  */
 const usePagination = (initialPage = 1) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(25);
   const page = parseInt(searchParams.get('page') || initialPage.toString(), 10);
 
   const setPage = (newPage: number) => {

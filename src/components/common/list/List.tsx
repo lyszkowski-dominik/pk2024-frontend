@@ -3,6 +3,7 @@ import styles2 from './List.module.scss';
 import ReactPaginate from 'react-paginate';
 import type { ApiPaginatedResult } from '../../../types/types';
 import IconButton from '../../ui/iconButton/IconButton';
+import { RateType } from '../../../features/billings/billingTypes';
 
 /**
  * The type `ColumnDef` defines the structure of the column definition object.
@@ -21,6 +22,7 @@ export enum ColumnType {
   DATE,
   DATETIME,
   ACTION,
+  ENUM
 }
 
 /**
@@ -67,6 +69,9 @@ const List = <T,>({
         value = new Date(value).toLocaleString();
       } else if (column.type === ColumnType.DATE) {
         value = new Date(value).toLocaleDateString();
+      } else if (column.type === ColumnType.ENUM) {
+        // use RateType[value] to get the enum value
+        value = RateType[ value as keyof typeof RateType ];
       }
       return <td key={column.name}>{value}</td>;
     });
@@ -82,7 +87,10 @@ const List = <T,>({
           <td>
             <IconButton
               iconName="delete"
-              onClick={() => onDelete(record)}
+              onClick={(event) => {
+                event.stopPropagation();
+                onDelete(record);
+              }}
               altText="Usuń"
               size={24}
               color="var(--pink)"

@@ -1,4 +1,4 @@
-import type { UserRole } from '../../types/types';
+ import type { UserRole } from '../../types/types';
 import api from '../../services/axiosInstance';
 
 const AddExistingUser = async ({

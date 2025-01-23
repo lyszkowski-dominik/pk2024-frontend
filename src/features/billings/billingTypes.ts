@@ -21,7 +21,7 @@ export interface IBill {
 }
 
 export interface IRate {
-  id: number;
+  id?: number;
   name: string;
   type: RateType;
   rate_per_unit: number;
@@ -49,15 +49,15 @@ export interface IMeterReading {
 }
 
 export enum RateType {
-  unit = 'unit',
-  area = 'area',
-  effective_area = 'effective_area',
-  person = 'person',
-  fixed = 'fixed',
-  property = 'property',
+  unit = 'Jednostka',
+  area = 'Powierzchnia',
+  effective_area = 'Powierzchnia użytkowa',
+  person = 'Osoba',
+  fixed = 'Stała',
+  property = 'Nieruchomość',
 }
 
 export enum MeterType {
-  hot_water = 'hot_water',
-  cold_water = 'cold_water',
+  hot_water = 'Gorąca woda',
+  cold_water = 'Zimna woda',
 }

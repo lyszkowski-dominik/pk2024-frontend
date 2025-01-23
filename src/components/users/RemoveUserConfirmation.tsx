@@ -35,7 +35,7 @@ const RemoveUserConfirmation = ({
         },
       },
     );
-
+// a tu kurwa nie
   return (
     <DeleteConfirmation
       header="Czy na pewno chcesz usunąć tego użytkownika?"

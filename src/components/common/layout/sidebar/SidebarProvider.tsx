@@ -54,6 +54,10 @@ const defaultSidebarValues: SidebarContextType = {
       title: 'Zgłoszenia',
       path: 'requests',
     },
+    {
+      title:'Stawki',
+      path: 'rates'
+    }
   ],
   setElements: () => {},
   activeItem: '',
