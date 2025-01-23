@@ -9,7 +9,7 @@ type FileUploadFormProps = {
   recordId: number;
   readonly invalidateQuery: readonly (number | string)[];
   setFileName: (name: string) => void;
-  setUploadStatus: (status: string) => void;
+  setIsPendingUpload: (isPending: boolean) => void;
 };
 
 export const FileUploadForm = ({
@@ -17,13 +17,14 @@ export const FileUploadForm = ({
   tableName,
   recordId,
   setFileName,
-  setUploadStatus,
+  setIsPendingUpload,
 }: FileUploadFormProps) => {
   const [file, setFile] = useState<File>();
   const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const uploadFile = useUploadFile(invalidateQuery);
+  const { isPending } = uploadFile;
   const { addNotification } = useNotifications();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,27 +70,22 @@ export const FileUploadForm = ({
   };
 
   useEffect(() => {
-    setUploadStatus(uploadFile.status);
-  }, [uploadFile.status, setUploadStatus]);
+    setIsPendingUpload(isPending);
+  }, [isPending, setIsPendingUpload]);
 
   return (
     <div className={styles['file-form-wrapper']}>
       <b>Prześlij plik</b>
       <form onSubmit={handleSubmit} className={styles['file-form']}>
         <input
-          disabled={uploadFile.status === 'pending'}
+          disabled={isPending}
           type="file"
           onChange={handleFileChange}
           ref={fileInputRef}
         />
-        <Button
-          disabled={!file || uploadFile.status === 'pending'}
-          type="submit"
-          variant="contained"
-        >
-          {uploadFile.status !== 'pending' && 'Prześlij'}
-          {uploadFile.status === 'pending' &&
-            `Przesyłanie... ${uploadProgress}%`}
+        <Button disabled={!file || isPending} type="submit" variant="contained">
+          {!isPending && 'Prześlij'}
+          {isPending && `Przesyłanie... ${uploadProgress}%`}
         </Button>
       </form>
     </div>

@@ -1,6 +1,6 @@
 import type { ListRequest, UserRole } from '../../types/types';
 
-export type GetUsersRequest = ListRequest & {
+export type GetHoaUsersRequest = ListRequest & {
   role: UserRole;
   hoaId: number;
 };
@@ -21,6 +21,12 @@ export type UsersResponse = {
 
 export const usersQueryKeys = {
   all: ['users'] as const,
-  hoa: (hoa: number, role: UserRole) =>
-    [...usersQueryKeys.all, 'hoa', `${hoa}`, 'role', `${role}`] as const,
+  filters: ({ hoaId, role, page, pageSize }: Partial<GetHoaUsersRequest>) =>
+    [
+      ...usersQueryKeys.all,
+      ...(hoaId ? ['hoa', `${hoaId}`] : []),
+      ...(role ? ['role', `${role}`] : []),
+      ...(page ? ['page', `${page}`] : []),
+      ...(pageSize ? ['pageSize', `${pageSize}`] : []),
+    ] as const,
 };

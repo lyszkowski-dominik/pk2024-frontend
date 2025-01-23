@@ -49,6 +49,7 @@ const OwnershipList = ({
   } = useGetOwnerships({
     page,
     pageSize,
+    propertyId,
   });
 
   useEffect(() => {
@@ -108,7 +109,7 @@ const OwnershipList = ({
           </tr>
         </thead>
         <tbody>
-          {ownerships?.map((ownership: IOwnership) => (
+          {ownerships?.map((ownership: any) => (
             <tr key={ownership.id} onClick={() => onRowClicked(ownership.id)}>
               <td>{getOwners(ownership.owners)}</td>
               <td>{ownership.start}</td>
@@ -121,9 +122,7 @@ const OwnershipList = ({
                       event.stopPropagation();
                       onRowDelete(ownership.id);
                     }}
-                    altText="Delete Ownership"
-                    size={24}
-                    color="var(--pink)"
+                    altText="Usuń właściciela"
                   />
                 </td>
               )}
@@ -148,7 +147,7 @@ const OwnershipList = ({
     ownerships?.map((ownership: IOwnership) => (
       <div key={ownership.id} className={propertiesStyles.details}>
         <b>Właściciele: </b>
-        {ownership.owners?.map((owner: User) => (
+        {ownership.owners?.map((owner: any) => (
           <div key={owner.id} className={propertiesStyles.owners_details}>
             <b>Imię: </b> {owner.first_name}
             <br />

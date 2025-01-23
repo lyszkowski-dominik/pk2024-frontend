@@ -2,12 +2,16 @@ import { useState } from 'react';
 import styles from './Properties.module.scss';
 import PropertiesList from '../../components/property/PropertiesList';
 import IconButton from '../../components/ui/iconButton/IconButton';
-import AddPropertyForm from '../../components/property/AddPropertyForm';
 import Modal from '../../components/ui/modal/Modal';
 import { ModalType } from '../../components/property/types';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
+import { UserRole } from '../../types/types';
+import PropertyForm from '../../components/property/PropertyForm';
+import { downloadFile } from '../../utils/downloadFile';
+import FileUploadForm from '../../components/common/forms/fileUploadForm/FileUploadForm';
+import { propertiesQueryKeys } from '../../features/properties/propertiesTypes';
 
 /**
  *
@@ -18,18 +22,22 @@ const Properties = () => {
   const [isModalOn, setModalOn] = useState(false);
   const selectedCommunityId = useAppSelector(selectSelectedCommunity);
   const role = useAppSelector(selectRoles);
-  const isManager = role === 'manager';
+  const isManager = role === UserRole.Manager;
 
   if (!selectedCommunityId) {
     return <div>No community selected</div>;
   }
 
   const handleImportClick = () => {
-    console.log('Import clicked');
+    setOpenModal(ModalType.Import);
+    setModalOn(true);
   };
 
   const handleExportClick = () => {
-    console.log('Export clicked');
+    downloadFile(
+      `/hoas/properties/export?hoa=${selectedCommunityId}`,
+      'properties.csv',
+    );
   };
 
   return (
@@ -37,7 +45,19 @@ const Properties = () => {
       {isModalOn && (
         <Modal>
           {openModal === ModalType.Add && (
-            <AddPropertyForm onClose={() => setModalOn(false)} />
+            <PropertyForm onClose={() => setModalOn(false)} />
+          )}
+          {openModal === ModalType.Import && (
+            <>
+              <h1>Import lokali</h1>
+              <FileUploadForm
+                url={`/hoas/properties/import/?hoa=${selectedCommunityId}`}
+                onClose={() => setModalOn(false)}
+                queryKeys={[
+                  propertiesQueryKeys.filters({ hoaId: selectedCommunityId }),
+                ]}
+              />
+            </>
           )}
         </Modal>
       )}
@@ -49,23 +69,17 @@ const Properties = () => {
               setOpenModal(ModalType.Add);
               setModalOn(true);
             }}
-            altText="Add Property"
-            size={24}
-            color="var(--pink)"
+            altText="Dodaj lokal"
           />
           <IconButton
             iconName="import"
             onClick={handleImportClick}
-            altText="Import Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Importuj lokale"
           />
           <IconButton
             iconName="export"
             onClick={handleExportClick}
-            altText="Export Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Eksportuj lokale"
           />
         </div>
       )}

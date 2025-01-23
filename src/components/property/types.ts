@@ -7,7 +7,7 @@ export enum ModalType {
   Details,
 }
 
-export type PropertyForm = {
+export type PropertyFormType = {
   id: number;
   type: PropertyType;
   building: string;

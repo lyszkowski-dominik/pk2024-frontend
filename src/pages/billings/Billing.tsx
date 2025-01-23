@@ -10,15 +10,16 @@ import { useAppSelector } from '../../app/hooks';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
 import SendPayment from '../../features/billings/SendPayment';
 import { Button } from '@mui/material';
+import { UserRole } from '../../types/types';
 
 /**
- * 
+ *
  * @returns {JSX.Element} The `Billing` component returns the billing details.
  */
 const Billing = () => {
   const role = useAppSelector(selectRoles);
   const navigate = useNavigate();
-  const isOwner = role === 'owner';
+  const isOwner = role === UserRole.Owner;
   const [isError, setIsError] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{ errors: string } | null>(
     null,

@@ -1,7 +1,8 @@
-export type DetailedUserData = {
-  first_name: string;
-  last_name: string;
-  email: string;
+import { ListRequest, UserRole } from '../../types/types';
+
+export type GetUsersRequest = ListRequest & {
+  role?: UserRole;
+  excludeHoa?: number;
 };
 
 export enum Module {
@@ -12,4 +13,14 @@ export enum Module {
 
 export const userDataQueryKeys = {
   all: ['userData'] as const,
+};
+
+export const allUsersQueryKeys = {
+  all: ['allUsers'] as const,
+  filters: ({ excludeHoa, role }: Partial<GetUsersRequest>) =>
+    [
+      ...allUsersQueryKeys.all,
+      ...(excludeHoa ? ['excludeHoa', `${excludeHoa}`] : []),
+      ...(role ? ['role', `${role}`] : []),
+    ] as const,
 };

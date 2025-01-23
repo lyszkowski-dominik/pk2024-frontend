@@ -10,7 +10,7 @@ export const useAddExistingUser = (hoa: number, role: UserRole) => {
     mutationFn: AddExistingUser,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: usersQueryKeys.hoa(hoa, role),
+        queryKey: usersQueryKeys.filters({ hoaId: hoa, role }),
       });
     },
     retry: false,

@@ -9,7 +9,7 @@ export const useCreateResolution = (hoa: number) => {
     mutationFn: CreateResolution,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: resolutionsQueryKeys.hoa(hoa),
+        queryKey: resolutionsQueryKeys.filters({ hoaId: hoa }),
       });
     },
     retry: false,

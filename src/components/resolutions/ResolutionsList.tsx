@@ -5,7 +5,7 @@ import { selectSelectedCommunity } from '../../features/communities/sharedDataSl
 import usePagination from '../../hooks/usePagination';
 import List from '../../components/common/list/List';
 import Spinner from '../../components/ui/spinner/Spinner';
-import { columns } from './utils';
+import { columns, getResolutionsData } from './utils';
 import { useGetResolutions } from '../../features/resolutions/useGetResolutions';
 
 const ResolutionsList = () => {
@@ -30,7 +30,7 @@ const ResolutionsList = () => {
       ) : (
         data && (
           <List
-            data={data}
+            data={getResolutionsData(data)}
             columns={columns}
             onPageChange={changePage}
             page={page}

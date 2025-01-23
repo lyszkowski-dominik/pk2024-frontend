@@ -1,3 +1,5 @@
+import { ListRequest } from '../../types/types';
+
 export interface IBilling {
   id: number;
   bills: IBill[];
@@ -39,14 +41,14 @@ export interface IMeter {
   property: number;
 }
 
-export interface IMeterReading {
+export type MeterReading = {
   id: number;
   reading_date: string;
   reading_value: string;
   meter: number;
   meter_number: string;
   meter_type: MeterType;
-}
+};
 
 export enum RateType {
   unit = 'unit',
@@ -61,3 +63,27 @@ export enum MeterType {
   hot_water = 'hot_water',
   cold_water = 'cold_water',
 }
+
+export const billingsQueryKeys = {
+  all: ['billings'] as const,
+  filters: ({
+    hoaId,
+    propertyId,
+    page,
+    pageSize,
+  }: Partial<GetBillingsRequest>) =>
+    [
+      ...billingsQueryKeys.all,
+      ...(hoaId ? ['hoa', `${hoaId}`] : []),
+      ...(propertyId ? ['property', `${propertyId}`] : []),
+      ...(page ? ['page', `${page}`] : []),
+      ...(pageSize ? ['pageSize', `${pageSize}`] : []),
+    ] as const,
+  details: (id: number) =>
+    [...billingsQueryKeys.all, 'details', `${id}`] as const,
+};
+
+export type GetBillingsRequest = ListRequest & {
+  hoaId: number;
+  propertyId: number;
+};

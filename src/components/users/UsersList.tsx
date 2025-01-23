@@ -5,12 +5,12 @@ import { selectRoles } from '../loginForm/loginFormSlice';
 import { UserRole } from '../../types/types';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
 import usePagination from '../../hooks/usePagination';
-import { useGetUsers } from '../../features/users/useGetUsers';
 import List from '../common/list/List';
 import { columns } from './utils';
 import { User } from '../../features/users/usersTypes';
 import RemoveUserConfirmation from './RemoveUserConfirmation';
 import Spinner from '../ui/spinner/Spinner';
+import { useGetHoaUsers } from '../../features/users/useGetHoaUsers';
 
 export interface UsersListProps {
   type: UserRole;
@@ -29,7 +29,7 @@ const UsersList = ({ type }: UsersListProps) => {
     setPage(pageNumber);
   }
 
-  const { isLoading, data } = useGetUsers({
+  const { isLoading, data } = useGetHoaUsers({
     role: type,
     hoaId: hoa,
     page,

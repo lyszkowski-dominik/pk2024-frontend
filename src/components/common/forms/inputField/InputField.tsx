@@ -1,4 +1,6 @@
 import type React from 'react';
+import dayjs from 'dayjs';
+
 import styles from './InputField.module.scss';
 
 /**
@@ -37,8 +39,11 @@ export type InputFieldProps = {
   placeholder?: string | undefined;
   error?: boolean;
   disabled?: boolean;
+  min?: any;
+  max?: any;
   checked?: boolean;
   autoFocus?: boolean;
+  units?: string;
 };
 
 /**
@@ -52,6 +57,8 @@ const InputField = ({
   type = 'text',
   name,
   value,
+  min,
+  max,
   onChange,
   onFocus,
   placeholder,
@@ -59,6 +66,7 @@ const InputField = ({
   disabled,
   checked,
   autoFocus,
+  units,
 }: InputFieldProps) => {
   const labelClassName = error
     ? styles.label + ' ' + styles['error-label']
@@ -68,24 +76,40 @@ const InputField = ({
     ? styles.input + ' ' + styles['error-input']
     : styles.input;
 
+  const formattedValue =
+    value === null || value === undefined || value === ''
+      ? ''
+      : type === 'date'
+        ? dayjs(value).format('YYYY-MM-DD')
+        : value;
+
+  const formattedMin =
+    min && type === 'date' ? dayjs(min).format('YYYY-MM-DD') : min;
+  const formattedMax =
+    max && type === 'date' ? dayjs(max).format('YYYY-MM-DD') : max;
+
   return (
     <div className={`${styles['form-control']} ${styles[type]}`}>
       <label htmlFor={id} className={labelClassName}>
         {label}
       </label>
-
-      <input
-        disabled={disabled}
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        onFocus={onFocus}
-        placeholder={placeholder}
-        className={inputClassName}
-        checked={checked}
-        autoFocus={autoFocus}
-      />
+      <div className={styles.inputWithUnits}>
+        <input
+          disabled={disabled}
+          type={type}
+          name={name}
+          value={formattedValue}
+          min={formattedMin}
+          max={formattedMax}
+          onChange={onChange}
+          onFocus={onFocus}
+          placeholder={placeholder}
+          className={inputClassName}
+          checked={checked}
+          autoFocus={autoFocus}
+        />
+        {units && <span className={styles.units}>{units}</span>}
+      </div>
     </div>
   );
 };

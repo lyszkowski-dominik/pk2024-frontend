@@ -12,7 +12,7 @@ export const useDeleteFile = (
   return useMutation({
     mutationFn: DeleteFile,
     onSuccess: () => {
-      addNotification('File deleted', 'success');
+      addNotification('Usunięto plik', 'success');
       if (shouldInvalidate) {
         queryClient.invalidateQueries({
           queryKey: invalidateQuery,

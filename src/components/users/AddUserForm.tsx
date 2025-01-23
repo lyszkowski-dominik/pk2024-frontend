@@ -20,7 +20,8 @@ const AddUserForm = ({
   const { addNotification } = useNotifications();
   const hoaId = useAppSelector(selectSelectedCommunity) || -1;
   const createUser = useCreateUser(hoaId, role);
-  const onSubmit = (user: User, setSubmitting: any, setErrors: any) =>
+
+  const onSubmit = (user: User, setSubmitting: any, setErrors: any) => {
     createUser.mutate(
       { user, role, hoa: hoaId },
       {
@@ -34,9 +35,9 @@ const AddUserForm = ({
         },
       },
     );
+  };
 
   const formikProps: FormikWrapperProps<Partial<User>> = {
-    header: 'Dodawanie nowego użytkownika',
     submitLabel: 'Dodaj',
     initialValues: {
       email: '',
@@ -45,7 +46,7 @@ const AddUserForm = ({
     },
     onSubmit: (values, { setSubmitting, setErrors }) =>
       onSubmit(values as User, setSubmitting, setErrors),
-    onReset: onClose,
+    onCancel: onClose,
     validationSchema: Yup.object({
       email: Yup.string()
         .email('Niepoprawny adres email')

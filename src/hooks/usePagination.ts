@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 /**
@@ -15,15 +15,21 @@ import { useSearchParams } from 'react-router-dom';
  * - `pageSize`: the number of items per page
  * - `setPageSize`: a function to set the number of items per page
  */
-const usePagination = (initialPage = 1) => {
+const usePagination = (
+  addToParams = true,
+  initialPage = 1,
+  initialPageSize = 20,
+) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [pageSize, setPageSize] = useState(3);
-  const page = parseInt(searchParams.get('page') || initialPage.toString(), 10);
+  const [pageSize, setPageSize] = useState(initialPageSize);
+  const [page, setPage] = useState(initialPage);
 
-  const setPage = (newPage: number) => {
-    const pageStr = newPage.toString();
-    setSearchParams({ page: pageStr });
-  };
+  useEffect(() => {
+    if (addToParams) {
+      const pageStr = page.toString();
+      setSearchParams({ page: pageStr });
+    }
+  }, [searchParams, page, setSearchParams, addToParams]);
 
   const nextPage = () => {
     setPage(page + 1);

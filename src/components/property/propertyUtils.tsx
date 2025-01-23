@@ -1,5 +1,8 @@
 import { MeterType, RateType } from '../../features/billings/billingTypes';
-import { Property } from '../../features/properties/propertiesTypes';
+import {
+  Property,
+  PropertyType,
+} from '../../features/properties/propertiesTypes';
 import { ApiPaginatedResult } from '../../types/types';
 import { ColumnDef, ColumnType } from '../common/list/List';
 import { PropertyTypeDisplayNames } from './types';
@@ -56,21 +59,48 @@ export const columns: ColumnDef[] = [
     type: ColumnType.TEXT,
   },
   {
-    name: 'building',
-    label: 'Budynek',
+    name: 'usable_area',
+    label: 'Powierzchnia użytkowa',
     type: ColumnType.TEXT,
   },
   {
-    name: 'parent',
-    label: 'Przynależy do',
+    name: 'building',
+    label: 'Budynek',
     type: ColumnType.TEXT,
   },
 ];
 
 export const getData = (data: ApiPaginatedResult<Property>) => ({
   ...data,
-  results: data.results.map((property) => ({
+  results: getFormattedData(data.results),
+});
+
+export const getFormattedData = (data: Property[]) =>
+  data.map((property) => ({
     ...property,
     type: PropertyTypeDisplayNames[property.type],
-  })),
-});
+    usable_area: `${property.usable_area} m²`,
+    total_area: `${property.total_area} m²`,
+  }));
+
+export const mustHaveParent = (propertyType: PropertyType) => {
+  switch (propertyType) {
+    case PropertyType.Garage:
+    case PropertyType.Other:
+    case PropertyType.ParkingSpace:
+    case PropertyType.Storage:
+      return true;
+    default:
+      return false;
+  }
+};
+
+export const canBeParent = (propertyType: PropertyType) => {
+  switch (propertyType) {
+    case PropertyType.Flat:
+    case PropertyType.Business:
+      return true;
+    default:
+      return false;
+  }
+};

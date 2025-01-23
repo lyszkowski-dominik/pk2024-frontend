@@ -18,8 +18,11 @@ export type TextInputLiveFeedbackProps = {
   type: string;
   id?: string;
   name: string;
+  min?: any;
+  max?: any;
   className?: string;
   disabled?: boolean;
+  units?: string;
 };
 
 /**
@@ -38,7 +41,8 @@ const TextInputLiveFeedback = ({
   const [didFocus, setDidFocus] = useState(false);
   const handleFocus = () => setDidFocus(true);
   const showFeedback =
-    (didFocus && field.value.trim().length > 2) || meta.touched;
+    (didFocus && props.type === 'text' && field.value?.trim().length > 2) ||
+    meta.touched;
 
   return (
     <div

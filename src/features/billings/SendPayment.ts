@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
+import api from '../../services/axiosInstance';
 
 /**
  * The `SendPayment` function sends a payment request to a specific billing endpoint using an
@@ -10,20 +9,10 @@ import { GetToken } from '../auth/GetToken';
  */
 const SendPayment = async (id: number) => {
   try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/billings/bills/${id}/pay/`,
-      {},
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
-
-    return response;
+    const { data } = await api.post(`/billings/bills/${id}/pay/`, {});
+    return data;
   } catch (err: any) {
-    console.log(err);
+    throw err.response.data;
   }
 };
 

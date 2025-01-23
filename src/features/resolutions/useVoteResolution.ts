@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { VoteResolution } from './VoteResolution';
 import { resolutionsQueryKeys } from './resolutionsTypes';
+import VoteResolution from './VoteResolution';
 
 export const useVoteResolution = (hoa: number, id: number) => {
   const queryClient = useQueryClient();
@@ -12,7 +12,7 @@ export const useVoteResolution = (hoa: number, id: number) => {
         queryKey: resolutionsQueryKeys.details(id),
       });
       queryClient.invalidateQueries({
-        queryKey: resolutionsQueryKeys.hoa(hoa),
+        queryKey: resolutionsQueryKeys.filters({ hoaId: hoa }),
       });
     },
     retry: false,

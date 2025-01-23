@@ -1,5 +1,11 @@
 import * as Yup from 'yup';
 import { ColumnDef, ColumnType } from '../common/list/List';
+import {
+  Resolution,
+  ResolutionState,
+} from '../../features/resolutions/resolutionsTypes';
+import dayjs from 'dayjs';
+import { ApiPaginatedResult } from '../../types/types';
 
 export const columns: ColumnDef[] = [
   {
@@ -8,21 +14,42 @@ export const columns: ColumnDef[] = [
     type: ColumnType.TEXT,
   },
   {
-    name: 'created_at',
-    label: 'Utworzono',
-    type: ColumnType.DATETIME,
-  },
-  {
     name: 'start_date',
     label: 'Rozpoczęcie',
-    type: ColumnType.DATETIME,
+    type: ColumnType.DATE,
   },
   {
     name: 'end_date',
     label: 'Zakończenie',
     type: ColumnType.DATETIME,
   },
+  {
+    name: 'status',
+    label: 'Stan głosowania',
+    type: ColumnType.TEXT,
+  },
 ];
+
+export const getResolutionsData = (data: ApiPaginatedResult<Resolution>) => ({
+  ...data,
+  results: data.results.map((resolution) => ({
+    ...resolution,
+    status: getStatusDisplay(resolution),
+  })),
+});
+
+const getStatusDisplay = (resolution: Resolution) => {
+  const { state, start_date, end_date } = resolution;
+  const now = dayjs();
+  switch (state) {
+    case ResolutionState.active:
+      return now > dayjs(start_date) && now < dayjs(end_date)
+        ? 'Aktywne'
+        : 'Niekatywne';
+    case ResolutionState.inactive:
+      return 'Zamknięte';
+  }
+};
 
 export const validationSchema = Yup.object({
   title: Yup.string().required('Tytuł jest wymagany'),

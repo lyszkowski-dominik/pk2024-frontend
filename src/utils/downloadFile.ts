@@ -39,10 +39,13 @@ export const downloadFile = async (fileURL: string, filename: string) => {
  * status is 200 (indicating success). If there is an error during the request, it will return the
  * error object.
  */
-export const uploadFile = async (
-  fileURL: string,
-  file: File,
-) => {
+export const uploadFile = async ({
+  fileURL,
+  file,
+}: {
+  fileURL: string;
+  file: File;
+}) => {
   const formData = new FormData();
   formData.append('file', file);
 
@@ -56,7 +59,7 @@ export const uploadFile = async (
     if (response.status === 200) {
       console.log('Plik przesłany i dane zaimportowane');
     }
-    return response;
+    return response.data;
   } catch (error) {
     console.error('Błąd podczas przesyłania pliku:', error);
     return error;

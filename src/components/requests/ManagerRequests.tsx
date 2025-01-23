@@ -3,8 +3,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import RequestsList from './RequestsList';
 import RequestsTypesList from './RequestsTypesList';
 import { allRequestsColumns } from './utils';
-import { useGetUserData } from '../../features/auth/useGetUserData';
 import Spinner from '../ui/spinner/Spinner';
+import { useGetCurrentUserData } from '../../features/auth/useGetCurrentUserData';
 
 /**
  *
@@ -12,7 +12,8 @@ import Spinner from '../ui/spinner/Spinner';
  */
 const ManagerRequests = () => {
   const [tabIndex, setTabIndex] = useState(0);
-  const { data: userData, isLoading: loadingUserData } = useGetUserData();
+  const { data: userData, isLoading: loadingUserData } =
+    useGetCurrentUserData();
 
   return (
     <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>

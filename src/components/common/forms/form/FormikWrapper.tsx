@@ -6,11 +6,12 @@ import FormButtons from './FormButtons';
 import { ReactNode } from 'react';
 
 export type FormikWrapperProps<T> = {
-  header: string;
-  initialValues: T;
+  header?: string;
+  initialValues: any;
   validationSchema?: Yup.Schema<T>;
+  disabled?: boolean;
   onSubmit: (values: T, { setSubmitting, setErrors }: FormikHelpers<T>) => void;
-  onReset?: () => void;
+  onCancel: () => void;
   submitLabel?: string;
   children?: ((formik: FormikProps<T>) => ReactNode) | ReactNode;
 };
@@ -19,29 +20,32 @@ const FormikWrapper = <T extends object>({
   header,
   initialValues,
   validationSchema,
+  disabled = false,
   onSubmit,
-  onReset,
+  onCancel,
   submitLabel,
   children,
 }: FormikWrapperProps<T>) => {
   return (
     <div className={styles.container}>
-      <h1>{header}</h1>
+      {header && <h1>{header}</h1>}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
-        onReset={onReset}
       >
         {(formik) => (
           <Form>
-            {typeof children === 'function' ? children(formik) : children}
-            <FormButtons
-              submitLabel={submitLabel}
-              submitDisabled={formik.isSubmitting || !formik.isValid}
-              cancelDisabled={formik.isSubmitting}
-              isLoading={formik.isSubmitting}
-            />
+            <fieldset className={styles.fieldset} disabled={disabled}>
+              {typeof children === 'function' ? children(formik) : children}
+              <FormButtons
+                onCancel={onCancel}
+                submitLabel={submitLabel}
+                submitDisabled={formik.isSubmitting || disabled}
+                cancelDisabled={formik.isSubmitting || disabled}
+                isLoading={formik.isSubmitting}
+              />
+            </fieldset>
           </Form>
         )}
       </Formik>

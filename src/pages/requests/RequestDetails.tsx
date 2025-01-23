@@ -10,11 +10,11 @@ import { useNotifications } from '../../components/alerts/NotificationContext';
 import Spinner from '../../components/ui/spinner/Spinner';
 import { useGetRequest } from '../../features/requests/useGetRequest';
 import Comments from '../../components/requests/Comments';
-import { useGetUserData } from '../../features/auth/useGetUserData';
 import Details from '../../components/requests/Details';
 import { useEditRequest } from '../../features/requests/useEditRequest';
 import { UserRole } from '../../types/types';
 import { RequestState } from '../../features/requests/requestTypes';
+import { useGetCurrentUserData } from '../../features/auth/useGetCurrentUserData';
 /**
  *
  * @returns {React.FunctionComponent} The `ReqeustDetails` component is a functional component that displays the details of a request.
@@ -32,7 +32,8 @@ const ReqeustDetails = () => {
 
   const { data: request, isLoading } = useGetRequest(requestId);
   const editRequest = useEditRequest(hoaId, requestId);
-  const { data: userData, isLoading: loadingUserData } = useGetUserData();
+  const { data: userData, isLoading: loadingUserData } =
+    useGetCurrentUserData();
   const isClosed = request?.state === RequestState.closed;
 
   const onAssignToMe = async () => {

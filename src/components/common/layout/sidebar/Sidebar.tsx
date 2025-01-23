@@ -6,6 +6,7 @@ import { selectRoles } from '../../../loginForm/loginFormSlice';
 import { useEffect, useState } from 'react';
 import { selectSelectedCommunity } from '../../../../features/communities/sharedDataSlice';
 import Icon from '../../../ui/icon/Icon';
+import { UserRole } from '../../../../types/types';
 
 /**
  * The `ISidebarElement` interface defines the structure of the sidebar element.
@@ -29,8 +30,8 @@ const Sidebar = () => {
   const selectedCommunity = useAppSelector(selectSelectedCommunity);
   const navigate = useNavigate();
 
-  const userRoles = useAppSelector(selectRoles);
-  if (userRoles === 'owner') {
+  const userRole = useAppSelector(selectRoles);
+  if (userRole === UserRole.Owner) {
     elements = elements.filter((element) => {
       return element.path !== 'owners';
     });
@@ -74,9 +75,6 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      {/* <div className={styles.footer}>
-        <p>Footer</p>
-      </div> */}
     </aside>
   );
 };

@@ -11,6 +11,8 @@ import { ModalType, UserRole } from '../../types/types';
 import UsersList from '../../components/users/UsersList';
 import { AddExistingUsersForm } from '../../components/users/AddExistingUsersForm';
 import AddUserForm from '../../components/users/AddUserForm';
+import InputField from '../../components/common/forms/inputField/InputField';
+import { usersQueryKeys } from '../../features/users/usersTypes';
 
 export interface UsersProps {
   type: UserRole;
@@ -20,7 +22,7 @@ const Users = ({ type }: UsersProps) => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const userRole = useAppSelector(selectRoles);
   const canAddManager = userRole === UserRole.Manager || UserRole.Admin;
-
+  const [addingNew, setAddingNew] = useState(false);
   const [isModalOn, setModalOn] = useState(false);
   const [openModal, setOpenModal] = useState({});
 
@@ -39,53 +41,64 @@ const Users = ({ type }: UsersProps) => {
         <Modal>
           {openModal === ModalType.Add && (
             <div className={styles.addUsersFormContainer}>
-              <AddExistingUsersForm role={type} isModalOn={setModalOn} />
-              <AddUserForm onClose={() => setModalOn(false)} role={type} />
+              <AddExistingUsersForm
+                role={type}
+                onClose={() => setModalOn(false)}
+                disabled={addingNew}
+              />
+              <InputField
+                label="Dodaj nowego użytkownika"
+                name="addingNew"
+                value={addingNew}
+                type="checkbox"
+                checked={addingNew}
+                onChange={() => {
+                  setAddingNew(!addingNew);
+                }}
+              />
+              {addingNew && (
+                <AddUserForm onClose={() => setModalOn(false)} role={type} />
+              )}
             </div>
           )}
           {openModal === ModalType.Import && (
             <>
-              <h1>Import {type === 'owner' ? 'właścicieli' : 'zarządców'}</h1>
+              <h1>
+                Import {type === UserRole.Owner ? 'właścicieli' : 'zarządców'}
+              </h1>
               <FileUploadForm
                 url={`/auth/users/import/?hoa=${hoaID}&role=${type}`}
-                setModalOn={setModalOn}
+                onClose={() => setModalOn(false)}
+                queryKeys={[
+                  usersQueryKeys.filters({ hoaId: hoaID, role: type }),
+                ]}
               />
             </>
           )}
         </Modal>
       )}
-      <div className={styles.iconButtons}>
-        {canAddManager && (
+      {canAddManager && (
+        <div className={styles.iconButtons}>
           <IconButton
             iconName="add"
             onClick={() => {
               setOpenModal(ModalType.Add);
               setModalOn(true);
             }}
-            altText="Add User"
-            size={24}
-            color="var(--pink)"
+            altText="Dodaj użytkownika"
           />
-        )}
-        {canAddManager && (
           <IconButton
             iconName="import"
             onClick={handleImportClick}
-            altText="Import Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Importuj użytkowników"
           />
-        )}
-        {canAddManager && (
           <IconButton
             iconName="export"
             onClick={handleExportClick}
-            altText="Export Properties"
-            size={24}
-            color="var(--pink)"
+            altText="Eksportuj użytkowników"
           />
-        )}
-      </div>
+        </div>
+      )}
 
       <UsersList type={type} />
     </div>

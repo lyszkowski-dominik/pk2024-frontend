@@ -1,25 +1,15 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
-import type { IMeterReading } from '../billings/billingTypes';
+import type { MeterReading } from '../billings/billingTypes';
+import api from '../../services/axiosInstance';
 
-const UpdateMeterReading = async (
-  id: number,
-  formData: Partial<IMeterReading>,
-) => {
+const UpdateMeterReading = async (formData: Partial<MeterReading>) => {
   try {
-    const { data } = await axios.patch(
-      `${import.meta.env.VITE_APP_API_URL}/billings/meter_readings/${id}/`,
+    const { data } = await api.patch(
+      `/billings/meter_readings/${formData.id}/`,
       formData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
     );
     return data;
   } catch (err: any) {
-    return err.response;
+    return err.response.data;
   }
 };
 

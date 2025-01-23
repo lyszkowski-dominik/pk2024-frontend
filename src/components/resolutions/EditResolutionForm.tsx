@@ -9,6 +9,7 @@ import FormikWrapper, {
   FormikWrapperProps,
 } from '../common/forms/form/FormikWrapper';
 import { validationSchema } from './utils';
+import dayjs from 'dayjs';
 
 export type EditResolutionFormProps = {
   initialData: Resolution;
@@ -25,7 +26,9 @@ const EditResolutionForm = ({
 
   const formikProps: FormikWrapperProps<Partial<Resolution>> = {
     header: 'Edycja uchwały',
-    initialValues: initialData,
+    initialValues: {
+      ...initialData,
+    },
     onSubmit: (values, { setSubmitting, setErrors }) => {
       editResolution.mutate(
         { id: initialData.id, editedData: { ...(values as Resolution) } },
@@ -41,24 +44,37 @@ const EditResolutionForm = ({
         },
       );
     },
-    onReset: onClose,
+    onCancel: onClose,
     validationSchema: validationSchema,
   };
 
   return (
     <FormikWrapper {...formikProps}>
-      <TextInputLiveFeedback label="Tytuł" type="text" name="title" />
-      <TextAreaLiveFeedback label="Opis" name="description" />
-      <TextInputLiveFeedback
-        label="Data rozpoczęcia"
-        type="datetime"
-        name="start_date"
-      />
-      <TextInputLiveFeedback
-        label="Data zakończenia"
-        type="datetime"
-        name="end_date"
-      />
+      {({ values }) => {
+        const now = dayjs();
+        const min = dayjs(values.start_date) > now ? values.start_date : now;
+        const max = values.end_date ? values.end_date : undefined;
+
+        return (
+          <>
+            <TextInputLiveFeedback label="Tytuł" type="text" name="title" />
+            <TextAreaLiveFeedback label="Opis" name="description" />
+            <TextInputLiveFeedback
+              label="Data rozpoczęcia"
+              type="date"
+              name="start_date"
+              min={now}
+              max={max}
+            />
+            <TextInputLiveFeedback
+              label="Data zakończenia"
+              type="date"
+              name="end_date"
+              min={min}
+            />
+          </>
+        );
+      }}
     </FormikWrapper>
   );
 };

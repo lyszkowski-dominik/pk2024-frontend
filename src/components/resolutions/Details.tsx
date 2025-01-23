@@ -15,16 +15,16 @@ const Details = ({
   role: UserRole;
 }) => {
   const isOwner = role === UserRole.Owner;
+  const isManager = role === UserRole.Manager;
   const isOpenVoting = resolution?.can_vote || false;
   const haveResults = resolution?.results || false;
 
   const yourVote: string = resolution?.vote
     ? voteDisplayMap[resolution?.vote]
-    : 'Wstrzymano się';
+    : 'Nie zagłosowano';
 
   return (
     <>
-      <h2>Szczegóły</h2>
       <div className={styles.details}>
         <b>Dodano: </b>{' '}
         {new Date(resolution?.created_at || '').toLocaleString()}
@@ -36,9 +36,24 @@ const Details = ({
         {new Date(resolution?.end_date || '').toLocaleString()}
         <br />
       </div>
+      <div className={styles.details}>
+        {isOwner && (
+          <>
+            <b>Twój głos:</b> {yourVote}
+            <br />
+          </>
+        )}
+        {isManager && (
+          <>
+            <b>Stan głosowania:</b> {yourVote}
+            <br />
+          </>
+        )}
+      </div>
+
       {haveResults && (
         <>
-          <h2>Wyniki</h2>
+          <h3>Wyniki</h3>
           <div className={styles.details}>
             {isOwner && !isOpenVoting && (
               <>
@@ -57,7 +72,7 @@ const Details = ({
           </div>
         </>
       )}
-      <h2>Opis</h2>
+      <h3>Opis</h3>
       <div className={styles.description}>
         <p>{resolution?.description}</p>
       </div>

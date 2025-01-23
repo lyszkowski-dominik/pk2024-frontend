@@ -1,8 +1,5 @@
-import { ErrorMessage } from 'formik';
-import { useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectSelectedCommunity } from '../../features/communities/sharedDataSlice';
-import styles from './ExistingUsers.module.scss';
 import SearchDropdown, {
   type SearchDropdownOption,
 } from '../ui/search/SearchDropdown';
@@ -14,68 +11,76 @@ import * as Yup from 'yup';
 import FormikWrapper, {
   FormikWrapperProps,
 } from '../common/forms/form/FormikWrapper';
+import { useGetUsers } from '../../features/auth/useGetUsers';
 
 export const AddExistingUsersForm = ({
-  isModalOn,
+  onClose,
   role,
+  disabled,
 }: {
-  isModalOn: (value: boolean) => void;
+  onClose: () => void;
   role: UserRole;
+  disabled: boolean;
 }) => {
-  const [userData] = useState<any[]>([]);
   const hoaId = useAppSelector(selectSelectedCommunity) || -1;
   const { addNotification } = useNotifications();
   const addUser = useAddExistingUser(hoaId, role);
 
-  const getUserOptions = (data: any): SearchDropdownOption[] => {
-    return data.results?.map((owner: User) => ({
-      value: owner.id,
-      label: `${owner.first_name} ${owner.last_name} [${owner.email}]`,
-      key: owner.id,
-    }));
-  };
+  const { isLoading, data } = useGetUsers({
+    page: 1,
+    pageSize: 50,
+    role: role,
+    excludeHoa: hoaId,
+  });
 
-  const formikProps: FormikWrapperProps<{ userId: number }> = {
-    header: 'Dodawanie istniejącego użytkownika',
+  const usersDropdownOptions: SearchDropdownOption[] = data
+    ? data.results?.map((user: User) => ({
+        value: user.id,
+        label: `${user.first_name} ${user.last_name} [${user.email}]`,
+        key: user.id,
+      }))
+    : [];
+
+  const formikProps: FormikWrapperProps<{ id: number | null }> = {
+    header: 'Dodawanie użytkownika',
     submitLabel: 'Dodaj',
-    initialValues: {
-      userId: -1,
-    },
-    onSubmit: (values, { setErrors }) => {
-      const userId = values.userId;
-      addUser.mutate(
-        { role, hoaId, userId },
-        {
-          onSuccess: () => {
-            isModalOn(false);
-            addNotification('Użytkownik został dodany.', 'success');
+    initialValues: { id: null },
+    onSubmit: (values, { setErrors, setFieldError }) => {
+      const userId = values.id;
+      if (!userId) {
+        setFieldError('id', 'Nie wybrano użytkownika.');
+      } else {
+        addUser.mutate(
+          { role, hoaId, userId },
+          {
+            onSuccess: () => {
+              onClose();
+              addNotification('Użytkownik został dodany.', 'success');
+            },
+            onError: (error) => {
+              setErrors({ id: error.message });
+            },
           },
-          onError: (error) => {
-            setErrors({ userId: error.message });
-          },
-        },
-      );
+        );
+      }
     },
-    onReset: () => isModalOn(false),
+    onCancel: onClose,
     validationSchema: Yup.object({
-      userId: Yup.number().required('Wybierz użytkownika'),
+      id: Yup.number().required('Wybierz użytkownika'),
     }),
+    disabled: disabled,
   };
 
   return (
     <FormikWrapper {...formikProps}>
       <SearchDropdown
-        name="userID"
-        endpoint={`/auth/users/?page_size=5000&role=${role}&exclude_hoa=${hoaId}`}
+        name="id"
+        isLoading={isLoading}
         label="Użytkownicy"
-        getOptions={getUserOptions}
-        multiselect={false}
-        value={userData.map((user: User) => ({
-          value: user.id,
-          label: `${user.first_name} ${user.last_name} [${user.email}]`,
-        }))}
+        options={usersDropdownOptions}
+        disabled={disabled}
+        cleanOnDisabling={true}
       />
-      <ErrorMessage name="userID" component="div" className={styles.error} />
     </FormikWrapper>
   );
 };

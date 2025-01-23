@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
-import type { ListRequestProperty } from '../../types/types';
+import type { ApiPaginatedResult } from '../../types/types';
+import { GetBillingsRequest, IBilling } from './billingTypes';
+import api from '../../services/axiosInstance';
 
 /**
  * The function `GetBillings` asynchronously fetches billing data from an API based on the provided
@@ -13,22 +13,18 @@ import type { ListRequestProperty } from '../../types/types';
  * making a GET request with the specified page and pageSize parameters. If the request is successful,
  * it returns the response data. If there is an error during the request, it logs the error to the
  */
-const GetBillings = async ({ page, pageSize }: ListRequestProperty) => {
+const GetBillings = async ({
+  propertyId,
+  page,
+  pageSize,
+}: GetBillingsRequest) => {
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_APP_API_URL}/billings/bills/?page=${page}&page_size=${pageSize}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
+    const response = await api.get(
+      `/billings/bills/?page=${page}&page_size=${pageSize}&property=${propertyId}&order_by=["-month"]`,
     );
-
-    return response.data;
+    return response.data as ApiPaginatedResult<IBilling>;
   } catch (err: any) {
-    console.log(err);
+    throw err.response.data;
   }
 };
 

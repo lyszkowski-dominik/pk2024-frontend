@@ -28,8 +28,8 @@ const ConfirmationModal = ({
         <Spinner />
       ) : (
         <>
-          <h2>{header}</h2>
-          <div>{content}</div>
+          <h3>{header}</h3>
+          <div className={styles.content}>{content}</div>
           <div className={styles.modalButtons}>
             <Button variant="outlined" color="error" onClick={onConfirm}>
               {confirmButtonLabel}

@@ -38,3 +38,18 @@
 .error-label {
   color: rgb(255, 75, 75);
 }
+
+.inputWithUnits {
+  display: flex;
+  align-items: center;
+}
+
+.inputWithUnits .input {
+  flex: 1;
+}
+
+.inputWithUnits .units {
+  margin-left: 8px;
+  color: #555;
+  font-size: 0.9rem;
+}

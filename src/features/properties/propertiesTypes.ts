@@ -1,4 +1,6 @@
 import type { ListRequest } from '../../types/types';
+import { IOwnership } from '../ownerships/ownershipTypes';
+import { User } from '../users/usersTypes';
 
 export enum ModalType {
   Add,
@@ -25,6 +27,9 @@ export type Property = {
   inhabitants?: number | null;
   hoa: number;
   parent?: number | null;
+  properties?: Property[] | null;
+  owners?: User[] | null;
+  ownerships?: IOwnership[] | null;
 };
 
 export type PropertiesRequest = ListRequest & {
@@ -66,7 +71,13 @@ export enum PropertyTab {
 
 export const propertiesQueryKeys = {
   all: ['properies'] as const,
-  hoa: (hoa: number) => [...propertiesQueryKeys.all, 'hoa', `${hoa}`] as const,
+  filters: ({ hoaId, page, pageSize }: Partial<PropertiesRequest>) =>
+    [
+      ...propertiesQueryKeys.all,
+      ...(hoaId ? ['hoa', `${hoaId}`] : []),
+      ...(page ? ['page', `${page}`] : []),
+      ...(pageSize ? ['pageSize', `${pageSize}`] : []),
+    ] as const,
   details: (id: number) =>
     [...propertiesQueryKeys.all, 'details', `${id}`] as const,
 };

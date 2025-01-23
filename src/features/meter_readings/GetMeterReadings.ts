@@ -1,27 +1,22 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
-import type { ListRequestProperty } from '../../types/types';
+import type { ApiPaginatedResult } from '../../types/types';
+import api from '../../services/axiosInstance';
+import { MeterReading } from '../billings/billingTypes';
+import { MetersReadingsRequest } from './metersTypes';
 
 const GetMeterReadings = async ({
   page,
   pageSize,
   propertyId,
-}: ListRequestProperty) => {
+  meterId,
+}: MetersReadingsRequest) => {
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_APP_API_URL}/billings/meter_readings/?page=${page}&page_size=${pageSize}&property=${propertyId}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
+    const response = await api.get(
+      `/billings/meter_readings/?page=${page}&page_size=${pageSize}&property=${propertyId}&meter=${meterId}`,
     );
 
-    return response.data;
+    return response.data as ApiPaginatedResult<MeterReading>;
   } catch (err: any) {
-    console.log(err);
+    throw err.response.data;
   }
 };
 

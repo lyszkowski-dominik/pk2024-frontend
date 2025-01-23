@@ -10,7 +10,7 @@ export const useRemoveUser = (hoa: number, role: UserRole) => {
     mutationFn: RemoveUser,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: usersQueryKeys.hoa(hoa, role),
+        queryKey: usersQueryKeys.filters({ hoaId: hoa, role }),
       });
     },
     retry: false,

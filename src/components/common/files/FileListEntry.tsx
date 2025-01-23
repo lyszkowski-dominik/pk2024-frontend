@@ -43,7 +43,6 @@ const FileListEntry = ({
                 onClick={() => handleDelete(file.id || -1)}
                 altText="Usuń plik"
                 size={18}
-                color="var(--pink)"
               />
             )}
           </>

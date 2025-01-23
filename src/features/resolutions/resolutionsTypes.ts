@@ -13,11 +13,17 @@ export type Resolution = {
   can_edit: boolean;
   results: any;
   files: ApiFile[];
+  state: ResolutionState;
 };
 
 export type GetResolutionsRequest = ListRequest & {
   hoaId: number;
 };
+
+export enum ResolutionState {
+  active = 'active',
+  inactive = 'inactive',
+}
 
 export enum Vote {
   for = 'for',
@@ -33,8 +39,13 @@ export const voteDisplayMap = {
 
 export const resolutionsQueryKeys = {
   all: ['resolutions'] as const,
-  page: (page: number, pageSize?: number) => ['page', page, 'pageSize', pageSize],
-  hoa: (hoa: number) => [...resolutionsQueryKeys.all, 'hoa', `${hoa}`],
+  filters: ({ hoaId, page, pageSize }: Partial<GetResolutionsRequest>) =>
+    [
+      ...resolutionsQueryKeys.all,
+      ...(hoaId ? ['hoa', `${hoaId}`] : []),
+      ...(page ? ['page', `${page}`] : []),
+      ...(pageSize ? ['pageSize', `${pageSize}`] : []),
+    ] as const,
   details: (id: number) =>
     [...resolutionsQueryKeys.all, 'details', `${id}`] as const,
 };

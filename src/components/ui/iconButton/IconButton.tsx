@@ -14,8 +14,8 @@ const IconButton = ({
   iconName,
   onClick,
   altText,
-  size,
-  color,
+  size = 24,
+  color = 'var(--pink)',
 }: IconButtonProps) => {
   return (
     <button

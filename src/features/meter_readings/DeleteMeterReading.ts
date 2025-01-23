@@ -1,20 +1,11 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
+import api from '../../services/axiosInstance';
 
 const DeleteMeterReading = async (id: number) => {
   try {
-    const { data } = await axios.delete(
-      `${import.meta.env.VITE_APP_API_URL}/billings/meter_readings/${id}/`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
+    const { data } = await api.delete(`/billings/meter_readings/${id}/`);
     return data;
   } catch (err: any) {
-    return err.response;
+    return err.response.data;
   }
 };
 
