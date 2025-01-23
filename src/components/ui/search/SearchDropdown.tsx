@@ -222,6 +222,7 @@ interface SearchDropdownProps {
   cleanOnDisabling?: boolean;
   multiselect?: boolean;
   value?: any[];
+  placeholder?: string;
 }
 
 const SearchDropdown: React.FC<SearchDropdownProps> = ({
@@ -232,16 +233,10 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
   disabled = false,
   cleanOnDisabling = false,
   multiselect = false,
-  value,
+  placeholder,
 }) => {
   const [field, meta, helpers] = useField(name);
   const { setValue } = helpers;
-
-  useEffect(() => {
-    if (value) {
-      setValue(value);
-    }
-  }, [value, setValue]);
 
   useEffect(() => {
     if (disabled && cleanOnDisabling) {
@@ -283,7 +278,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
         isLoading={isLoading}
         value={getSelectValue()}
         onChange={handleChange}
-        placeholder="Wyszukaj..."
+        placeholder={placeholder || 'Wyszukaj...'}
         classNamePrefix={styles.input}
         menuPortalTarget={document.body}
         styles={{

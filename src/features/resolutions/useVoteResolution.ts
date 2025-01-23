@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { VoteResolution } from './VoteResolution';
 import { resolutionsQueryKeys } from './resolutionsTypes';
+import VoteResolution from './VoteResolution';
 
 export const useVoteResolution = (hoa: number, id: number) => {
   const queryClient = useQueryClient();

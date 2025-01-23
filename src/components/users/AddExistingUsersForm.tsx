@@ -73,18 +73,14 @@ export const AddExistingUsersForm = ({
 
   return (
     <FormikWrapper {...formikProps}>
-      {() => (
-        <>
-          <SearchDropdown
-            name="id"
-            isLoading={isLoading}
-            label="Użytkownicy"
-            options={usersDropdownOptions}
-            disabled={disabled}
-            cleanOnDisabling={true}
-          />
-        </>
-      )}
+      <SearchDropdown
+        name="id"
+        isLoading={isLoading}
+        label="Użytkownicy"
+        options={usersDropdownOptions}
+        disabled={disabled}
+        cleanOnDisabling={true}
+      />
     </FormikWrapper>
   );
 };

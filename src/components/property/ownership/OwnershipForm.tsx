@@ -15,6 +15,8 @@ import { setUpdatedOwnerships } from '../../../features/properties/propertiesSta
 import { Button } from '@mui/material';
 import { useNotifications } from '../../alerts/NotificationContext';
 import type { User } from '../../../features/users/usersTypes';
+import { useGetHoaUsers } from '../../../features/users/useGetHoaUsers';
+import { UserRole } from '../../../types/types';
 
 /**
  * @param {boolean} isModalOn - The `isModalOn` function is a callback function that closes the form.
@@ -46,8 +48,16 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
     null,
   );
   const [initialData, setInitialData] = useState<IOwnership | null>(null);
-  const selectedCommunity = useAppSelector(selectSelectedCommunity);
+  const hoaId = useAppSelector(selectSelectedCommunity) ?? -1;
   const { addNotification } = useNotifications();
+
+  const { isLoading, data } = useGetHoaUsers({
+    page: 1,
+    pageSize: 50,
+    hoaId: hoaId,
+    role: UserRole.Owner,
+  });
+
   useEffect(() => {
     if (ownershipId) {
       const fetchOwnershipData = async () => {
@@ -76,6 +86,14 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
     }));
   };
 
+  const ownersDropdownOptions: SearchDropdownOption[] = data
+    ? data.results?.map((user: User) => ({
+        value: user.id,
+        label: `${user.first_name} ${user.last_name} [${user.email}]`,
+        key: user.id,
+      }))
+    : [];
+
   if (isWaiting && !initialData && ownershipId) {
     return <Spinner />;
   }
@@ -99,11 +117,11 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
           </div>
         </div>
       )} */}
-      {!isSuccess && selectedCommunity && (
+      {!isSuccess && hoaId && (
         <Formik
           enableReinitialize
           initialValues={{
-            owners: initialData?.owners || [],
+            owners: initialData?.owners.map((owner) => owner.id) || [],
             start: initialData?.start || '',
             property: propertyId,
             ...(initialData?.end ? { end: initialData.end } : {}),
@@ -112,10 +130,14 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
           onSubmit={async (values, { setSubmitting }) => {
             setIsWaiting(true);
             let res;
+            const newOwnership = {
+              ...values,
+              owners: values.owners.map((o) => ({ id: o })),
+            };
             if (ownershipId) {
-              res = await UpdateOwnership(ownershipId, values);
+              res = await UpdateOwnership(ownershipId, newOwnership);
             } else {
-              res = await CreateOwnership(values);
+              res = await CreateOwnership(newOwnership);
             }
             if (res.status === 400) {
               setErrorMessages(res.data);
@@ -137,14 +159,10 @@ const OwnershipForm = ({ isModalOn, propertyId, ownershipId }: FormProps) => {
               <div className={styles.fieldGroup}>
                 <SearchDropdown
                   name="owners"
-                  endpoint={`/hoas/hoas/${selectedCommunity}/owners`}
+                  isLoading={isLoading}
                   label="Właściciele"
-                  getOptions={getUserOptions}
+                  options={ownersDropdownOptions}
                   multiselect={true}
-                  value={values.owners.map((owner: User) => ({
-                    value: owner.id,
-                    label: `${owner.first_name} ${owner.last_name} [${owner.email}]`,
-                  }))}
                 />
                 <ErrorMessage
                   name="owners"

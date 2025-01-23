@@ -15,7 +15,7 @@ export const useUploadFile = (
       addNotification(e.message);
     },
     onSuccess: () => {
-      addNotification('Pomyślnie przesłano plik');
+      addNotification('Pomyślnie przesłano plik', 'success');
 
       if (shouldInvalidate) {
         queryClient.invalidateQueries({

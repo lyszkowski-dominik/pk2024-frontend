@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import type { PropertiesRequest } from '../properties/propertiesTypes';
 import GetOwnerships from './GetOwnerships';
+import { OwnershipsRequest } from './ownershipTypes';
 
 /**
- * 
+ *
  * @param {PropertiesRequest} - The `useGetOwnerships` function fetches ownership data using a query with caching enabled.
  * @remarks
  * queryKey: ['getOwnerships'] - The `queryKey` is an array that specifies the query key for easy refetching.
@@ -17,13 +17,18 @@ import GetOwnerships from './GetOwnerships';
  * ```
  * @returns the result of the useGetOwnerships hook.
  */
-export const useGetOwnerships = ({ page, pageSize }: PropertiesRequest) => {
+export const useGetOwnerships = ({
+  page,
+  pageSize,
+  propertyId,
+}: OwnershipsRequest) => {
   return useQuery({
     queryKey: ['getOwnerships'],
     queryFn: () =>
       GetOwnerships({
         page,
         pageSize,
+        propertyId,
       }),
     retry: false,
     staleTime: 1000 * 60 * 60,

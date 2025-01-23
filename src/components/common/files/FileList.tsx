@@ -20,13 +20,13 @@ export const FileList = ({
   canEditFiles,
 }: FileListProps) => {
   const [uploadFileName, setUploadFileName] = useState<string>('');
-  const [uploadStatus, setUploadStatus] = useState<string>('');
+  const [isPendingUpload, setIsPendingUpload] = useState<boolean>();
 
   return (
     <div>
-      <h2>Pliki do pobrania</h2>
+      <h3>Pliki do pobrania</h3>
       <div>
-        {files.length === 0 && uploadStatus !== 'pending' && (
+        {files.length === 0 && !isPendingUpload && (
           <span>Brak plików do pobrania</span>
         )}
         <table>
@@ -39,7 +39,7 @@ export const FileList = ({
                 file={file}
               />
             ))}
-            {uploadStatus === 'pending' && (
+            {isPendingUpload && (
               <FileListUploadEntry fileName={uploadFileName} />
             )}
           </tbody>
@@ -50,7 +50,7 @@ export const FileList = ({
             recordId={recordId}
             invalidateQuery={invalidateQuery}
             setFileName={setUploadFileName}
-            setUploadStatus={setUploadStatus}
+            setIsPendingUpload={setIsPendingUpload}
           />
         )}
       </div>

@@ -2,14 +2,14 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Spinner from '../../ui/spinner/Spinner';
 import styles from '../AddPropertyForm.module.scss';
-import { useEffect, useState, type SetStateAction } from 'react';
+import { useState, type SetStateAction } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { selectSelectedCommunity } from '../../../features/communities/sharedDataSlice';
 import { setUpdatedMeterReadings } from '../../../features/properties/propertiesState';
-import { type IMeterReading } from '../../../features/billings/billingTypes';
-import GetMeterReadingById from '../../../features/meter_readings/GetMeterReadingById';
+
 import { UpdateMeterReading } from '../../../features/meter_readings/UpdateMeterReadings';
-import { CreateMeterReading } from '../../../features/meters/CreateMeter';
+import { CreateMeterReading } from '../../../features/meter_readings/CreateMeterReading';
+import { useGetMeterReadingById } from '../../../features/meter_readings/useGetMeterReadingById';
 
 type FormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;
@@ -30,31 +30,12 @@ const MeterReadingForm = ({ isModalOn, meterId, readingId }: FormProps) => {
   const [errorMessages, setErrorMessages] = useState<{ errors: string } | null>(
     null,
   );
-  const [initialData, setInitialData] = useState<IMeterReading | null>(null);
   const selectedCommunity = useAppSelector(selectSelectedCommunity);
+  const { data: existingReading, isPending } = useGetMeterReadingById(
+    readingId ?? 0,
+  );
 
-  useEffect(() => {
-    if (readingId) {
-      const fetchReadingData = async () => {
-        setIsWaiting(true);
-        try {
-          const res = await GetMeterReadingById(readingId);
-          if (res?.status === 200) {
-            setInitialData(res.data);
-          } else {
-            setErrorMessages(res?.data);
-          }
-        } catch (error: any) {
-          setErrorMessages(error);
-        } finally {
-          setIsWaiting(false);
-        }
-      };
-      fetchReadingData();
-    }
-  }, [readingId]);
-
-  if (isWaiting && !initialData && readingId) {
+  if (readingId && isPending) {
     return <Spinner />;
   }
 
@@ -82,15 +63,15 @@ const MeterReadingForm = ({ isModalOn, meterId, readingId }: FormProps) => {
           enableReinitialize
           initialValues={{
             meter: meterId,
-            reading_date: initialData?.reading_date || '',
-            reading_value: initialData?.reading_value || 0,
+            reading_date: existingReading?.reading_date || '',
+            reading_value: existingReading?.reading_value || 0,
           }}
           validationSchema={readingSchema}
           onSubmit={async (values, { setSubmitting }) => {
             setIsWaiting(true);
             let res;
             if (readingId) {
-              res = await UpdateMeterReading(readingId, {
+              res = await UpdateMeterReading({
                 ...values,
                 reading_value: `${values.reading_value}`,
               });
@@ -115,7 +96,7 @@ const MeterReadingForm = ({ isModalOn, meterId, readingId }: FormProps) => {
         >
           {({ isSubmitting, values }) => (
             <Form className={styles.form}>
-              <h2>{`Odczyt licznika: ${initialData?.meter_number}`}</h2>
+              <h2>{`Odczyt licznika: ${existingReading?.meter_number}`}</h2>
               <div className={styles.fieldGroup}>
                 <label htmlFor="reading_date">Data odczytu:</label>
                 <Field

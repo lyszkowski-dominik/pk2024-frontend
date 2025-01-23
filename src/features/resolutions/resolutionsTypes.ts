@@ -13,11 +13,17 @@ export type Resolution = {
   can_edit: boolean;
   results: any;
   files: ApiFile[];
+  state: ResolutionState;
 };
 
 export type GetResolutionsRequest = ListRequest & {
   hoaId: number;
 };
+
+export enum ResolutionState {
+  active = 'active',
+  inactive = 'inactive',
+}
 
 export enum Vote {
   for = 'for',

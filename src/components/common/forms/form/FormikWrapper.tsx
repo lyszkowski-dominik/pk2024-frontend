@@ -7,7 +7,7 @@ import { ReactNode } from 'react';
 
 export type FormikWrapperProps<T> = {
   header?: string;
-  initialValues: T;
+  initialValues: any;
   validationSchema?: Yup.Schema<T>;
   disabled?: boolean;
   onSubmit: (values: T, { setSubmitting, setErrors }: FormikHelpers<T>) => void;
@@ -41,9 +41,7 @@ const FormikWrapper = <T extends object>({
               <FormButtons
                 onCancel={onCancel}
                 submitLabel={submitLabel}
-                submitDisabled={
-                  formik.isSubmitting || !formik.isValid || disabled
-                }
+                submitDisabled={formik.isSubmitting || disabled}
                 cancelDisabled={formik.isSubmitting || disabled}
                 isLoading={formik.isSubmitting}
               />

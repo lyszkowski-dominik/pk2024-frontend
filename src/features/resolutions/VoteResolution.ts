@@ -8,7 +8,7 @@ type VoteResolutionData = {
 
 const VoteResolution = async ({ id, choice }: VoteResolutionData) => {
   try {
-    const { data } = await api.patch(`/resolutions/resolutions/${id}/vote/`, {
+    const { data } = await api.post(`/resolutions/resolutions/${id}/vote/`, {
       choice,
     });
     return data as Resolution;
@@ -17,4 +17,4 @@ const VoteResolution = async ({ id, choice }: VoteResolutionData) => {
   }
 };
 
-export { VoteResolution };
+export default VoteResolution;

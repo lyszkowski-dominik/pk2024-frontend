@@ -23,13 +23,18 @@ h1 {
 
 .fieldGroup {
   margin-bottom: 15px;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: var(--gray-800);
+.label {
+  margin-bottom: 0.1rem;
+  padding-left: 5px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  text-align: left;
 }
 
 .field {

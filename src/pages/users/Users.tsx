@@ -12,6 +12,7 @@ import UsersList from '../../components/users/UsersList';
 import { AddExistingUsersForm } from '../../components/users/AddExistingUsersForm';
 import AddUserForm from '../../components/users/AddUserForm';
 import InputField from '../../components/common/forms/inputField/InputField';
+import { usersQueryKeys } from '../../features/users/usersTypes';
 
 export interface UsersProps {
   type: UserRole;
@@ -67,7 +68,10 @@ const Users = ({ type }: UsersProps) => {
               </h1>
               <FileUploadForm
                 url={`/auth/users/import/?hoa=${hoaID}&role=${type}`}
-                setModalOn={setModalOn}
+                onClose={() => setModalOn(false)}
+                queryKeys={[
+                  usersQueryKeys.filters({ hoaId: hoaID, role: type }),
+                ]}
               />
             </>
           )}

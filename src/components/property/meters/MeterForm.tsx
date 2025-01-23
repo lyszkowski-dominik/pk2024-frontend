@@ -9,8 +9,8 @@ import GetMeterById from '../../../features/meters/GetMeterById';
 import type { IMeter } from '../../../features/billings/billingTypes';
 import { MeterType } from '../../../features/billings/billingTypes';
 import { UpdateMeter } from '../../../features/meters/UpdateMeter';
-import { CreateMeter } from '../../../features/meter_readings/CreateMeterReading';
 import { getMeterType } from '../propertyUtils';
+import { CreateMeter } from '../../../features/meters/CreateMeter';
 
 type FormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;

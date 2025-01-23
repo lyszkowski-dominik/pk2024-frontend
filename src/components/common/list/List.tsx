@@ -20,29 +20,19 @@ export enum ColumnType {
   TEXT,
   DATE,
   DATETIME,
+  AMOUNT,
   ACTION,
 }
 
-/**
- * The type `ListProps` defines the structure of the props for the `List` component.
- * @param {ApiPaginatedResult<any>} data - The `data` property represents the paginated data to be displayed in the list.
- * @param {ColumnDef[]} columns - The `columns` property represents the column definitions for the list.
- * @param {string} nameField - The `nameField` property represents the field in the data that contains the name of the record.
- * @param {function} onDelete - The `onDelete` property represents the function to be called when a record is deleted.
- * @param {function} onPageChange - The `onPageChange` property represents the function to be called when the page changes.
- * @param {boolean} isFetching - The `isFetching` property represents whether the data is being fetched.
- * @param {number} page - The `page` property represents the current page number.
- * @param {number} pageSize - The `pageSize` property represents the number of records to be displayed per page.
- * @param {function} getDetailsHref - The `getDetailsHref` property represents the function to get the details URL for a record.
- */
 export type ListProps<T> = {
-  data: ApiPaginatedResult<T>;
+  data: ApiPaginatedResult<T> | any[];
   columns: ColumnDef[];
   onDelete?: (record: T) => void;
-  onPageChange: (pageNumber: number) => void;
-  page: number;
-  pageSize: number;
+  onPageChange?: (pageNumber: number) => void;
+  page?: number;
+  pageSize?: number;
   onRowClick?: (rowData: T) => void;
+  noPagination?: boolean;
 };
 
 const List = <T,>({
@@ -53,11 +43,15 @@ const List = <T,>({
   page,
   pageSize,
   onRowClick,
+  noPagination = false,
 }: ListProps<T>) => {
   const isClickable = !!onRowClick;
+  const results = Array.isArray(data) ? data : data?.results;
 
   const pageCount = Math.ceil(
-    data?.count !== undefined ? data?.count / pageSize : 0,
+    !Array.isArray(data) && data?.count !== undefined && !!pageSize
+      ? data?.count / pageSize
+      : 0,
   );
 
   const renderRow = (record: any) => {
@@ -67,6 +61,8 @@ const List = <T,>({
         value = new Date(value).toLocaleString();
       } else if (column.type === ColumnType.DATE) {
         value = new Date(value).toLocaleDateString();
+      } else if (column.type === ColumnType.AMOUNT) {
+        value = `${value} zł`;
       }
       return <td key={column.name}>{value}</td>;
     });
@@ -82,7 +78,10 @@ const List = <T,>({
           <td>
             <IconButton
               iconName="delete"
-              onClick={() => onDelete(record)}
+              onClick={(event) => {
+                event.stopPropagation();
+                onDelete(record);
+              }}
               altText="Usuń"
             />
           </td>
@@ -94,7 +93,7 @@ const List = <T,>({
   };
 
   const pageChangeHandler = (selectedItem: { selected: number }) => {
-    onPageChange(selectedItem.selected + 1);
+    onPageChange?.(selectedItem.selected + 1);
   };
 
   return (
@@ -109,22 +108,24 @@ const List = <T,>({
               {onDelete ? <th></th> : ''}
             </tr>
           </thead>
-          <tbody>{data?.results?.map((record) => renderRow(record))}</tbody>
+          <tbody>{results?.map((record) => renderRow(record))}</tbody>
         </table>
-        <ReactPaginate
-          previousLabel={'<'}
-          nextLabel={'>'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={pageChangeHandler}
-          containerClassName={styles.pagination}
-          activeClassName={styles.active}
-          disabledClassName={styles.disabled}
-          initialPage={page - 1}
-        />
+        {!noPagination && page && (
+          <ReactPaginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={pageChangeHandler}
+            containerClassName={styles.pagination}
+            activeClassName={styles.active}
+            disabledClassName={styles.disabled}
+            initialPage={page - 1}
+          />
+        )}
       </div>
     </>
   );

@@ -1,25 +1,13 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
-import type { IMeterReading } from '../billings/billingTypes';
+import type { IMeter } from '../billings/billingTypes';
+import api from '../../services/axiosInstance';
 
-const CreateMeterReading = async (
-  formData: Partial<Omit<IMeterReading, 'id'>>,
-) => {
+const CreateMeter = async (formData: Partial<Omit<IMeter, 'id'>>) => {
   try {
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/billings/meters/`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
+    const { data } = await api.post(`/billings/meters/`, formData);
     return data;
   } catch (err: any) {
-    return err.response;
+    return err.response.data;
   }
 };
 
-export { CreateMeterReading };
+export { CreateMeter };
