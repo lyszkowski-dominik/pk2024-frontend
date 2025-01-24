@@ -41,11 +41,12 @@ export const Rates = () => {
   function changePage(pageNumber: number) {
     setPage(pageNumber);
   }
-  const { isLoading, data, refetch } = useGetRates({
+  const { isLoading, data, refetch, isError, error } = useGetRates({
     hoaId: hoaID,
     page,
     pageSize: 10,
   });
+  console.log(isError, error);
   const handleRowClick = (rate: Rate) => {
     setEditModalData(rate);
     setSelectedRate(rate);
@@ -60,8 +61,9 @@ export const Rates = () => {
         />
       )}
       <div>
+        {isError && <div>{error instanceof Error ? error.message : 'Nie masz wystarczających uprawnień.'}</div>}
         <div style={{ display: 'flex', justifyContent: 'center', width: "100%" }}>
-          {isManager && (
+          {isManager && !isError && !isLoading && (
             <IconButton
               iconName="add"
               onClick={() => {
@@ -81,7 +83,7 @@ export const Rates = () => {
                 <AddRateModal setModalOn={setModalOn} refetchRates={refetch} />
               </div>
             )}
-            
+
             {openModal === ModalType.Edit && editModalData != null && (
               <div className={styles.addRateContainer}>
                 {editModalData && <EditRateModal data={editModalData} UpdateRate={UpdateRate} setModalOn={setModalOn} refetchRates={refetch} />}
