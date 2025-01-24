@@ -22,7 +22,7 @@ export const Rates = () => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const [selectedRate, setSelectedRate] = useState<Rate | null>(null);
   const userRole = useAppSelector(selectRoles);
-  const isManager = userRole === UserRole.Manager || UserRole.Admin;
+  const isManager = userRole === UserRole.Manager || userRole === UserRole.Admin ? true : false;
   const dispatch = useAppDispatch();
   const { page, setPage, pageSize } = usePagination();
   const [openModal, setOpenModal] = useState({});
@@ -46,7 +46,7 @@ export const Rates = () => {
     page,
     pageSize: 10,
   });
-  console.log(isError, error);
+  console.log(userRole, isManager);
   const handleRowClick = (rate: Rate) => {
     setEditModalData(rate);
     setSelectedRate(rate);
