@@ -1,0 +1,107 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  
+    h1 {
+      margin-bottom: 2rem;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      width:100%;
+  
+      .form_control {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+  
+        label {
+          font-weight: bold;
+        }
+  
+        input {
+          width: 50%;
+          padding: 0.65rem 0.5rem;
+          font-size: 1rem;
+          border: 2px solid var(--gray-200);
+          background-color: var(--gray-100);
+          color: var(--gray-800);
+          border-radius: var(--border-radius);
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+        }
+        select{
+            width: 50%;
+            padding: 0.65rem 0.5rem;
+            font-size: 1rem;
+            border: 2px solid var(--gray-200);
+            background-color: var(--gray-100);
+            border-radius: var(--border-radius);
+        }
+      }
+  
+      .invalid .feedback {
+        color: var(--red);
+        font-size: 0.8em;
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+        display: block;
+        text-align: center;
+      }
+  
+      .invalid input[type="password"] {
+        border: 1px solid var(--red);
+      }
+  
+      .valid {
+        color: var(--green);
+        font-size: 0.8em;
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+  
+  .cancel_button {
+    margin-top: 3rem !important;
+    border-radius: 15px;
+    padding: 10px;
+    border: var(--black) solid 1px;
+    background-color: var(--gray-100);
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 50%;
+  
+    &:hover {
+      color: var(--black);
+      background-color: var(--red);
+    }
+  }
+  
+  .waiting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  
+  .error {
+    color: var(--red);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .success {
+    color: var(--green);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    text-align: center;
+  }

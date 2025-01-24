@@ -21,6 +21,7 @@ import Requests from './pages/requests/Requests';
 import ReqeustDetails from './pages/requests/RequestDetails';
 import Users from './pages/users/Users';
 import { UserRole } from './types/types';
+import { Rates } from './pages/rates/Rates';
 
 const App = () => {
   return (
@@ -80,6 +81,10 @@ const App = () => {
           <Route
             path="/hoa/:communityId/requests/:requestId"
             element={<ReqeustDetails key="request" />}
+          />
+          <Route
+            path="/hoa/:communityId/rates/"
+            element={<Rates />}
           />
           <Route path="*" element={<NotFound404 />} />
         </Route>

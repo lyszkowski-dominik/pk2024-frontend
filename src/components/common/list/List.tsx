@@ -3,6 +3,7 @@ import styles2 from './List.module.scss';
 import ReactPaginate from 'react-paginate';
 import type { ApiPaginatedResult } from '../../../types/types';
 import IconButton from '../../ui/iconButton/IconButton';
+import { RateType } from '../../../features/billings/billingTypes';
 
 /**
  * The type `ColumnDef` defines the structure of the column definition object.
@@ -21,6 +22,7 @@ export enum ColumnType {
   DATE,
   DATETIME,
   AMOUNT,
+  ENUM,
   ACTION,
 }
 
@@ -63,6 +65,9 @@ const List = <T,>({
         value = new Date(value).toLocaleDateString();
       } else if (column.type === ColumnType.AMOUNT) {
         value = `${value} zł`;
+      } else if (column.type === ColumnType.ENUM) {
+        // use RateType[value] to get the enum value
+        value = RateType[ value as keyof typeof RateType ];
       }
       return <td key={column.name}>{value}</td>;
     });
