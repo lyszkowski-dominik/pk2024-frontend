@@ -110,8 +110,9 @@ export const EditRateModal = ({ data, UpdateRate, setModalOn, refetchRates }: Ed
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                     >
-                        <option value="unit">Unit</option>
-                        <option value="other">Other</option>
+                        {Object.entries(RateType).map(([key, value]) => (
+                            <option key={key} value={key}>{value}</option>
+                        ))}
                     </select>
                     {formik.touched.type && formik.errors.type ? (
                         <div className={styles.error}>{formik.errors.type}</div>
@@ -126,8 +127,9 @@ export const EditRateModal = ({ data, UpdateRate, setModalOn, refetchRates }: Ed
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                         >
-                            <option value="meter1">Meter 1</option>
-                            <option value="meter2">Meter 2</option>
+                            {Object.entries(MeterType).map(([key, value]) => (
+                                <option key={key} value={key}>{value}</option>
+                            ))}
                         </select>
                         {formik.touched.applies_to && formik.errors.applies_to ? (
                             <div className={styles.error}>{formik.errors.applies_to}</div>
