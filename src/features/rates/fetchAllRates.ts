@@ -9,7 +9,8 @@ const fetchAllRates = async ({
 }: RatesRequest) => {
   try {
     const response = await api.get(
-      `/billings/rates/?page=${page}&page_size=${pageSize}&hoa=${hoaId}${onlyOld ? '&active=false' : '&active=true'}`,
+      // `/billings/rates/?page=${page}&page_size=${pageSize}&hoa=${hoaId}${onlyOld ? '&active=false' : '&active=true'}`,
+      `/billings/rates/?page=${page}&page_size=${pageSize}&hoa=${hoaId}${onlyOld ? '&active=false' : ''}`,
     );
     return response.data as ApiPaginatedResult<Rate>;
   } catch (err: any) {

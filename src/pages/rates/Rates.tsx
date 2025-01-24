@@ -139,7 +139,7 @@ export const Rates = () => {
                 //     setDeleteModalOn(true);
                 //   },
                 // })}
-                onRowClick={handleRowClick} 
+                // onRowClick={handleRowClick} 
                 />
             </>
           )
