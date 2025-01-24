@@ -21,7 +21,7 @@ export interface UsersProps {
 const Users = ({ type }: UsersProps) => {
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const userRole = useAppSelector(selectRoles);
-  const canAddManager = userRole === UserRole.Manager || UserRole.Admin;
+  const canAddManager = userRole === UserRole.Manager || userRole === UserRole.Admin;
   const [addingNew, setAddingNew] = useState(false);
   const [isModalOn, setModalOn] = useState(false);
   const [openModal, setOpenModal] = useState({});
