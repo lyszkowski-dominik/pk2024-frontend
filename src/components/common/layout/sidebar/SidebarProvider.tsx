@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { ISidebarElement } from './Sidebar';
+import { useAppSelector } from '../../../../app/hooks';
+import { UserRole } from '../../../../types/types';
+import { selectRoles } from '../../../loginForm/loginFormSlice';
 
 /**
  * The `SidebarContextType` interface defines the structure of the sidebar context.
@@ -54,14 +57,10 @@ const defaultSidebarValues: SidebarContextType = {
       title: 'Zgłoszenia',
       path: 'requests',
     },
-    {
-      title:'Stawki',
-      path: 'rates'
-    }
   ],
-  setElements: () => {},
+  setElements: () => { },
   activeItem: '',
-  setActiveItem: () => {},
+  setActiveItem: () => { },
 };
 
 const SidebarContext = createContext(defaultSidebarValues);
@@ -75,11 +74,30 @@ interface SidebarProviderProps {
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({
   children,
 }) => {
+  const userRole = useAppSelector(selectRoles);
+  const isManager = userRole === UserRole.Manager || userRole === UserRole.Admin;
+
+  const [elements, setElements] = useState(defaultSidebarValues);
+
+  useEffect(() => {
+    if (isManager) {
+      setElements({
+        ...defaultSidebarValues,
+        elements: [
+          ...defaultSidebarValues.elements,
+          {
+            title: 'Stawki',
+            path: 'rates',
+          },
+        ],
+      });
+    }
+  }, [isManager]);
   // const [activeItem, setActiveItem] = useState('Właściciele');
   // const [elements, setElements] = useState<ISidebarElement[]>([]);
 
   return (
-    <SidebarContext.Provider value={defaultSidebarValues}>
+    <SidebarContext.Provider value={elements}>
       {children}
     </SidebarContext.Provider>
   );
