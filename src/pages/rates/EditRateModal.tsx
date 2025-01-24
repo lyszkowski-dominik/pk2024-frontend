@@ -6,17 +6,20 @@ import { Rate } from '../../features/rates/ratesTypes';
 
 export type EditRateProps = {
     data: Rate;
-    UpdateRate: (updatedRate: Rate) => void;
+    UpdateRate: (updatedRate: IRate) => void;
     setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
     refetchRates: () => void;
 }
 export const EditRateModal = ({ data, UpdateRate, setModalOn, refetchRates }: EditRateProps) => {
+console.log(data)
+
     const [formData, setFormData] = useState({
         name: data.name,
         effective_date: data.effective_date,
         rate_per_unit: data.rate_per_unit,
+        end_date: data.end_date,
         type: data.type as RateType,
-        applies_to: data.applies_to,
+        applies_to: data.applies_to as MeterType | undefined,
     });
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -28,10 +31,16 @@ export const EditRateModal = ({ data, UpdateRate, setModalOn, refetchRates }: Ed
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const updatedRate = { ...data, ...formData };
+        if(updatedRate.type as string !== 'unit') {
+            delete updatedRate?.applies_to;
+        }
+        console.log(updatedRate)
+        
         await UpdateRate(updatedRate);
         refetchRates();
         setModalOn(false);
     };
+    console.log(formData.type)
     return (
         <div className={styles.container}>
             <h1>{data.id === 0 ? 'Dodaj nową stawkę' : `Edycja stawki: ${formData.name}`}</h1>
@@ -51,6 +60,15 @@ export const EditRateModal = ({ data, UpdateRate, setModalOn, refetchRates }: Ed
                         type="date"
                         name="effective_date"
                         value={formData.effective_date}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className={styles.form_control}>
+                    <label>Data końca:</label>
+                    <input
+                        type="date"
+                        name="end_date"
+                        value={formData.end_date}
                         onChange={handleChange}
                     />
                 </div>
@@ -75,7 +93,8 @@ export const EditRateModal = ({ data, UpdateRate, setModalOn, refetchRates }: Ed
                         ))}
                     </select>
                 </div>
-                {formData.type === RateType.unit && (
+                
+                {formData.type as string === 'unit' && (
                     <div className={styles.form_control}>
                         <label>Dotyczy:</label>
                         <select

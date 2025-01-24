@@ -5,6 +5,7 @@ import { selectSelectedCommunity } from '../../features/communities/sharedDataSl
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AddRate } from '../../features/rates/addRate';
+import { Button } from '@mui/material';
 
 export type AddRateProps = {
     setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,18 +24,27 @@ export const AddRateModal = ({ setModalOn, refetchRates }: AddRateProps) => {
         initialValues: {
             name: '',
             effective_date: '',
+            end_date: '',
             rate_per_unit: 0,
-            type: 'unit', // Use key of RateType
-            applies_to: 'cold_water', // Use key of MeterType
+            type: 'unit',
+            applies_to: 'cold_water',
         },
         validationSchema: rateSchema,
         onSubmit: async (values) => {
+            const { end_date, applies_to, ...rest } = values;
             const newRate: IRate = {
-                ...values,
+                ...rest,
                 hoa: hoaID,
                 type: values.type as RateType,
-                applies_to: values.applies_to as MeterType,
+                // applies_to: values.applies_to as MeterType,
             };
+            if (end_date) {
+                newRate.end_date = end_date;
+            }
+            console.log(values.type)
+            if (values.type === 'unit') {
+                newRate.applies_to = values.applies_to as MeterType;
+            }
             await AddRate(newRate);
             refetchRates();
             setModalOn(false);
@@ -68,6 +78,19 @@ export const AddRateModal = ({ setModalOn, refetchRates }: AddRateProps) => {
                     />
                     {formik.touched.effective_date && formik.errors.effective_date ? (
                         <div className={styles.error}>{formik.errors.effective_date}</div>
+                    ) : null}
+                </div>
+                <div className={styles.form_control}>
+                    <label>Data końca:</label>
+                    <input
+                        type="date"
+                        name="end_date"
+                        value={formik.values.end_date}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.end_date && formik.errors.end_date ? (
+                        <div className={styles.error}>{formik.errors.end_date}</div>
                     ) : null}
                 </div>
                 <div className={styles.form_control}>
@@ -112,7 +135,10 @@ export const AddRateModal = ({ setModalOn, refetchRates }: AddRateProps) => {
                     </div>
                 )}
                 <div>
-                    <button type="submit">Zapisz</button>
+                    <div>
+                        <Button variant="contained" type="submit">Zapisz</Button>
+                        <Button type="reset" style={{ color: '#e074c1' }} onClick={() => setModalOn(false)}>Anuluj</Button>
+                    </div>
                 </div>
             </form>
         </div>

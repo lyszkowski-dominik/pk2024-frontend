@@ -16,13 +16,14 @@ import { UpdateRate } from '../../features/rates/updateRate';
 import { useGetRates } from '../../features/rates/useGetRates';
 import { ratesColumns } from '../../features/rates/utils';
 import { AddRateModal } from './AddRateModal';
+import { useGetOldRates } from '../../features/rates/useGetOldRates';
 
 export const Rates = () => {
   const [deleteModalOn, setDeleteModalOn] = useState(false);
   const hoaID = useAppSelector(selectSelectedCommunity) || -1;
   const [selectedRate, setSelectedRate] = useState<Rate | null>(null);
   const userRole = useAppSelector(selectRoles);
-  const isManager = userRole === UserRole.Manager || userRole === UserRole.Admin ? true : false;
+  const isManager = userRole === UserRole.Manager || userRole === UserRole.Admin;
   const dispatch = useAppDispatch();
   const { page, setPage, pageSize } = usePagination();
   const [openModal, setOpenModal] = useState({});
@@ -46,7 +47,16 @@ export const Rates = () => {
     page,
     pageSize: 10,
   });
-  console.log(userRole, isManager);
+
+  const { data: oldRates, isLoading: oldIsLoading } = useGetOldRates({
+    hoaId: hoaID,
+    page,
+    pageSize,
+    onlyOld: true,
+  });
+
+  console.log('old rates: ', oldRates)
+
   const handleRowClick = (rate: Rate) => {
     setEditModalData(rate);
     setSelectedRate(rate);
@@ -70,8 +80,9 @@ export const Rates = () => {
                 setOpenModal(ModalType.Add);
                 setModalOn(true);
               }}
-              altText="Add User"
+              altText="Add Rate"
               size={24}
+              margin={10}
               color="var(--pink)"
             />
           )}
@@ -108,6 +119,29 @@ export const Rates = () => {
                 },
               })}
               onRowClick={handleRowClick} />
+          )
+        )}
+        {oldIsLoading ? (
+          <Spinner />
+        ) : (
+          oldRates && (
+            <>
+              <h1>Stawki historyczne</h1>
+              <List
+                data={oldRates}
+                columns={ratesColumns}
+                onPageChange={changePage}
+                page={page}
+                pageSize={pageSize}
+                // {...(isManager && {
+                //   onDelete: (rate: Rate) => {
+                //     setSelectedRate(rate);
+                //     setDeleteModalOn(true);
+                //   },
+                // })}
+                onRowClick={handleRowClick} 
+                />
+            </>
           )
         )}
       </div>

@@ -7,6 +7,7 @@ type IconButtonProps = {
   onClick: (event?: any) => void;
   altText: string;
   size?: number;
+  margin?: number;
   color?: string;
 };
 
@@ -15,6 +16,7 @@ const IconButton = ({
   onClick,
   altText,
   size = 24,
+  margin = 0,
   color = 'var(--pink)',
 }: IconButtonProps) => {
   return (
@@ -22,7 +24,7 @@ const IconButton = ({
       className={styles.iconButton}
       onClick={onClick}
       aria-label={altText}
-      style={{ width: size }}
+      style={{ width: size, marginBottom: margin }}
     >
       <Icon name={iconName} size={size} color={color} className={styles.icon} />
     </button>

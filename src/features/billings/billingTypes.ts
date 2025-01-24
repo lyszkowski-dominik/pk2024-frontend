@@ -28,7 +28,8 @@ export interface IRate {
   type: RateType;
   rate_per_unit: number;
   effective_date: string;
-  applies_to: MeterType;
+  end_date?: string;
+  applies_to?: MeterType;
   hoa: number;
 }
 

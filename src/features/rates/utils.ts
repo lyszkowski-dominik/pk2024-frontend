@@ -16,13 +16,18 @@ export const ratesColumns: ColumnDef[] = [
     type: ColumnType.TEXT,
   },
   {
+    name: 'end_date',
+    label: 'Data końca',
+    type: ColumnType.TEXT,
+  },
+  {
     name: 'rate_per_unit',
     label: 'Stawka za jednostkę',
     type: ColumnType.TEXT,
   },
-  {
-    name: 'delete-icon',
-    label: '',
-    type: ColumnType.ACTION,
-  },
+  // {
+  //   name: 'delete-icon',
+  //   label: '',
+  //   type: ColumnType.ACTION,
+  // },
 ];

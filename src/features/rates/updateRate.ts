@@ -1,7 +1,7 @@
 import api from '../../services/axiosInstance';
-import { Rate } from './ratesTypes';
+import { IRate } from '../billings/billingTypes';
 
-const UpdateRate = async (data: Rate) => {
+const UpdateRate = async (data: IRate) => {
     const test = data;
     console.log(test);
     try {
