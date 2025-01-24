@@ -55,8 +55,6 @@ export const Rates = () => {
     onlyOld: true,
   });
 
-  console.log('old rates: ', oldRates)
-
   const handleRowClick = (rate: Rate) => {
     setEditModalData(rate);
     setSelectedRate(rate);

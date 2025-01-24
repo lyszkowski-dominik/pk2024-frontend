@@ -35,7 +35,7 @@ export const EditRateModal = ({ data, UpdateRate, setModalOn, refetchRates }: Ed
         },
         validationSchema,
         onSubmit: async (values) => {
-            console.log(values);
+            console.log("submitting");
             const updatedRate = { ...data, ...values };
             if (updatedRate.type as string !== 'unit') {
                 delete updatedRate?.applies_to;
