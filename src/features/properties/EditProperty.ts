@@ -9,7 +9,7 @@ const EditProperty = async (formData: Partial<Property>) => {
     );
     return data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 

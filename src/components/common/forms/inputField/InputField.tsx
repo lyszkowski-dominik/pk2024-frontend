@@ -2,6 +2,7 @@ import type React from 'react';
 import dayjs from 'dayjs';
 
 import styles from './InputField.module.scss';
+import { useState } from 'react';
 
 /**
  * The type `InputFieldProps` defines props for an input field component in TypeScript React.
@@ -68,6 +69,7 @@ const InputField = ({
   autoFocus,
   units,
 }: InputFieldProps) => {
+  const [rawInput, setRawInput] = useState<string | null>(null);
   const labelClassName = error
     ? styles.label + ' ' + styles['error-label']
     : styles.label;
@@ -76,17 +78,30 @@ const InputField = ({
     ? styles.input + ' ' + styles['error-input']
     : styles.input;
 
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (type === 'date') {
+      setRawInput(e.target.value);
+    }
+    onChange(e);
+  };
+
   const formattedValue =
-    value === null || value === undefined || value === ''
-      ? ''
-      : type === 'date'
-        ? dayjs(value).format('YYYY-MM-DD')
-        : value;
+    rawInput !== null
+      ? rawInput
+      : value === null || value === undefined || value === ''
+        ? ''
+        : type === 'date'
+          ? dayjs(value).format('YYYY-MM-DD')
+          : value;
 
   const formattedMin =
     min && type === 'date' ? dayjs(min).format('YYYY-MM-DD') : min;
   const formattedMax =
     max && type === 'date' ? dayjs(max).format('YYYY-MM-DD') : max;
+
+  const handleBlur = () => {
+    setRawInput(null);
+  };
 
   return (
     <div className={`${styles['form-control']} ${styles[type]}`}>
@@ -101,7 +116,8 @@ const InputField = ({
           value={formattedValue}
           min={formattedMin}
           max={formattedMax}
-          onChange={onChange}
+          onChange={handleInputChange}
+          onBlur={handleBlur}
           onFocus={onFocus}
           placeholder={placeholder}
           className={inputClassName}

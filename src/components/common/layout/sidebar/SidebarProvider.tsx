@@ -49,10 +49,10 @@ const defaultSidebarValues: SidebarContextType = {
       title: 'Zarządcy',
       path: 'managers',
     },
-    // {
-    //   title: 'Rachunki',
-    //   path: 'bills',
-    // },
+    {
+      title: 'Opłaty',
+      path: 'charges',
+    },
     {
       title: 'Zgłoszenia',
       path: 'requests',

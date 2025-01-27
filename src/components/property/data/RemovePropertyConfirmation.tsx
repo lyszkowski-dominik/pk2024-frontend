@@ -26,7 +26,7 @@ const RemovePropertyConfirmation = ({
         onClose();
         addNotification('Lokal został usunięty.', 'success');
         if (currentProperty === propertyId) {
-          navigate('..');
+          navigate('.');
         }
       },
       onError: (error: any) => {

@@ -12,7 +12,7 @@ const EditOwnership = async (id: number, formData: Partial<IOwnership>) => {
     });
     return data;
   } catch (err: any) {
-    return err.response;
+    throw err.response.data;
   }
 };
 

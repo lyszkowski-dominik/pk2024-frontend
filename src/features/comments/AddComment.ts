@@ -36,7 +36,7 @@ const AddComment = async (data: CreateCommentData) => {
     const res = await api.post(`/requests/comments/`, data);
     return res.data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 

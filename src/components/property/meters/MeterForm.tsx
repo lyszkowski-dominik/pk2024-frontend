@@ -5,12 +5,12 @@ import styles from '../AddPropertyForm.module.scss';
 import { useEffect, useState, type SetStateAction } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
 import { setUpdatedMeters } from '../../../features/properties/propertiesState';
-import GetMeterById from '../../../features/meters/GetMeterById';
+import GetMeterById from '../../../features/meters/metersDevices/GetMeterById';
 import type { IMeter } from '../../../features/billings/billingTypes';
 import { MeterType } from '../../../features/billings/billingTypes';
-import { UpdateMeter } from '../../../features/meters/UpdateMeter';
+import { UpdateMeter } from '../../../features/meters/metersDevices/UpdateMeter';
 import { getMeterType } from '../propertyUtils';
-import { CreateMeter } from '../../../features/meters/CreateMeter';
+import { CreateMeter } from '../../../features/meters/metersDevices/CreateMeter';
 
 type FormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;

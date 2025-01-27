@@ -209,7 +209,7 @@ import formStyles from '../../common/forms/form/Form.module.scss';
 import Spinner from '../spinner/Spinner';
 
 export interface SearchDropdownOption {
-  value: number | string;
+  value: number | string | object;
   label: string;
 }
 
@@ -223,6 +223,11 @@ interface SearchDropdownProps {
   multiselect?: boolean;
   value?: any[];
   placeholder?: string;
+  onChange?: (
+    option:
+      | SingleValue<SearchDropdownOption>
+      | MultiValue<SearchDropdownOption>,
+  ) => void;
 }
 
 const SearchDropdown: React.FC<SearchDropdownProps> = ({
@@ -234,6 +239,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
   cleanOnDisabling = false,
   multiselect = false,
   placeholder,
+  onChange,
 }) => {
   const [field, meta, helpers] = useField(name);
   const { setValue } = helpers;
@@ -257,6 +263,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
     } else {
       setValue((selectedOption as SearchDropdownOption)?.value || null);
     }
+    onChange?.(selectedOption);
   };
 
   const getSelectValue = () => {

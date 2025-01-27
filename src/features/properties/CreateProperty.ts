@@ -14,7 +14,7 @@ const CreateProperty = async (formData: Partial<Property>) => {
     const { data } = await api.post(`/hoas/properties/`, formData);
     return data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 

@@ -1,6 +1,9 @@
 .tableContainer {
   width: 100%;
   overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .table {
@@ -9,7 +12,8 @@
   background-color: var(--white);
   color: var(--black);
 
-  th, td {
+  th,
+  td {
     padding: 12px 15px;
     text-align: center;
     vertical-align: top;

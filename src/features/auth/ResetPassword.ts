@@ -52,6 +52,6 @@ export const ResetPassword = async ({
     return data;
   } catch (err: any) {
     console.log(err);
-    return err.response;
+    throw err.response.data;
   }
 };

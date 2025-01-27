@@ -1,6 +1,6 @@
 import styles from '../../../styles/Table.module.scss';
 import Spinner from '../../ui/spinner/Spinner';
-import { useGetMeterReadings } from '../../../features/meter_readings/useGetMeterReadings';
+import { useGetMeterReadings } from '../../../features/meters/meterReadings/useGetMeterReadings';
 
 import { columns } from './metersUtils';
 import List from '../../common/list/List';
@@ -40,7 +40,7 @@ const MeterReadingList = ({
 
   return (
     <div className={styles.tableContainer}>
-      {data && (
+      {data && data.results.length > 0 ? (
         <List
           data={data}
           columns={columns}
@@ -52,6 +52,8 @@ const MeterReadingList = ({
             onDelete: (reading: any) => onRowDelete(reading.id),
           })}
         />
+      ) : (
+        <div>Brak odczytów</div>
       )}
     </div>
   );

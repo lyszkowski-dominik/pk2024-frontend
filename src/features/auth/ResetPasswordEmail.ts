@@ -1,10 +1,7 @@
-import axios from "axios"
-
-
-
+import axios from 'axios';
 
 interface FormData {
-  email: string
+  email: string;
 }
 /**
  * The function `ResetPasswordEmail` sends a POST request to a password reset endpoint with the
@@ -15,23 +12,23 @@ interface FormData {
  * @returns The function `ResetPasswordEmail` is returning the response data from the API call if the
  * call is successful. If there is an error during the API call, it will return the error response.
  */
-export const ResetPasswordEmail = async ({email}: FormData) => {
-  const formData = new FormData()
-  formData.append('email', email)
+export const ResetPasswordEmail = async ({ email }: FormData) => {
+  const formData = new FormData();
+  formData.append('email', email);
   try {
     const { data } = await axios.post(
       `${import.meta.env.VITE_APP_API_URL}/auth/password_reset/`,
       formData,
       {
         headers: {
-          "Content-Type": "application/json",
-        }
-      }
-    )
-    console.log(data)
-    return data
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    console.log(data);
+    return data;
   } catch (err: any) {
-    console.log(err)
-    return err.response
+    console.log(err);
+    throw err.response.data;
   }
-}
+};

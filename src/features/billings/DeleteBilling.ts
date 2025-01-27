@@ -5,7 +5,7 @@ const DeleteBilling = async (id: number) => {
     const { data } = await api.delete(`/billings/bills/${id}`);
     return data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 

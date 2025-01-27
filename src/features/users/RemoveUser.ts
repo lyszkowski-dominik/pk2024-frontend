@@ -12,7 +12,7 @@ const RemoveUser = async ({ hoaId, userId }: IParams) => {
     );
     return data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 

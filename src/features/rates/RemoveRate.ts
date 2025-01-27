@@ -7,7 +7,7 @@ const RemoveRate = async ({ rateId }: IParams) => {
     const { data } = await api.delete(`/billings/rates/${rateId}`);
     return data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 export { RemoveRate };

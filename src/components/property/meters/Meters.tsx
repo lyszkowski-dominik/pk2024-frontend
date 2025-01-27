@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import styles from '../../../pages/properties/Properties.module.scss';
+import { useState } from 'react';
+import styles from '../../../styles/Page.module.scss';
+import propertiesStyles from '../../../pages/properties/Properties.module.scss';
 import IconButton from '../../ui/iconButton/IconButton';
 import Modal from '../../ui/modal/Modal';
 import { ModalType } from '../types';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../app/hooks';
 import { selectRoles } from '../../loginForm/loginFormSlice';
-import {
-  setUpdatedMeterReadings,
-  setUpdatedMeters,
-} from '../../../features/properties/propertiesState';
-import MeterForm from './MeterForm';
-import { DeleteMeter } from '../../../features/meters/DeleteMeter';
-import MeterReadingForm from './MeterReadingForm';
-import { DeleteMeterReading } from '../../../features/meter_readings/DeleteMeterReading';
-import { useGetMeters } from '../../../features/meters/useGetMeters';
-import type { IMeter } from '../../../features/billings/billingTypes';
-import Meter from './Meter';
+import { useGetMeters } from '../../../features/meters/metersDevices/useGetMeters';
+import MeterComponent from './Meter';
 import Spinner from '../../ui/spinner/Spinner';
 import { UserRole } from '../../../types/types';
+import { selectSelectedCommunity } from '../../../features/communities/sharedDataSlice';
+import DeleteMeterConfirmation from '../../charges/meters/devices/DeleteMeterConfirmation';
+import { Meter } from '../../../features/meters/metersApiTypes';
+import EditMeterDeviceForm from '../../charges/meters/devices/EditMeterDeviceForm';
+import AddMeterDeviceForm from '../../charges/meters/devices/AddMeterDeviceForm';
+import InputField from '../../common/forms/inputField/InputField';
+import AddMeterReadingForm from '../../charges/meters/readings/AddMeterReadingForm';
+import { downloadFile } from '../../../utils/downloadFile';
 
 interface IProps {
   propertyId: number;
@@ -29,142 +29,110 @@ enum FormType {
 }
 
 const Meters = ({ propertyId }: IProps) => {
-  const dispatch = useAppDispatch();
+  const hoaId = useAppSelector(selectSelectedCommunity) || -1;
+  const [onlyActive, setOnlyActive] = useState<boolean>(true);
+
   const [openModal, setOpenModal] = useState({});
   const [isModalOn, setModalOn] = useState(false);
   const [formType, setFormType] = useState<FormType | undefined>();
-  const [selectedMeter, setSelectedMeter] = useState<number | undefined>();
-  const [selectedReading, setSelectedReading] = useState<number | undefined>();
-  const shouldUpdate = useAppSelector(
-    (state) => state.propertiesState.updatedMeters,
-  );
-  const [meters, setMeters] = useState([]);
+  const [selectedMeter, setSelectedMeter] = useState<Meter | undefined>();
   const role = useAppSelector(selectRoles);
   const isManager = role === UserRole.Manager;
 
-  const { data, error, isLoading, refetch: refreshPage } = useGetMeters();
+  const {
+    data: activeMeters,
+    isLoading,
+    isError,
+    error,
+  } = useGetMeters({
+    hoaId,
+    propertyId,
+    page: 1,
+    pageSize: 1000,
+    isActive: true,
+  });
 
-  const handleImportClick = () => {
-    console.log('Import clicked');
+  const { data: inactiveMeters } = useGetMeters({
+    hoaId,
+    propertyId,
+    page: 1,
+    pageSize: 1000,
+    isActive: false,
+  });
+
+  const handleAction = (
+    modalType: ModalType,
+    formType: FormType,
+    meter?: Meter,
+  ) => {
+    setModalOn(true);
+    setSelectedMeter(meter);
+    setOpenModal(modalType);
+    setFormType(formType);
   };
 
-  const handleExportClick = () => {
-    console.log('Export clicked');
+  const handleAddReading = (meter: Meter) => {
+    handleAction(ModalType.Add, FormType.Reading, meter);
   };
 
-  useEffect(() => {
-    refreshPage();
-    if (data) {
-      setMeters(
-        propertyId
-          ? data?.results?.filter(
-              (meter: IMeter) => meter.property === propertyId,
-            )
-          : data?.results,
-      );
-    }
-  }, [data, refreshPage, propertyId]);
+  const handleEditMeter = (meter: Meter) => {
+    handleAction(ModalType.Edit, FormType.Meter, meter);
+  };
 
-  useEffect(() => {
-    if (shouldUpdate) {
-      refreshPage();
-      dispatch(setUpdatedMeters(false));
-    }
-  }, [dispatch, refreshPage, shouldUpdate]);
+  const handleDeleteMeter = (meter: Meter) => {
+    handleAction(ModalType.Delete, FormType.Meter, meter);
+  };
 
-  useEffect(() => {
-    if (!isModalOn) {
-      setSelectedMeter(undefined);
-      setSelectedReading(undefined);
-    }
-  }, [isModalOn]);
+  const handleExportReadings = (meter: Meter) => {
+    downloadFile(
+      `/billings/meter_readings/export?meter=${meter.id}`,
+      `meter_readings_${meter.number}.csv`,
+    );
+  };
 
   if (isLoading) return <Spinner />;
-  if (error) return <div>Błąd przy wczytywaniu danych</div>;
-  if (meters.length <= 0) return <div>Brak przypisanych liczników</div>;
+  if (isError) return <div>Błąd przy wczytywaniu danych: {error.message}</div>;
+  if (activeMeters && activeMeters.results.length <= 0)
+    return <div>Brak przypisanych liczników</div>;
 
   return (
-    <div className={styles.propertiesContainer}>
+    <div className={styles.section}>
       {isModalOn && (
-        <Modal>
-          {openModal === ModalType.Add && formType === FormType.Meter && (
-            <MeterForm isModalOn={setModalOn} propertyId={propertyId} />
-          )}
-          {openModal === ModalType.Edit && formType === FormType.Meter && (
-            <MeterForm
-              isModalOn={setModalOn}
-              propertyId={propertyId}
-              meterId={selectedMeter}
-            />
-          )}
-          {openModal === ModalType.Delete && formType === FormType.Meter && (
-            <div>
-              <h2>Czy na pewno chcesz usunąć ten licznik?</h2>
-              <div className={styles.modalButtons}>
-                <button
-                  className={styles.btn_edit}
-                  onClick={() => {
-                    setModalOn(false);
-                  }}
-                >
-                  Anuluj
-                </button>
-                <button
-                  onClick={async () => {
-                    await DeleteMeter(selectedMeter || -1);
-                    setModalOn(false);
-                    dispatch(setUpdatedMeters(true));
-                  }}
-                  className={`${styles.btn_edit} ${styles.btn_delete}`}
-                >
-                  Usuń
-                </button>
-              </div>
-            </div>
-          )}
-          {openModal === ModalType.Add &&
-            formType === FormType.Reading &&
-            selectedMeter && (
-              <MeterReadingForm
-                isModalOn={setModalOn}
-                meterId={selectedMeter}
+        <>
+          <Modal>
+            {openModal === ModalType.Add && formType === FormType.Meter && (
+              <AddMeterDeviceForm
+                onClose={() => setModalOn(false)}
+                propertyId={propertyId}
               />
             )}
-          {openModal === ModalType.Edit &&
-            formType === FormType.Reading &&
+            {openModal === ModalType.Edit &&
+              formType === FormType.Meter &&
+              selectedMeter && (
+                <EditMeterDeviceForm
+                  onClose={() => setModalOn(false)}
+                  id={selectedMeter?.id}
+                />
+              )}
+            {openModal === ModalType.Add &&
+              formType === FormType.Reading &&
+              selectedMeter && (
+                <AddMeterReadingForm
+                  onClose={() => setModalOn(false)}
+                  meterId={selectedMeter.id}
+                />
+              )}
+          </Modal>
+          {openModal === ModalType.Delete &&
+            formType === FormType.Meter &&
             selectedMeter && (
-              <MeterReadingForm
-                isModalOn={setModalOn}
-                meterId={selectedMeter}
-                readingId={selectedReading}
+              <DeleteMeterConfirmation
+                id={selectedMeter.id}
+                onClose={() => setModalOn(false)}
+                number={selectedMeter.number}
               />
             )}
-          {openModal === ModalType.Delete && formType === FormType.Reading && (
-            <div>
-              <h2>Czy na pewno chcesz usunąć ten odczyt?</h2>
-              <div className={styles.modalButtons}>
-                <button
-                  className={styles.btn_edit}
-                  onClick={() => {
-                    setModalOn(false);
-                  }}
-                >
-                  Anuluj
-                </button>
-                <button
-                  onClick={async () => {
-                    await DeleteMeterReading(selectedReading || -1);
-                    setModalOn(false);
-                    dispatch(setUpdatedMeterReadings(true));
-                  }}
-                  className={`${styles.btn_edit} ${styles.btn_delete}`}
-                >
-                  Usuń
-                </button>
-              </div>
-            </div>
-          )}
-        </Modal>
+        </>
       )}
       {isManager && (
         <div className={styles.iconButtons}>
@@ -179,47 +147,45 @@ const Meters = ({ propertyId }: IProps) => {
           />
         </div>
       )}
-      {meters?.map((meter: IMeter) => (
-        <Meter
-          key={meter.id}
-          propertyId={propertyId}
-          meter={meter}
-          onMeterEdit={() => {
-            setModalOn(true);
-            setOpenModal(ModalType.Edit);
-            setFormType(FormType.Meter);
-            setSelectedMeter(meter.id);
-          }}
-          onMeterDelete={() => {
-            setModalOn(true);
-            setOpenModal(ModalType.Delete);
-            setFormType(FormType.Meter);
-            setSelectedMeter(meter.id);
-          }}
-          onReadingEdit={(id: number) => {
-            setModalOn(true);
-            setOpenModal(ModalType.Edit);
-            setFormType(FormType.Reading);
-            setSelectedMeter(meter.id);
-            setSelectedReading(id);
-          }}
-          onReadingDelete={(id: number) => {
-            setModalOn(true);
-            setOpenModal(ModalType.Delete);
-            setFormType(FormType.Reading);
-            setSelectedMeter(meter.id);
-            setSelectedReading(id);
-          }}
-          isEditable={isManager}
-          handleAddReading={() => {
-            setModalOn(true);
-            setOpenModal(ModalType.Add);
-            setFormType(FormType.Reading);
-          }}
-          handleImportReadings={handleImportClick}
-          handleExportReadings={handleExportClick}
-        />
-      ))}
+      <div className={propertiesStyles.metersList}>
+        {activeMeters?.results.map((meter) => (
+          <MeterComponent
+            key={meter.id}
+            meter={meter}
+            onMeterEdit={() => handleEditMeter(meter)}
+            onMeterDelete={() => handleDeleteMeter(meter)}
+            isEditable={isManager}
+            handleAddReading={() => handleAddReading(meter)}
+            handleExportReadings={() => handleExportReadings(meter)}
+          />
+        ))}
+      </div>
+      <InputField
+        label="Pokaż nieaktywne"
+        name="onlyActive"
+        value={!onlyActive}
+        type="checkbox"
+        checked={!onlyActive}
+        onChange={() => {
+          setOnlyActive(!onlyActive);
+        }}
+      />
+      {!onlyActive && (
+        <div className={propertiesStyles.metersList}>
+          {inactiveMeters?.results.map((meter) => (
+            <MeterComponent
+              key={meter.id}
+              meter={meter}
+              onMeterEdit={() => handleEditMeter(meter)}
+              onMeterDelete={() => handleDeleteMeter(meter)}
+              isEditable={isManager}
+              handleAddReading={() => handleAddReading(meter)}
+              handleExportReadings={() => handleExportReadings(meter)}
+              inactive={true}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

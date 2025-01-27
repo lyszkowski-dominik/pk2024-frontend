@@ -59,15 +59,19 @@ const List = <T,>({
   const renderRow = (record: any) => {
     const cols = columns.map((column) => {
       let value = record[column.name];
-      if (column.type === ColumnType.DATETIME) {
-        value = new Date(value).toLocaleString();
-      } else if (column.type === ColumnType.DATE) {
-        value = new Date(value).toLocaleDateString();
-      } else if (column.type === ColumnType.AMOUNT) {
-        value = `${value} zł`;
-      } else if (column.type === ColumnType.ENUM) {
-        // use RateType[value] to get the enum value
-        value = RateType[ value as keyof typeof RateType ];
+      if (value === null || value === undefined) {
+        value = '-';
+      } else {
+        if (column.type === ColumnType.DATETIME) {
+          value = new Date(value).toLocaleString();
+        } else if (column.type === ColumnType.DATE) {
+          value = new Date(value).toLocaleDateString();
+        } else if (column.type === ColumnType.AMOUNT) {
+          value = `${value} zł`;
+        } else if (column.type === ColumnType.ENUM) {
+          // use RateType[value] to get the enum value
+          value = RateType[value as keyof typeof RateType];
+        }
       }
       return <td key={column.name}>{value}</td>;
     });

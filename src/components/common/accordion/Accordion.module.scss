@@ -1,0 +1,37 @@
+.accordion {
+  width: 100%;
+  .accordion-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 8px;
+
+    .accordion-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .accordion-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--gray-800);
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        color: var(--blue);
+      }
+    }
+  }
+
+  .accordion-content {
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

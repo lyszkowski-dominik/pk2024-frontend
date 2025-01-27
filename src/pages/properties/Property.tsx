@@ -1,5 +1,5 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
+import styles from '../../styles/Page.module.scss';
 import { useState } from 'react';
 import { PropertyTab } from '../../features/properties/propertiesTypes';
 import { useParams } from 'react-router-dom';
@@ -30,24 +30,48 @@ const Property = ({ currentTab = PropertyTab.billings }: IProps) => {
   }
 
   return (
-    <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-      <TabList>
-        <Tab>Rachunki</Tab>
-        <Tab>Dane</Tab>
-        <Tab>Liczniki</Tab>
-        <Tab>Właściciele</Tab>
+    <Tabs
+      className={styles['react-tabs']}
+      selectedIndex={tabIndex}
+      onSelect={(index) => setTabIndex(index)}
+    >
+      <TabList className={styles['react-tabs__tab-list']}>
+        <Tab
+          className={styles['react-tabs__tab']}
+          selectedClassName={styles['react-tabs__tab--selected']}
+        >
+          Rachunki
+        </Tab>
+        <Tab
+          className={styles['react-tabs__tab']}
+          selectedClassName={styles['react-tabs__tab--selected']}
+        >
+          Dane
+        </Tab>
+        <Tab
+          className={styles['react-tabs__tab']}
+          selectedClassName={styles['react-tabs__tab--selected']}
+        >
+          Liczniki
+        </Tab>
+        <Tab
+          className={styles['react-tabs__tab']}
+          selectedClassName={styles['react-tabs__tab--selected']}
+        >
+          Właściciele
+        </Tab>
       </TabList>
 
-      <TabPanel>
+      <TabPanel selectedClassName="react-tabs__tab-panel--selected">
         <BillingList propertyId={parseInt(propertyId, 10)} />
       </TabPanel>
-      <TabPanel>
+      <TabPanel selectedClassName="react-tabs__tab-panel--selected">
         <PropertyData propertyId={parseInt(propertyId, 10)} />
       </TabPanel>
-      <TabPanel>
+      <TabPanel selectedClassName="react-tabs__tab-panel--selected">
         <Meters propertyId={parseInt(propertyId, 10)} />
       </TabPanel>
-      <TabPanel>
+      <TabPanel selectedClassName="react-tabs__tab-panel--selected">
         <Ownerships propertyId={parseInt(propertyId, 10)} />
       </TabPanel>
     </Tabs>
