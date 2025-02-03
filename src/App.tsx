@@ -23,6 +23,7 @@ import Users from './pages/users/Users';
 import { UserRole } from './types/types';
 import { Rates } from './pages/rates/Rates';
 import Charges from './pages/charges/Charges';
+import { Buildings } from './pages/Buildings/Buildings';
 
 const App = () => {
   return (
@@ -86,6 +87,10 @@ const App = () => {
           <Route
             path="/hoa/:communityId/rates/"
             element={<Rates />}
+          />
+          <Route
+            path="/hoa/:communityId/buildings/"
+            element={<Buildings />}
           />
           <Route
             path="/hoa/:communityId/charges"

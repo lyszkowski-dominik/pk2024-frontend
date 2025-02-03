@@ -89,6 +89,10 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
             title: 'Stawki',
             path: 'rates',
           },
+          {
+            title: 'Budynki',
+            path: 'buildings',
+          },
         ],
       });
     }

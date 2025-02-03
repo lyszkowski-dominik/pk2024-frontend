@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size:1rem;
+    .box{
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .header{
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 1rem;
+    }
+  }
+}
