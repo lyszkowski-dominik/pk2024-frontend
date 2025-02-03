@@ -23,7 +23,7 @@ const EditRequest = async ({ id, editedData }: EditRequestParams) => {
     const res = await api.patch(`/requests/requests/${id}/`, editedData);
     return res.data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 

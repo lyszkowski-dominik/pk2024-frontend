@@ -1,19 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import fetchAllRates from './fetchAllRates';
-import { RatesRequest } from './ratesTypes';
+import { GetRatesRequest, ratesQueryKeys } from './ratesTypes';
+import GetRates from './GetRates';
 
-export const useGetRates = ({ hoaId, page, pageSize, onlyOld }: RatesRequest) => {
+export const useGetRates = (params: GetRatesRequest) => {
   return useQuery({
-    queryKey: ['rates', hoaId],
-    queryFn: () =>
-      fetchAllRates({
-        hoaId,
-        page,
-        pageSize,
-        onlyOld,
-      }),
+    queryKey: ratesQueryKeys.filters(params),
+    queryFn: () => GetRates(params),
     retry: false,
     staleTime: 1000 * 60 * 60,
-    enabled: hoaId > 0,
+    enabled: params.hoaId > 0,
   });
 };

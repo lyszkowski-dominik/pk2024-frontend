@@ -1,4 +1,5 @@
 import { ListRequest } from '../../types/types';
+import { Meter } from '../meters/metersApiTypes';
 
 export interface IBilling {
   id: number;
@@ -13,7 +14,7 @@ export interface IBilling {
 export interface IBill {
   id: number;
   rate: IRate;
-  meter: IMeter;
+  meter: Meter;
   billing_date: string;
   units_consumed: number;
   total_amount: number;
@@ -32,24 +33,6 @@ export interface IRate {
   applies_to?: MeterType;
   hoa: number;
 }
-
-export interface IMeter {
-  id: number;
-  number: string;
-  type: MeterType;
-  unit_of_measurement: string;
-  installation_date: string;
-  property: number;
-}
-
-export type MeterReading = {
-  id: number;
-  reading_date: string;
-  reading_value: string;
-  meter: number;
-  meter_number: string;
-  meter_type: MeterType;
-};
 
 export enum RateType {
   unit = 'Jednostka',

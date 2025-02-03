@@ -25,6 +25,7 @@ const IconButton = ({
       onClick={onClick}
       aria-label={altText}
       style={{ width: size, marginBottom: margin }}
+      type="button"
     >
       <Icon name={iconName} size={size} color={color} className={styles.icon} />
     </button>

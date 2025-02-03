@@ -30,7 +30,7 @@ const GetOwnerships = async ({ page, pageSize }: OwnershipsRequest) => {
 
     return response.data;
   } catch (err: any) {
-    console.log(err);
+    throw err.response.data;
   }
 };
 

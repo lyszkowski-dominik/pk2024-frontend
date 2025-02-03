@@ -15,7 +15,7 @@ const CreateRequest = async (formData: Partial<Request>) => {
     const { data } = await api.post(`/requests/requests/`, formData);
     return data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 

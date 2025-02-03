@@ -7,9 +7,9 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { selectSelectedCommunity } from '../../../features/communities/sharedDataSlice';
 import { setUpdatedMeterReadings } from '../../../features/properties/propertiesState';
 
-import { UpdateMeterReading } from '../../../features/meter_readings/UpdateMeterReadings';
-import { CreateMeterReading } from '../../../features/meter_readings/CreateMeterReading';
-import { useGetMeterReadingById } from '../../../features/meter_readings/useGetMeterReadingById';
+import { UpdateMeterReading } from '../../../features/meters/meterReadings/UpdateMeterReadings';
+import { CreateMeterReading } from '../../../features/meters/meterReadings/CreateMeterReading';
+import { useGetMeterReadingById } from '../../../features/meters/meterReadings/useGetMeterReadingById';
 
 type FormProps = {
   isModalOn: React.Dispatch<SetStateAction<boolean>>;

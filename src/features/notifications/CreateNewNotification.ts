@@ -6,7 +6,7 @@ const CreateNewNotification = async (params: Partial<Notification>) => {
     const { data } = await api.post(`/notifications/notifications/`, params);
     return data;
   } catch (err: any) {
-    return err.response.data;
+    throw err.response.data;
   }
 };
 

@@ -39,7 +39,7 @@ const TextAreaLiveFeedback = ({
 
   return (
     <div
-      className={`${styles.form_control} ${showFeedback ? (meta.error ? styles.invalid : styles.valid) : ''}`}
+      className={`${styles.form_control} ${showFeedback ? (meta.error && meta.touched ? styles.invalid : styles.valid) : ''}`}
     >
       <div>
         <label htmlFor={props.id}>{label}</label>{' '}

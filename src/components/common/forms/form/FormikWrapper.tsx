@@ -14,6 +14,7 @@ export type FormikWrapperProps<T> = {
   onCancel: () => void;
   submitLabel?: string;
   children?: ((formik: FormikProps<T>) => ReactNode) | ReactNode;
+  classname?: string;
 };
 
 const FormikWrapper = <T extends object>({
@@ -25,6 +26,7 @@ const FormikWrapper = <T extends object>({
   onCancel,
   submitLabel,
   children,
+  classname,
 }: FormikWrapperProps<T>) => {
   return (
     <div className={styles.container}>
@@ -35,9 +37,14 @@ const FormikWrapper = <T extends object>({
         onSubmit={onSubmit}
       >
         {(formik) => (
-          <Form>
+          <Form className={`form ${classname}`}>
             <fieldset className={styles.fieldset} disabled={disabled}>
               {typeof children === 'function' ? children(formik) : children}
+              {formik.errors && (formik.errors as any)['non_field_error'] && (
+                <div className={styles.invalid}>
+                  {(formik.errors as any)['non_field_error']}
+                </div>
+              )}
               <FormButtons
                 onCancel={onCancel}
                 submitLabel={submitLabel}

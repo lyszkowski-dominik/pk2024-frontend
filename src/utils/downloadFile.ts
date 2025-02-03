@@ -62,6 +62,6 @@ export const uploadFile = async ({
     return response.data;
   } catch (error) {
     console.error('Błąd podczas przesyłania pliku:', error);
-    return error;
+    throw error;
   }
 };

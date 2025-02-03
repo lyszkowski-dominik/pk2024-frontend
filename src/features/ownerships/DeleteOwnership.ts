@@ -23,7 +23,7 @@ const DeleteOwnership = async (id: number) => {
     );
     return data;
   } catch (err: any) {
-    return err.response;
+    throw err.response.data;
   }
 };
 
