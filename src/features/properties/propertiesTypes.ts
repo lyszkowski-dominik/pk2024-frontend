@@ -81,3 +81,19 @@ export const propertiesQueryKeys = {
   details: (id: number) =>
     [...propertiesQueryKeys.all, 'details', `${id}`] as const,
 };
+
+export type BuildingsRequest = {
+  id: number
+  address:{
+    id: number
+    city: string
+    street: string
+    number: string
+    postal_code: string
+  },
+  number: string
+  area: string
+  floor_min: number
+  floor_max: number
+  hoa: number
+}

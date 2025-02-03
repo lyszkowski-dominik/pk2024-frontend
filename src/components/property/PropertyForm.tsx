@@ -17,48 +17,12 @@ import FormikWrapper, {
 import TextInputLiveFeedback from '../common/forms/textInputLiveFeedback/TextInputLiveFeedback';
 import { useGetProperty } from '../../features/properties/useGetProperty';
 import { useGetProperties } from '../../features/properties/useGetProperties';
-import { Property } from '../../features/properties/propertiesTypes';
+import { BuildingsRequest, Property } from '../../features/properties/propertiesTypes';
 import { canBeParent, mustHaveParent } from './propertyUtils';
 import { useEditProperty } from '../../features/properties/useEditProperty';
 import Spinner from '../ui/spinner/Spinner';
-
-const propertySchema = Yup.object({
-  type: Yup.mixed<PropertyType>()
-    .oneOf(Object.values(PropertyType))
-    .required('Wybierz rodzaj lokalu'),
-  building: Yup.string(),
-  number: Yup.string().required('Podaj numer'),
-  floor: Yup.number()
-    .required('Podaj piętro')
-    .integer('Podaj liczbę całkowitą'),
-  total_area: Yup.number()
-    .positive('Powierzchnia musi być > 0')
-    .required('Podaj powierzchnię całkowitą lokalu'),
-  usable_area: Yup.number()
-    .positive('Powierzchnia musi być > 0')
-    .required('Podaj powierzchnię użytkową lokalu')
-    .test(
-      'usable-area-max',
-      'Powierzchnia użytkowa nie może być większa niż całkowita',
-      function (value) {
-        const { total_area } = this.parent;
-        return total_area == null || value == null || value <= total_area;
-      },
-    ),
-  description: Yup.string(),
-  inhabitants: Yup.number().when('type', ([type], sch) => {
-    return type === PropertyType.Flat
-      ? sch
-          .required('Podaj liczbę osób zamieszkujących mieszkanie')
-          .positive('Liczba mieszkańców musi być > 0')
-      : sch.nullable();
-  }),
-  parent: Yup.number().when('type', ([type], sch) => {
-    return mustHaveParent(type)
-      ? sch.required('Wybierz lokal nadrzędny')
-      : sch.nullable();
-  }),
-});
+import { useGetBuildings } from '../../features/properties/useGetBuildings';
+import { useEffect, useState } from 'react';
 
 const PropertyForm = ({
   onClose,
@@ -75,12 +39,106 @@ const PropertyForm = ({
   const editProperty = useEditProperty(hoaId, propertyId, addToParent);
   const { data: existingProperty, isPending } = useGetProperty(propertyId ?? 0);
   const mutation = propertyId ? editProperty : createProperty;
+  const [selectedBuilding, setSelectedBuilding] = useState('');
   const { isLoading: isLoadingOptions, data: parentsOptions } =
     useGetProperties({
       page: 1,
       pageSize: 50,
       hoaId,
     });
+  const [propertySchema, setPropertySchema] = useState(
+    Yup.object({
+      type: Yup.mixed<PropertyType>()
+        .oneOf(Object.values(PropertyType))
+        .required('Wybierz rodzaj lokalu'),
+      building: Yup.string(),
+      number: Yup.string().required('Podaj numer'),
+      floor: Yup.number()
+        .required('Podaj piętro')
+        .integer('Podaj liczbę całkowitą'),
+      total_area: Yup.number()
+        .positive('Powierzchnia musi być > 0')
+        .required('Podaj powierzchnię całkowitą lokalu'),
+      usable_area: Yup.number()
+        .positive('Powierzchnia musi być > 0')
+        .required('Podaj powierzchnię użytkową lokalu')
+        .test(
+          'usable-area-max',
+          'Powierzchnia użytkowa nie może być większa niż całkowita',
+          function (value) {
+            const { total_area } = this.parent;
+            return total_area == null || value == null || value <= total_area;
+          },
+        ),
+      description: Yup.string(),
+      inhabitants: Yup.number().when('type', ([type], sch) => {
+        return type === PropertyType.Flat
+          ? sch
+            .required('Podaj liczbę osób zamieszkujących mieszkanie')
+            .positive('Liczba mieszkańców musi być > 0')
+          : sch.nullable();
+      }),
+      parent: Yup.number().when('type', ([type], sch) => {
+        return mustHaveParent(type)
+          ? sch.required('Wybierz lokal nadrzędny')
+          : sch.nullable();
+      }),
+    })
+  );
+  const { data: allBuildings, isLoading: isLoadingBuildings } = useGetBuildings({ page: 1, pageSize: 50, hoaId });
+
+  useEffect(() => {
+    // console.log('selectedBuilding', selectedBuilding);
+    const minFloor = allBuildings?.results.find((building: BuildingsRequest) => building.id === Number(selectedBuilding))?.floor_min;
+    const maxFloor = allBuildings?.results.find((building: BuildingsRequest) => building.id === Number(selectedBuilding))?.floor_max;
+    if (minFloor && maxFloor) {
+      setPropertySchema(Yup.object({
+        type: Yup.mixed<PropertyType>()
+          .oneOf(Object.values(PropertyType))
+          .required('Wybierz rodzaj lokalu'),
+        building: Yup.string(),
+        number: Yup.string().required('Podaj numer'),
+        floor: Yup.number()
+          .required('Podaj piętro')
+          .integer('Podaj liczbę całkowitą')
+          .min(minFloor, `Piętro musi być większe niż ${minFloor}`)
+          .max(maxFloor, `Piętro musi być mniejsze niż ${maxFloor}`),
+        total_area: Yup.number()
+          .positive('Powierzchnia musi być > 0')
+          .required('Podaj powierzchnię całkowitą lokalu'),
+        usable_area: Yup.number()
+          .positive('Powierzchnia musi być > 0')
+          .required('Podaj powierzchnię użytkową lokalu')
+          .test(
+            'usable-area-max',
+            'Powierzchnia użytkowa nie może być większa niż całkowita',
+            function (value) {
+              const { total_area } = this.parent;
+              return total_area == null || value == null || value <= total_area;
+            },
+          ),
+        description: Yup.string(),
+        inhabitants: Yup.number().when('type', ([type], sch) => {
+          return type === PropertyType.Flat
+            ? sch
+              .required('Podaj liczbę osób zamieszkujących mieszkanie')
+              .positive('Liczba mieszkańców musi być > 0')
+            : sch.nullable();
+        }),
+        parent: Yup.number().when('type', ([type], sch) => {
+          return mustHaveParent(type)
+            ? sch.required('Wybierz lokal nadrzędny')
+            : sch.nullable();
+        }),
+      }));
+    }
+  }, [selectedBuilding, allBuildings]);
+
+  useEffect(()=> {
+    if(propertyId){
+      setSelectedBuilding(existingProperty!.building);
+    }
+  }, [existingProperty, propertyId]);
 
   const filterTypes =
     (existingProperty && mustHaveParent(existingProperty.type)) ||
@@ -89,36 +147,43 @@ const PropertyForm = ({
   const initialValues =
     propertyId && existingProperty
       ? {
-          type: existingProperty.type,
-          building: existingProperty.building,
-          number: existingProperty.number,
-          floor: existingProperty.floor,
-          total_area: existingProperty.total_area,
-          usable_area: existingProperty.usable_area,
-          inhabitants: existingProperty.inhabitants || 0,
-          parent: existingProperty.parent || null,
-          description: existingProperty.description || '',
-        }
+        type: existingProperty.type,
+        building: existingProperty.building,
+        number: existingProperty.number,
+        floor: existingProperty.floor,
+        total_area: existingProperty.total_area,
+        usable_area: existingProperty.usable_area,
+        inhabitants: existingProperty.inhabitants || 0,
+        parent: existingProperty.parent || null,
+        description: existingProperty.description || '',
+      }
       : {
-          type: '' as PropertyType,
-          building: '',
-          number: '',
-          floor: '',
-          total_area: '',
-          usable_area: '',
-          inhabitants: '',
-          parent: addToParent || null,
-          description: '',
-        };
+        type: '' as PropertyType,
+        building: '',
+        number: '',
+        floor: '',
+        total_area: '',
+        usable_area: '',
+        inhabitants: '',
+        parent: addToParent || null,
+        description: '',
+      };
 
   const parentDropdownOptions: SearchDropdownOption[] = parentsOptions
     ? parentsOptions.results
-        ?.filter((property: Property) => canBeParent(property.type))
-        .map((property: Property) => ({
-          value: property.id,
-          label: `${property.building} ${property.number} ${property.floor}`,
-          key: property.id,
-        }))
+      ?.filter((property: Property) => canBeParent(property.type))
+      .map((property: Property) => ({
+        value: property.id,
+        label: `${property.building} ${property.number} ${property.floor}`,
+        key: property.id,
+      }))
+    : [];
+
+  const buildingsDropdownOptions: SearchDropdownOption[] = allBuildings ? allBuildings.results.map((building: BuildingsRequest) => ({
+    value: building.id,
+    label: `${building.address.city} ul.${building.address.street} ${building.address.number} ${building.address.postal_code}`,
+    key: building.id,
+  }))
     : [];
 
   const formikProps: FormikWrapperProps<Partial<PropertyFormType>> = {
@@ -179,7 +244,20 @@ const PropertyForm = ({
               disabled={!!existingProperty}
             />
           </div>
-          <TextInputLiveFeedback label="Budynek" type="text" name="building" />
+          {/* <TextInputLiveFeedback label="Budynek" type="text" name="building" /> */}
+          <div className={styles.fieldGroup}>
+            <SearchDropdown
+              name="building"
+              isLoading={isLoadingBuildings}
+              label="Budynek"
+              options={buildingsDropdownOptions}
+              cleanOnDisabling={!addToParent}
+              onChange={(selectedOption) => {
+                console.log('selectedOption', selectedOption);
+                setSelectedBuilding(selectedOption?.value);
+              }}
+            />
+          </div>
           <TextInputLiveFeedback label="Numer" type="text" name="number" />
           <TextInputLiveFeedback label="Piętro" type="number" name="floor" />
           <TextInputLiveFeedback
