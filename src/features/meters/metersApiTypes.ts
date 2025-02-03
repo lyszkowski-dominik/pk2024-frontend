@@ -38,6 +38,9 @@ export type MeterReading = {
   meter_number: string;
   meter: number;
   ownership: number;
+  property_number: string;
+  property_building: string;
+  unit: string;
 };
 
 export type Meter = {
@@ -65,3 +68,11 @@ export const chargingMethodDisplayMap = {
   [ChargingMethod.TOTAL_FLOOT_AREA]: 'Powierzchnia całkowita',
   [ChargingMethod.USABLE_AREA]: 'Powierzchnia użytkowa',
 };
+
+export const chargingMethodOptions = Object.values(ChargingMethod).map(
+  (method) => ({
+    key: method,
+    value: method,
+    label: `${chargingMethodDisplayMap[method]}`,
+  }),
+);

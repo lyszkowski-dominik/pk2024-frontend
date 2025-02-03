@@ -28,7 +28,7 @@ export const ResetPasswordEmail = async ({ email }: FormData) => {
     console.log(data);
     return data;
   } catch (err: any) {
-    console.log(err);
+    throw err.response.data;
     throw err.response.data;
   }
 };

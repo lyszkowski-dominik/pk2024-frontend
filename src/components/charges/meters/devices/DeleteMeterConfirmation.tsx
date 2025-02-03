@@ -26,7 +26,7 @@ const DeleteMeterConfirmation = ({
       onError: (error: any) => {
         onClose();
         addNotification(
-          `Licznik nie został usunięty. Błąd: ${error.details}`,
+          `Licznik nie został usunięty. Błąd: ${error.error}`,
           'error',
         );
       },

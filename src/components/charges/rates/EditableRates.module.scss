@@ -1,0 +1,62 @@
+.date {
+  width: 50%;
+  :only-child {
+    align-items: center;
+    flex-direction: row;
+  }
+}
+
+.display_date {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-self: flex-start;
+  margin: 1rem 0;
+}
+
+.button_add {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem;
+}
+
+.wide-modal {
+  width: 80vw;
+  left: calc(10vw);
+}
+.content {
+  max-width: none !important;
+}
+
+@media (min-width: 768px) {
+  .wide-modal {
+    width: 80vw;
+    left: calc(10vw);
+  }
+  .content {
+    max-width: none !important;
+  }
+}
+
+.form {
+  width: 100%;
+}
+
+.past_list {
+  width: 100%;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.past_list > div:first-child {
+  border-top: var(--mint) 1px solid;
+}
+
+.past_list > div {
+  border-bottom: var(--mint) 1px solid;
+  padding: 0.5rem;
+}
+
+.past_rates h2 {
+  font-size: 1rem !important;
+}

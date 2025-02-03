@@ -78,16 +78,6 @@ const MeterTypes = () => {
             }}
             altText="Dodaj rodzaj licznika"
           />
-          {/* <IconButton
-      iconName="import"
-      onClick={handleImportClick}
-      altText="Importuj użytkowników"
-    />
-    <IconButton
-      iconName="export"
-      onClick={handleExportClick}
-      altText="Eksportuj użytkowników"
-    /> */}
         </div>
         {isLoading ? (
           <Spinner />

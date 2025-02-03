@@ -24,6 +24,7 @@ export enum ColumnType {
   AMOUNT,
   ENUM,
   ACTION,
+  INPUT,
 }
 
 export type ListProps<T> = {
@@ -67,7 +68,7 @@ const List = <T,>({
         } else if (column.type === ColumnType.DATE) {
           value = new Date(value).toLocaleDateString();
         } else if (column.type === ColumnType.AMOUNT) {
-          value = `${value} zł`;
+          value = `${parseFloat(`${value}`).toFixed(2)} zł`;
         } else if (column.type === ColumnType.ENUM) {
           // use RateType[value] to get the enum value
           value = RateType[value as keyof typeof RateType];

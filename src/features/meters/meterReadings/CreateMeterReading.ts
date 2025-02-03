@@ -1,5 +1,5 @@
-import type { MeterReading } from '../../billings/billingTypes';
 import api from '../../../services/axiosInstance';
+import { MeterReading } from '../metersApiTypes';
 
 const CreateMeterReading = async (
   formData: Partial<Omit<MeterReading, 'id'>>,

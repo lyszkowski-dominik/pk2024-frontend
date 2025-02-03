@@ -1,5 +1,5 @@
 import api from '../../../services/axiosInstance';
-import { MeterReading } from '../../billings/billingTypes';
+import { MeterReading } from '../metersApiTypes';
 
 export const GetMeterReadingById = async (id: number) => {
   try {

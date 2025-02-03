@@ -45,7 +45,7 @@ export const getData = (data: ApiPaginatedResult<MeterType>) => ({
   })),
 });
 
-const getUnitDisplay = (unit: string) => {
+export const getUnitDisplay = (unit: string) => {
   switch (unit.toLowerCase()) {
     case 'm2':
     case 'm^2':

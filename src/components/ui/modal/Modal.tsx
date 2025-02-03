@@ -8,12 +8,16 @@ const Backdrop = () => {
 
 export type ModalOverlayProps = {
   children: React.ReactNode;
+  className?: string;
+  contentClassName?: string;
 };
 
 const ModalOverlay = (props: ModalOverlayProps) => {
   return (
-    <div className={styles.modal}>
-      <div className={styles.content}>{props.children}</div>
+    <div className={`${styles.modal} ${props.className || ''}`}>
+      <div className={`${styles.contentClassName} ${props.className || ''}`}>
+        {props.children}
+      </div>
     </div>
   );
 };
@@ -26,12 +30,17 @@ const ModalOverlay = (props: ModalOverlayProps) => {
  * `ModalOverlay` component with `props.children` inside it.
  */
 const Modal = (props: ModalOverlayProps) => {
-    return (
-        <Fragment>
-            <Backdrop/>
-            <ModalOverlay>{props.children}</ModalOverlay>
-        </Fragment>
-    );
+  return (
+    <Fragment>
+      <Backdrop />
+      <ModalOverlay
+        className={props.className}
+        contentClassName={props.contentClassName}
+      >
+        {props.children}
+      </ModalOverlay>
+    </Fragment>
+  );
 };
 
 export default Modal;

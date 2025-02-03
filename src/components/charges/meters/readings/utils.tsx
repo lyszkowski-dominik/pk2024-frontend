@@ -1,7 +1,11 @@
-import { Meter, MeterType } from '../../../../features/meters/metersApiTypes';
+import {
+  MeterReading,
+  MeterType,
+} from '../../../../features/meters/metersApiTypes';
 import * as Yup from 'yup';
-import { Property } from '../../../../features/properties/propertiesTypes';
 import { ColumnDef, ColumnType } from '../../../common/list/List';
+import { ApiPaginatedResult } from '../../../../types/types';
+import { getUnitDisplay } from '../meterTypes/utils';
 
 export const columns: ColumnDef[] = [
   {
@@ -14,49 +18,45 @@ export const columns: ColumnDef[] = [
     label: 'Wartość',
     type: ColumnType.TEXT,
   },
-  // {
-  //   name: 'meter_type',
-  //   label: 'Typ licznika',
-  //   type: ColumnType.TEXT,
-  // },
+  {
+    name: 'meter_type',
+    label: 'Typ licznika',
+    type: ColumnType.TEXT,
+  },
   {
     name: 'meter_number',
     label: 'Numer',
     type: ColumnType.TEXT,
   },
-  // {
-  //   name: 'property_number',
-  //   label: 'Numer lokalu',
-  //   type: ColumnType.TEXT,
-  // },
-  // {
-  //   name: 'building',
-  //   label: 'Budynek',
-  //   type: ColumnType.TEXT,
-  // },
+  {
+    name: 'property_number',
+    label: 'Numer lokalu',
+    type: ColumnType.TEXT,
+  },
+  {
+    name: 'property_building',
+    label: 'Budynek',
+    type: ColumnType.TEXT,
+  },
 ];
 
-// export const getData = (
-//   data: ApiPaginatedResult<MeterReading>,
-//   types: MeterType[],
-//   properties: Property[],
-//   meters: Meter[],
-// ) => {
-//   const typeMap = getTypeMap(types);
-//   const propertyMap = getPropertyMap(properties);
-//   const metersMap = getMeterMap(meters);
+export const getData = (
+  data: ApiPaginatedResult<MeterReading>,
+  types: MeterType[],
+) => {
+  const typeMap = getTypeMap(types);
 
-//   return {
-//     ...data,
-//     results: data.results.map((r) => ({
-//       ...r,
-//       meter_type: typeMap[r.meter_type] || '?',
-//       property_number:
-//         propertyMap[metersMap[r.meter].property].property_number || '?',
-//       building: propertyMap[metersMap[r.meter].property].building || '?',
-//     })),
-//   };
-// };
+  return {
+    ...data,
+    results: data.results.map((r) => ({
+      ...r,
+      reading_value: `${r.reading_value} ${getUnitDisplay(r.unit)}`,
+      meter_type: typeMap[r.meter_type] || '-',
+      property_number: r.property_number || '-',
+      property_building: r.property_building || '-',
+    })),
+  };
+};
 
 const getTypeMap = (types: MeterType[]) =>
   types.reduce(
@@ -67,54 +67,10 @@ const getTypeMap = (types: MeterType[]) =>
     {} as Record<number, string>,
   );
 
-const getPropertyMap = (properties: Property[]) =>
-  properties.reduce(
-    (acc, property) => {
-      acc[property.id] = {
-        property_number: property.number,
-        building: property.building,
-      };
-      return acc;
-    },
-    {} as Record<number, { property_number: string; building: string }>,
-  );
-
-const getMeterMap = (meters: Meter[]) =>
-  meters.reduce(
-    (acc, meter) => {
-      acc[meter.id] = {
-        property: meter.property,
-      };
-      return acc;
-    },
-    {} as Record<number, { property: number }>,
-  );
-// const getUnitDisplay = (unit: string) => {
-//   switch (unit.toLowerCase()) {
-//     case 'm2':
-//     case 'm^2':
-//       return 'm²';
-//     case 'm3':
-//     case 'm^3':
-//       return 'm³';
-//     default:
-//       return unit;
-//   }
-// };
-
 export const validationSchema = Yup.object({
   meter: Yup.number().required('Licznik jest wymagany'),
   reading_date: Yup.date().required('Data odczytu jest wymagana'),
-  reading_value: Yup.number().required('Wartość jest wymagana'),
+  reading_value: Yup.number()
+    .required('Wartość jest wymagana')
+    .min(0, 'Wartość musi być większa od 0'),
 });
-
-// export const validationSchemaEdit = Yup.object({
-//   name: Yup.string().required('Nazwa jest wymagana'),
-//   unit: Yup.string().required('Jednostka jest wymagana'),
-//   advance_calculating_method: Yup.mixed<CalculatingMethod>()
-//     .oneOf(Object.values(CalculatingMethod))
-//     .required('Sposób naliczania jest wymagany'),
-//   average_use: Yup.number()
-//     .required('Norma zużycia jest wymagana')
-//     .moreThan(0, 'Norma zużycia musi być większa od 0'),
-// });

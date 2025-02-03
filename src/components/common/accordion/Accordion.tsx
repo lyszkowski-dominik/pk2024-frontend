@@ -4,11 +4,13 @@ import styles from './Accordion.module.scss';
 const Accordion = ({
   title,
   children,
+  defaultOpen = false,
 }: {
   title: string;
   children: React.ReactNode;
+  defaultOpen?: boolean;
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);

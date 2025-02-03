@@ -43,11 +43,7 @@ const EditMeterReadingForm = ({
       label: meter.number,
     })) || [];
 
-  const editMeterDevice = useUpdateMeterReading(
-    id,
-    hoaId,
-    meterId ?? initialData?.meter,
-  );
+  const editMeterDevice = useUpdateMeterReading(id, hoaId, meterId);
 
   const formikProps: FormikWrapperProps<any> = {
     header: 'Edytuj odczyt',

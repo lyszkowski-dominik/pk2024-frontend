@@ -1,14 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { RemoveRate } from './RemoveRate';
 import { ratesQueryKeys } from './ratesTypes';
+import { UpdateRate } from './updateRate';
 
-export const useRemoveRate = (hoa: number) => {
+export const useUpdateRate = (hoaId: number, id: number) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: RemoveRate,
+    mutationFn: UpdateRate,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ratesQueryKeys.filters({ hoaId: hoa }),
+        queryKey: ratesQueryKeys.filters({ hoaId }),
+      });
+      queryClient.invalidateQueries({
+        queryKey: ratesQueryKeys.details(id),
       });
     },
     retry: false,

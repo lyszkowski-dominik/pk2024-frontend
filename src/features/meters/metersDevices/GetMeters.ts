@@ -16,7 +16,7 @@ const GetMeters = async ({
 
     return response.data as ApiPaginatedResult<Meter>;
   } catch (err: any) {
-    console.log(err);
+    throw err.response.data;
   }
 };
 

@@ -12,11 +12,18 @@
     font-weight: 500;
   }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
     padding: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
+  }
+}
+
+.invalid {
+  input {
+    border: 1px solid var(--red);
   }
 }
 

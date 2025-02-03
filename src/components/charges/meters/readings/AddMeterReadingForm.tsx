@@ -66,6 +66,7 @@ const AddMeterReadingForm = ({
         isLoading={isLoading}
         disabled={!!meterId}
       />
+
       <TextInputLiveFeedback
         label="Data odczytu"
         type="date"

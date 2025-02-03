@@ -31,7 +31,7 @@ import { useState } from 'react';
  */
 export type InputFieldProps = {
   id?: string;
-  label: string;
+  label?: string;
   type?: string | undefined;
   name: string;
   value: any;
@@ -105,9 +105,11 @@ const InputField = ({
 
   return (
     <div className={`${styles['form-control']} ${styles[type]}`}>
-      <label htmlFor={id} className={labelClassName}>
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={id} className={labelClassName}>
+          {label}
+        </label>
+      )}
       <div className={styles.inputWithUnits}>
         <input
           disabled={disabled}

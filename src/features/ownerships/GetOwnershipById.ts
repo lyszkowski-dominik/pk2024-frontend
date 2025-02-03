@@ -24,7 +24,7 @@ export const GetOwnershipById = async (id: number) => {
 
     return response;
   } catch (err: any) {
-    console.log(err);
+    throw err.response.data;
   }
 };
 

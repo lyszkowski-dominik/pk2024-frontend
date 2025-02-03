@@ -49,9 +49,9 @@ export const getData = (
     ...data,
     results: data.results.map((meter) => ({
       ...meter,
-      type: typeMap[meter.type] || '?',
-      property_number: propertyMap[meter.property].property_number || '?',
-      building: propertyMap[meter.property].building || '?',
+      type: typeMap[meter.type] || '-',
+      property_number: propertyMap[meter.property].property_number || '-',
+      building: propertyMap[meter.property].building || '-',
     })),
   };
 };

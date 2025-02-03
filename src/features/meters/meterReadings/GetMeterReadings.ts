@@ -1,7 +1,7 @@
 import type { ApiPaginatedResult } from '../../../types/types';
 import api from '../../../services/axiosInstance';
-import { MeterReading } from '../../billings/billingTypes';
 import { MetersReadingsRequest } from './meterReadingsTypes';
+import { MeterReading } from '../metersApiTypes';
 
 const GetMeterReadings = async ({
   page,
@@ -12,7 +12,7 @@ const GetMeterReadings = async ({
 }: MetersReadingsRequest) => {
   try {
     const response = await api.get(
-      `/billings/meter_readings/?page=${page}&page_size=${pageSize}${propertyId ? `&property=${propertyId}` : ''}${meterId ? `&meter=${meterId}` : ''}${hoaId ? `&hoa=${hoaId}` : ''}&order_by=["+reading_date"]`,
+      `/billings/meter_readings/?page=${page}&page_size=${pageSize}${propertyId ? `&property=${propertyId}` : ''}${meterId ? `&meter=${meterId}` : ''}${hoaId ? `&hoa=${hoaId}` : ''}&order_by="reading_date"`,
     );
 
     return response.data as ApiPaginatedResult<MeterReading>;

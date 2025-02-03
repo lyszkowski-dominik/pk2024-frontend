@@ -15,7 +15,7 @@ const DeleteReadingConfirmation = ({
   date: string;
   number: string;
   onClose: () => void;
-  meterId: number;
+  meterId?: number;
 }) => {
   const { addNotification } = useNotifications();
   const hoaId = useAppSelector(selectSelectedCommunity) || -1;

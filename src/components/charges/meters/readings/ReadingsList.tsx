@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { MeterReading } from '../../../../features/billings/billingTypes';
 import { useGetMeterReadings } from '../../../../features/meters/meterReadings/useGetMeterReadings';
 import usePagination from '../../../../hooks/usePagination';
 import List, { ColumnDef } from '../../../common/list/List';
@@ -10,6 +9,9 @@ import EditMeterReadingForm from './EditMeterReadingForm';
 import Modal from '../../../ui/modal/Modal';
 import { useAppSelector } from '../../../../app/hooks';
 import { selectSelectedCommunity } from '../../../../features/communities/sharedDataSlice';
+import { getData } from './utils';
+import { useGetMeterTypes } from '../../../../features/meters/meterTypes/useGetMeterTypes';
+import { MeterReading } from '../../../../features/meters/metersApiTypes';
 
 const ReadingsList = ({
   columns,
@@ -21,9 +23,10 @@ const ReadingsList = ({
   const hoaId = useAppSelector(selectSelectedCommunity) || -1;
   const [openModal, setOpenModal] = useState<ModalType | null>(null);
   const [isModalOn, setModalOn] = useState(false);
-  const [selectedRecord, setSeletedRecord] = useState<MeterReading | null>(
-    null,
-  );
+  const [selectedRecord, setSeletedRecord] = useState<Omit<
+    MeterReading,
+    'meter_type'
+  > | null>(null);
   const { page, setPage, pageSize } = usePagination(false);
   const changePage = (pageNumber: number) => {
     setPage(pageNumber);
@@ -31,7 +34,7 @@ const ReadingsList = ({
 
   const {
     data: readings,
-    isLoading,
+    isLoading: loadingReadings,
     isError,
     error,
   } = useGetMeterReadings({
@@ -40,6 +43,15 @@ const ReadingsList = ({
     hoaId: hoaId ?? undefined,
     meterId: meterId ?? undefined,
   });
+
+  const { isLoading: loadingTypes, data: types } = useGetMeterTypes({
+    hoaId,
+    page: 1,
+    pageSize: 1000,
+    isActive: true,
+  });
+
+  const isLoading = loadingReadings || loadingTypes;
 
   return (
     <>
@@ -59,7 +71,7 @@ const ReadingsList = ({
               date={selectedRecord.reading_date}
               number={selectedRecord.meter_number}
               onClose={() => setModalOn(false)}
-              meterId={meterId ?? selectedRecord.meter}
+              meterId={meterId}
             />
           )}
         </>
@@ -70,7 +82,7 @@ const ReadingsList = ({
         <div>{error.message}</div>
       ) : readings && readings.results.length > 0 ? (
         <List
-          data={readings}
+          data={getData(readings, types?.results ?? [])}
           columns={columns}
           page={page}
           pageSize={pageSize}

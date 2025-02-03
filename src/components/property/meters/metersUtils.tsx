@@ -4,7 +4,7 @@ export const columns: ColumnDef[] = [
   {
     name: 'reading_date',
     label: 'Data odczytu',
-    type: ColumnType.DATETIME,
+    type: ColumnType.DATE,
   },
   {
     name: 'reading_value',
