@@ -24,7 +24,7 @@ export enum ColumnType {
   AMOUNT,
   ENUM,
   ACTION,
-  INPUT,
+  OTHER,
 }
 
 export type ListProps<T> = {
