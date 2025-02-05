@@ -13,6 +13,7 @@ export const Buildings = () => {
                 {data?.results.map((building) => (
                     <div key={building.id} className={styles.card}>
                         <div className={styles.box}>
+                            <div className={styles.row}>Numer budynku: {building.number}</div>
                             <div className={styles.header}>Dane adresowe</div>
                             <div>
 
