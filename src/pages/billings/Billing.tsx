@@ -5,7 +5,6 @@ import Spinner from '../../components/ui/spinner/Spinner';
 import { useNavigate, useParams } from 'react-router';
 import { useGetBillingById } from '../../features/billings/useGetBillingById';
 import type { IBill, IBilling } from '../../features/billings/billingTypes';
-import { getUnit } from '../../components/property/propertyUtils';
 import { useAppSelector } from '../../app/hooks';
 import { selectRoles } from '../../components/loginForm/loginFormSlice';
 import SendPayment from '../../features/billings/SendPayment';
@@ -86,7 +85,7 @@ const Billing = () => {
             <tr key={bill.id}>
               <td>{bill.rate.name}</td>
               <td>{bill.units_consumed}</td>
-              <td>{getUnit(bill.rate.type)}</td>
+              {/* <td>{getUnit(bill.rate.type)}</td> */}
               <td>{bill.rate.rate_per_unit}</td>
               <td>{bill.total_amount}</td>
             </tr>

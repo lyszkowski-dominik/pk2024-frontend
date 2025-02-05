@@ -58,9 +58,9 @@ const defaultSidebarValues: SidebarContextType = {
       path: 'requests',
     },
   ],
-  setElements: () => { },
+  setElements: () => {},
   activeItem: '',
-  setActiveItem: () => { },
+  setActiveItem: () => {},
 };
 
 const SidebarContext = createContext(defaultSidebarValues);
@@ -75,7 +75,8 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
   children,
 }) => {
   const userRole = useAppSelector(selectRoles);
-  const isManager = userRole === UserRole.Manager || userRole === UserRole.Admin;
+  const isManager =
+    userRole === UserRole.Manager || userRole === UserRole.Admin;
 
   const [elements, setElements] = useState(defaultSidebarValues);
 
@@ -85,10 +86,6 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({
         ...defaultSidebarValues,
         elements: [
           ...defaultSidebarValues.elements,
-          {
-            title: 'Stawki',
-            path: 'rates',
-          },
           {
             title: 'Budynki',
             path: 'buildings',

@@ -1,13 +1,6 @@
 import { ListRequest } from '../../types/types';
 import { ChargingMethod } from '../meters/metersApiTypes';
 
-export interface RatesRequest {
-  page: number;
-  pageSize: number;
-  hoaId: number;
-  onlyOld?: boolean;
-}
-
 export type GetRatesRequest = ListRequest & {
   hoaId: number;
   state?: RateSetState;

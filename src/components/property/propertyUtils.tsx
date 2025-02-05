@@ -1,4 +1,4 @@
-import { MeterType, RateType } from '../../features/billings/billingTypes';
+import { MeterType } from '../../features/billings/billingTypes';
 import {
   Property,
   PropertyType,
@@ -6,25 +6,6 @@ import {
 import { ApiPaginatedResult } from '../../types/types';
 import { ColumnDef, ColumnType } from '../common/list/List';
 import { PropertyTypeDisplayNames } from './types';
-
-export const getUnit = (rateType: RateType) => {
-  switch (rateType) {
-    case RateType.unit:
-      return 'm3';
-    case RateType.area:
-      return 'm2';
-    case RateType.effective_area:
-      return 'm2';
-    case RateType.person:
-      return 'os.';
-    case RateType.fixed:
-      return '-';
-    case RateType.property:
-      return 'lok.';
-    default:
-      return '';
-  }
-};
 
 export const getMeterType = (meterType: MeterType) => {
   switch (meterType) {

@@ -14,9 +14,14 @@ import { columns, getData } from './utils';
 import { useGetMeterTypes } from '../../../features/meters/meterTypes/useGetMeterTypes';
 import { Button } from '@mui/material';
 import Accordion from '../../common/accordion/Accordion';
+import { selectRoles } from '../../loginForm/loginFormSlice';
+import { UserRole } from '../../../types/types';
+import DeleteRateConfirmation from './DeleteRateConfirmation';
 
 const Rates = () => {
   const hoaId = useAppSelector(selectSelectedCommunity) || -1;
+  const userRole = useAppSelector(selectRoles);
+  const isManager = userRole === UserRole.Manager;
   const [selectedRecord, setSelectedRecord] = useState<number>();
   const [openModal, setOpenModal] = useState<ModalType | null>(null);
   const [isModalOn, setModalOn] = useState(false);
@@ -58,35 +63,41 @@ const Rates = () => {
                   <EditableRates
                     onClose={() => setModalOn(false)}
                     id={selectedRecord}
+                    minDate={currentRates?.results[0].start}
                   />
                 </Modal>
               )}
-              {/* {openModal === ModalType.Edit && selectedRecord && (
-                  <Modal>
-                      <EditMeterDeviceForm
-                          onClose={() => setModalOn(false)}
-                          id={selectedRecord.id} />
-                  </Modal>
+              {openModal === ModalType.Edit && selectedRecord && (
+                <Modal className={localStyles['wide-modal']}>
+                  <EditableRates
+                    onClose={() => setModalOn(false)}
+                    id={selectedRecord}
+                    addNew={false}
+                    minDate={currentRates?.results[0].start}
+                  />
+                </Modal>
               )}
               {openModal === ModalType.Delete && selectedRecord && (
-                  <DeleteMeterConfirmation
-                      id={selectedRecord.id}
-                      number={selectedRecord.number}
-                      onClose={() => setModalOn(false)} />
-              )} */}
+                <DeleteRateConfirmation
+                  id={selectedRecord}
+                  onClose={() => setModalOn(false)}
+                />
+              )}
             </>
           )}
           <h2 className={styles['section-title']}>Aktualne stawki</h2>
-          <Button
-            onClick={() => {
-              setOpenModal(ModalType.Add);
-              setModalOn(true);
-              setSelectedRecord(currentRates?.results[0].id);
-            }}
-            disabled={futureRates && futureRates.results.length > 0}
-          >
-            Aktualizuj
-          </Button>
+          {isManager && (
+            <Button
+              onClick={() => {
+                setOpenModal(ModalType.Add);
+                setModalOn(true);
+                setSelectedRecord(currentRates?.results[0].id);
+              }}
+              disabled={futureRates && futureRates.results.length > 0}
+            >
+              Aktualizuj
+            </Button>
+          )}
           {currentRates && currentRates.results.length > 0 ? (
             <>
               <div className={localStyles.display_date}>
@@ -107,24 +118,29 @@ const Rates = () => {
         {futureRates && futureRates.results.length > 0 && (
           <div className={styles.section}>
             <h2 className={styles['section-title']}>Przyszłe stawki</h2>
-            <Button
-              onClick={() => {
-                setOpenModal(ModalType.Edit);
-                setModalOn(true);
-                setSelectedRecord(futureRates?.results[0].id);
-              }}
-            >
-              Edytuj
-            </Button>
-            <Button
-              onClick={() => {
-                setOpenModal(ModalType.Delete);
-                setModalOn(true);
-                setSelectedRecord(futureRates?.results[0].id);
-              }}
-            >
-              Usuń
-            </Button>
+            {isManager && (
+              <div className={styles.iconButtons}>
+                <Button
+                  onClick={() => {
+                    setOpenModal(ModalType.Edit);
+                    setModalOn(true);
+                    setSelectedRecord(futureRates?.results[0].id);
+                  }}
+                >
+                  Edytuj
+                </Button>
+                <Button
+                  onClick={() => {
+                    setOpenModal(ModalType.Delete);
+                    setModalOn(true);
+                    setSelectedRecord(futureRates?.results[0].id);
+                  }}
+                  color="error"
+                >
+                  Usuń
+                </Button>
+              </div>
+            )}
             <>
               <div className={localStyles.display_date}>
                 <label>Ważne od:</label> {futureRates.results[0].start}{' '}

@@ -21,7 +21,6 @@ import Requests from './pages/requests/Requests';
 import ReqeustDetails from './pages/requests/RequestDetails';
 import Users from './pages/users/Users';
 import { UserRole } from './types/types';
-import { Rates } from './pages/rates/Rates';
 import Charges from './pages/charges/Charges';
 import { Buildings } from './pages/Buildings/Buildings';
 
@@ -84,18 +83,9 @@ const App = () => {
             path="/hoa/:communityId/requests/:requestId"
             element={<ReqeustDetails key="request" />}
           />
-          <Route
-            path="/hoa/:communityId/rates/"
-            element={<Rates />}
-          />
-          <Route
-            path="/hoa/:communityId/buildings/"
-            element={<Buildings />}
-          />
-          <Route
-            path="/hoa/:communityId/charges"
-            element={<Charges />}
-          />
+          <Route path="/hoa/:communityId/charges" element={<Charges />} />
+          <Route path="/hoa/:communityId/buildings/" element={<Buildings />} />
+          <Route path="/hoa/:communityId/charges" element={<Charges />} />
           <Route path="*" element={<NotFound404 />} />
         </Route>
       </Route>

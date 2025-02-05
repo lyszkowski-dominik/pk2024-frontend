@@ -1,5 +1,5 @@
 import type { ListRequest } from '../../types/types';
-import { IOwnership } from '../ownerships/ownershipTypes';
+import { Ownership } from '../ownerships/ownershipTypes';
 import { User } from '../users/usersTypes';
 
 export enum ModalType {
@@ -29,7 +29,7 @@ export type Property = {
   parent?: number | null;
   properties?: Property[] | null;
   owners?: User[] | null;
-  ownerships?: IOwnership[] | null;
+  ownerships?: Ownership[] | null;
 };
 
 export type PropertiesRequest = ListRequest & {

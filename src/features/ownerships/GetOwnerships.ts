@@ -9,7 +9,7 @@ const GetOwnerships = async ({
 }: OwnershipsRequest) => {
   try {
     const response = await api.get(
-      `/hoas/ownerships/?page=${page}&page_size=${pageSize}&property=${propertyId}}`,
+      `/hoas/ownerships/?page=${page}&page_size=${pageSize}&property=${propertyId}`,
     );
     return response.data as ApiPaginatedResult<Ownership>;
   } catch (err: any) {

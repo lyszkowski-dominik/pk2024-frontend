@@ -26,7 +26,7 @@ const OwnershipForm = ({ onClose, propertyId, ownershipId }: FormProps) => {
   const hoaId = useAppSelector(selectSelectedCommunity) ?? -1;
   const { addNotification } = useNotifications();
 
-  const createOwnership = useCreateOwnership(hoaId, propertyId);
+  const createOwnership = useCreateOwnership(propertyId);
   const editOwnership = useEditOwnership(ownershipId || -1, propertyId);
   const mutation = ownershipId ? editOwnership : createOwnership;
   const {

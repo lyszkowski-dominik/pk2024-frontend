@@ -37,6 +37,7 @@ export type InputFieldProps = {
   value: any;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   placeholder?: string | undefined;
   error?: boolean;
   disabled?: boolean;
@@ -62,6 +63,7 @@ const InputField = ({
   max,
   onChange,
   onFocus,
+  onBlur,
   placeholder,
   error,
   disabled,
@@ -95,12 +97,18 @@ const InputField = ({
           : value;
 
   const formattedMin =
-    min && type === 'date' ? dayjs(min).format('YYYY-MM-DD') : min;
+    min && type === 'date'
+      ? dayjs(min).format('YYYY-MM-DD')
+      : min && type === 'month'
+        ? dayjs(min).format('YYYY-MM')
+        : min;
+
   const formattedMax =
     max && type === 'date' ? dayjs(max).format('YYYY-MM-DD') : max;
 
-  const handleBlur = () => {
+  const handleBlur = (e: any) => {
     setRawInput(null);
+    onBlur?.(e);
   };
 
   return (

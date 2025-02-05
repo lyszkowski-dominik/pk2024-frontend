@@ -46,10 +46,13 @@
 
 .inputWithUnits .input {
   flex: 1;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 .inputWithUnits .units {
   margin-left: 8px;
   color: #555;
-  font-size: 0.9rem;
+  font-family: inherit;
+  font-size: inherit;
 }
