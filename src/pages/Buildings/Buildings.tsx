@@ -1,8 +1,11 @@
+import { useAppSelector } from "../../app/hooks";
 import Spinner from "../../components/ui/spinner/Spinner";
+import { selectSelectedCommunity } from "../../features/communities/sharedDataSlice";
 import { useGetBuildings } from "../../features/properties/useGetBuildings";
 import styles from './Buildings.module.scss';
 export const Buildings = () => {
-    const { data, isLoading } = useGetBuildings({ page: 1, pageSize: 50, hoaId: 1 });
+    const hoaId = useAppSelector(selectSelectedCommunity) || -1;
+    const { data, isLoading } = useGetBuildings({ page: 1, pageSize: 50, hoaId });
     return (
         <div>
             {isLoading && <Spinner />}
@@ -10,7 +13,6 @@ export const Buildings = () => {
                 {data?.results.map((building) => (
                     <div key={building.id} className={styles.card}>
                         <div className={styles.box}>
-                            <div className={styles.row}>ID: {building.id}</div>
                             <div className={styles.header}>Dane adresowe</div>
                             <div>
 
