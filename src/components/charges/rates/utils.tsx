@@ -37,7 +37,9 @@ export const getData = (data: Rate[], types: MeterType[]) => {
     ...data,
     results: data.map((rate) => ({
       ...rate,
-      meter_types: rate.meter_types.map((type) => typeMap[type]),
+      meter_types: rate.meter_types
+        .map((type) => `${typeMap[type]}`)
+        .join(' + '),
       charging_method: chargingMethodDisplayMap[rate.charging_method],
     })),
   };

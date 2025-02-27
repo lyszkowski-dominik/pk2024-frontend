@@ -27,10 +27,12 @@ const EditableRates = ({
   onClose,
   id,
   addNew = true,
+  minDate,
 }: {
   onClose: () => void;
   id?: number;
   addNew?: boolean;
+  minDate?: string;
 }) => {
   const hoaId = useAppSelector(selectSelectedCommunity) || -1;
   const { addNotification } = useNotifications();
@@ -66,7 +68,11 @@ const EditableRates = ({
     submitLabel: 'Zapisz',
     initialValues: {
       start: addNew ? initialValues.start : initialData?.start || '',
-      rates: initialData?.rates || initialValues.rates,
+      rates:
+        initialData?.rates.map((r) => ({
+          ...r,
+          rate_per_unit: parseFloat(`${r.rate_per_unit}`).toFixed(2),
+        })) || initialValues.rates,
       hoa: hoaId,
     },
     validationSchema,
@@ -109,6 +115,7 @@ const EditableRates = ({
                   name="start"
                   value={values.start}
                   onChange={(e) => setFieldValue('start', e.target.value)}
+                  min={minDate || undefined}
                 />
               </div>
               <FieldArray name="rates">
@@ -219,6 +226,7 @@ const EditableRates = ({
                                     rate.charging_method !==
                                     ChargingMethod.CONSUMPTION
                                   }
+                                  isLoading={loadingTypes}
                                   value={typeOptions.filter((sourceOption) =>
                                     rate.meter_types.includes(
                                       sourceOption.value,
@@ -273,6 +281,13 @@ const EditableRates = ({
                                       e.target.value,
                                     )
                                   }
+                                  units="zł"
+                                  onBlur={(e) => {
+                                    setFieldValue(
+                                      `rates.${index}.rate_per_unit`,
+                                      parseFloat(e.target.value).toFixed(2),
+                                    );
+                                  }}
                                 />
                               </td>
                               <td>

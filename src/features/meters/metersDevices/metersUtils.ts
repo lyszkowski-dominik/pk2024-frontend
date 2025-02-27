@@ -7,6 +7,7 @@ export const metersQueryKeys = {
     propertyId,
     isActive,
     meterType,
+    page,
   }: Partial<GetMetersRequest>) =>
     [
       ...metersQueryKeys.all,
@@ -14,6 +15,7 @@ export const metersQueryKeys = {
       ...(propertyId ? ['property', `${propertyId}`] : []),
       ...(isActive !== undefined ? ['active', `${isActive}`] : []),
       ...(meterType! ? ['type', `${meterType}`] : []),
+      ...(page ? ['page', `${page}`] : []),
     ] as const,
   details: (id: number) =>
     [...metersQueryKeys.all, 'details', `${id}`] as const,

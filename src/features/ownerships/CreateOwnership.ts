@@ -1,28 +1,9 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
-import type { IOwnership } from './ownershipTypes';
+import { Ownership } from './ownershipTypes';
+import api from '../../services/axiosInstance';
 
-/**
- * The function `CreateOwnership` sends a POST request to a specific API endpoint with form data and
- * returns the response data or error response.
- * @param formData - The `formData` parameter in the `CreateOwnership` function is a partial object of
- * type `IOwnership` with the `id` property omitted. It is used to send data to the API endpoint for
- * creating a new ownership record.
- * @returns The function `CreateOwnership` is returning the data received from the POST request if
- * successful. If there is an error, it is returning the response from the error.
- */
-const CreateOwnership = async (formData: Partial<Omit<IOwnership, 'id'>>) => {
+const CreateOwnership = async (formData: Partial<Ownership>) => {
   try {
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_API_URL}/hoas/ownerships/`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
+    const { data } = await api.post(`/hoas/ownerships/`, formData);
     return data;
   } catch (err: any) {
     throw err.response.data;

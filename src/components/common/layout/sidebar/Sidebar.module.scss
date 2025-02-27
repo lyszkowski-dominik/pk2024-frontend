@@ -12,7 +12,6 @@
   gap: 15px;
   z-index: 1000;
 
-
   ul {
     list-style: none;
     padding: 0;
@@ -24,15 +23,18 @@
       padding: 10px;
       margin-bottom: 10px;
       cursor: pointer;
-      transition: background-color 0.2s, color 0.2s;
+      transition:
+        background-color 0.2s,
+        color 0.2s;
 
       &:hover {
-        background-color: var(--gray-200);
+        background-color: var(--gray-100);
       }
 
       &.activeItem {
-        background-color: var(--gray-400); 
-        color: var(--white);
+        background-color: var(--lightMint);
+        color: var(--black);
+        border-radius: var(--border-radius);
       }
 
       .menuIcon {
@@ -44,7 +46,7 @@
   .logo {
     margin-bottom: 20px;
     text-align: center;
-   }
+  }
 
   .footer {
     text-align: center;

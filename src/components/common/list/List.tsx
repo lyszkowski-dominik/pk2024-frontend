@@ -1,9 +1,7 @@
 import styles from '../../../styles/Table.module.scss';
-import styles2 from './List.module.scss';
 import ReactPaginate from 'react-paginate';
 import type { ApiPaginatedResult } from '../../../types/types';
 import IconButton from '../../ui/iconButton/IconButton';
-import { RateType } from '../../../features/billings/billingTypes';
 
 /**
  * The type `ColumnDef` defines the structure of the column definition object.
@@ -22,9 +20,8 @@ export enum ColumnType {
   DATE,
   DATETIME,
   AMOUNT,
-  ENUM,
   ACTION,
-  INPUT,
+  OTHER,
 }
 
 export type ListProps<T> = {
@@ -69,20 +66,13 @@ const List = <T,>({
           value = new Date(value).toLocaleDateString();
         } else if (column.type === ColumnType.AMOUNT) {
           value = `${parseFloat(`${value}`).toFixed(2)} zł`;
-        } else if (column.type === ColumnType.ENUM) {
-          // use RateType[value] to get the enum value
-          value = RateType[value as keyof typeof RateType];
         }
       }
       return <td key={column.name}>{value}</td>;
     });
 
     return (
-      <tr
-        key={record.id}
-        className={isClickable ? styles2.row : ''}
-        onClick={() => onRowClick?.(record)}
-      >
+      <tr key={record.id} onClick={() => onRowClick?.(record)}>
         {cols}
         {onDelete ? (
           <td>
@@ -109,7 +99,7 @@ const List = <T,>({
   return (
     <>
       <div className={styles.tableContainer}>
-        <table className={styles.clickableTable}>
+        <table className={isClickable ? styles.clickableTable : styles.table}>
           <thead>
             <tr>
               {columns.map((column) => (

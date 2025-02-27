@@ -15,7 +15,8 @@
   justify-content: center;
   left: 15vw;
   width: 80vw;
-  /* height: 80vh; */
+  height: fit-content;
+  max-height: 80vh;
   background-color: var(--white);
   color: var(--black);
   padding: 1rem;
@@ -56,5 +57,23 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.wide-modal {
+  width: 80vw;
+  left: calc(10vw);
+}
+.content {
+  max-width: none !important;
+}
+
+@media (min-width: 768px) {
+  .wide-modal {
+    width: 80vw;
+    left: calc(10vw);
+  }
+  .content {
+    max-width: none !important;
   }
 }

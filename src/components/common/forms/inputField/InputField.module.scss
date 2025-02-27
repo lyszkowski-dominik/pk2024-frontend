@@ -17,7 +17,6 @@
 }
 
 .form-control {
-  margin-bottom: 0.5rem;
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
@@ -46,10 +45,13 @@
 
 .inputWithUnits .input {
   flex: 1;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 .inputWithUnits .units {
   margin-left: 8px;
   color: #555;
-  font-size: 0.9rem;
+  font-family: inherit;
+  font-size: inherit;
 }

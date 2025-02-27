@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { EditResolution } from '../resolutions/EditResolution';
-import { resolutionsQueryKeys } from '../resolutions/resolutionsTypes';
+import { EditOwnership } from './EditOwnership';
+import { ownershipsQueryKeys } from './ownershipTypes';
 
-export const useEditResolution = (hoa: number, id: number) => {
+export const useEditOwnership = (id: number, propertyId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: EditResolution,
+    mutationFn: EditOwnership,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: resolutionsQueryKeys.details(id),
+        queryKey: ownershipsQueryKeys.details(id),
       });
       queryClient.invalidateQueries({
-        queryKey: resolutionsQueryKeys.filters({ hoaId: hoa }),
+        queryKey: ownershipsQueryKeys.filters({ propertyId }),
       });
     },
     retry: false,

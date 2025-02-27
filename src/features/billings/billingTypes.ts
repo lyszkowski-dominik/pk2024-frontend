@@ -1,65 +1,39 @@
 import { ListRequest } from '../../types/types';
-import { Meter } from '../meters/metersApiTypes';
+import { Ownership } from '../ownerships/ownershipTypes';
+import { Rate } from '../rates/ratesTypes';
 
-export interface IBilling {
+export type Billing = {
   id: number;
-  bills: IBill[];
+  bills: Bill[];
   total_amount: number;
-  is_paid: boolean;
-  ownership: number;
+  ownership_data: Ownership;
   property: number;
   month: string;
-}
+  payment_deadline: string;
+};
 
-export interface IBill {
+export type Bill = {
   id: number;
-  rate: IRate;
-  meter: Meter;
-  billing_date: string;
+  rate: Rate;
   units_consumed: number;
   total_amount: number;
-  property: number;
-  ownership: number;
   monthly_bill: number;
-}
-
-export interface IRate {
-  id?: number;
-  name: string;
-  type: RateType;
-  rate_per_unit: number;
-  effective_date: string;
-  end_date?: string;
-  applies_to?: MeterType;
-  hoa: number;
-}
-
-export enum RateType {
-  unit = 'Jednostka',
-  area = 'Powierzchnia',
-  effective_area = 'Powierzchnia użytkowa',
-  person = 'Osoba',
-  fixed = 'Stała',
-  property = 'Nieruchomość',
-}
-
-export enum MeterType {
-  hot_water = 'Gorąca woda',
-  cold_water = 'Zimna woda',
-}
+};
 
 export const billingsQueryKeys = {
   all: ['billings'] as const,
   filters: ({
     hoaId,
-    propertyId,
+    month,
+    year,
     page,
     pageSize,
   }: Partial<GetBillingsRequest>) =>
     [
       ...billingsQueryKeys.all,
       ...(hoaId ? ['hoa', `${hoaId}`] : []),
-      ...(propertyId ? ['property', `${propertyId}`] : []),
+      ...(year ? ['year', `${year}`] : []),
+      ...(month ? ['month', `${month}`] : []),
       ...(page ? ['page', `${page}`] : []),
       ...(pageSize ? ['pageSize', `${pageSize}`] : []),
     ] as const,
@@ -68,6 +42,9 @@ export const billingsQueryKeys = {
 };
 
 export type GetBillingsRequest = ListRequest & {
-  hoaId: number;
-  propertyId: number;
+  hoaId?: number;
+  propertyId?: number;
+  day?: number;
+  month?: number;
+  year?: number;
 };

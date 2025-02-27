@@ -11,6 +11,30 @@
   form {
     display: flex;
     flex-direction: column;
+    width: 100%;
+
+    .form_control_dropdown {
+      margin-bottom: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+      width: 100%;
+
+      label {
+        display: inline;
+        margin-bottom: 0.1rem;
+        padding-left: 5px;
+        justify-content: space-between;
+        font-weight: 500;
+      }
+
+      input {
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+      }
+    }
 
     // .form_control {
     //   display: flex;
@@ -45,7 +69,7 @@
       text-align: center;
     }
 
-    .invalid input[type="password"] {
+    .invalid input[type='password'] {
       border: 1px solid var(--red);
     }
 
@@ -84,7 +108,7 @@
 
 .error {
   color: var(--red);
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   margin-top: 1rem;
   text-align: center;
 }
@@ -110,7 +134,8 @@
     font-weight: 500;
   }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
     padding: 10px 15px;
     border: 1px solid #ccc;
@@ -127,6 +152,13 @@
   border: 1px solid var(--red);
 }
 
-.fieldset{
-  border: none
+.fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  align-self: center;
+  margin-top: 1rem;
 }

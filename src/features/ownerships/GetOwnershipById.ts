@@ -1,28 +1,11 @@
-import axios from 'axios';
-import { GetToken } from '../auth/GetToken';
+import api from '../../services/axiosInstance';
+import { Ownership } from './ownershipTypes';
 
-/**
- * This TypeScript function asynchronously fetches ownership data by ID from an API using axios with
- * error handling.
- * @param {number} id - The `id` parameter in the `GetOwnershipById` function is a number that
- * represents the unique identifier of the ownership record you want to retrieve from the API.
- * @returns The `GetOwnershipById` function is returning the response from the API call made using
- * axios.
- */
 export const GetOwnershipById = async (id: number) => {
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_APP_API_URL}/hoas/ownerships/${id}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${GetToken()}`,
-        },
-      },
-    );
+    const response = await api.get(`/hoas/ownerships/${id}`);
 
-    return response;
+    return response.data as Ownership;
   } catch (err: any) {
     throw err.response.data;
   }

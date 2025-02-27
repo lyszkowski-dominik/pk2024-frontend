@@ -1,0 +1,29 @@
+.balanceAmountGreen {
+  color: green;
+}
+
+.balanceAmountRed {
+  color: red;
+}
+
+.balanceList {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.balanceOwners {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+}
+
+.balance {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}

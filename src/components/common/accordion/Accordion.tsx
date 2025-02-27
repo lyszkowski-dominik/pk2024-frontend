@@ -5,15 +5,18 @@ const Accordion = ({
   title,
   children,
   defaultOpen = false,
+  onChange,
 }: {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
+  onChange?: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
+    onChange && onChange();
   };
 
   return (

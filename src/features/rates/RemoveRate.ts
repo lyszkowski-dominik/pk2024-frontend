@@ -1,8 +1,6 @@
 import api from '../../services/axiosInstance';
-interface IParams {
-  rateId: number;
-}
-const RemoveRate = async ({ rateId }: IParams) => {
+
+const RemoveRate = async (rateId: number) => {
   try {
     const { data } = await api.delete(`/billings/rates/${rateId}`);
     return data;

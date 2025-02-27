@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import styles from '../../../pages/properties/Properties.module.scss';
+import modalStyles from '../../../components/ui/modal/Modal.module.css';
 import IconButton from '../../ui/iconButton/IconButton';
 import Modal from '../../ui/modal/Modal';
 import { ModalType } from '../types';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { useAppSelector } from '../../../app/hooks';
 import OwnershipList from './OwnershipList';
 import { selectRoles } from '../../loginForm/loginFormSlice';
 import OwnershipForm from './OwnershipForm';
-import { setUpdatedOwnerships } from '../../../features/properties/propertiesState';
-import { DeleteOwnership } from '../../../features/ownerships/DeleteOwnership';
-import { Button } from '@mui/material';
 import { UserRole } from '../../../types/types';
+import DeleteOwnershipConfirmation from './DeleteOwnershipConfirmation';
+import NewOwnershipForm from './NewOwnershipForm';
 
 /**
  * @property {number} propertyId - The `propertyId` property represents the id of the property.
@@ -25,7 +25,6 @@ export interface IProps {
  * @returns {JSX.Element} The `Ownerships` component returns a list of ownerships.
  */
 const Ownerships = ({ propertyId }: IProps) => {
-  const dispatch = useAppDispatch();
   const [openModal, setOpenModal] = useState({});
   const [isModalOn, setModalOn] = useState(false);
   const [selectedOwnership, setSelectedOwnership] = useState<
@@ -37,44 +36,32 @@ const Ownerships = ({ propertyId }: IProps) => {
   return (
     <div className={styles.propertiesContainer}>
       {isModalOn && (
-        <Modal>
+        <>
           {openModal === ModalType.Add && (
-            <OwnershipForm isModalOn={setModalOn} propertyId={propertyId} />
+            <Modal className={modalStyles['wide-modal']}>
+              <NewOwnershipForm
+                onClose={() => setModalOn(false)}
+                propertyId={propertyId}
+              />
+            </Modal>
           )}
-          {openModal === ModalType.Edit && (
-            <OwnershipForm
-              isModalOn={setModalOn}
+          {openModal === ModalType.Edit && selectedOwnership && (
+            <Modal>
+              <OwnershipForm
+                onClose={() => setModalOn(false)}
+                propertyId={propertyId}
+                ownershipId={selectedOwnership}
+              />
+            </Modal>
+          )}
+          {openModal === ModalType.Delete && selectedOwnership && (
+            <DeleteOwnershipConfirmation
+              id={selectedOwnership}
+              onClose={() => setModalOn(false)}
               propertyId={propertyId}
-              ownershipId={selectedOwnership}
             />
           )}
-          {openModal === ModalType.Delete && (
-            <div>
-              <h2>Czy na pewno chcesz usunąć tego właściciela?</h2>
-              <div className={styles.modalButtons}>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={async () => {
-                    await DeleteOwnership(selectedOwnership || -1);
-                    setModalOn(false);
-                    dispatch(setUpdatedOwnerships(true));
-                  }}
-                >
-                  Usuń
-                </Button>
-                <Button
-                  color="secondary"
-                  onClick={() => {
-                    setModalOn(false);
-                  }}
-                >
-                  Anuluj
-                </Button>
-              </div>
-            </div>
-          )}
-        </Modal>
+        </>
       )}
       {isManager && (
         <div className={styles.iconButtons}>

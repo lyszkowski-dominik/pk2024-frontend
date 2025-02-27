@@ -8,5 +8,9 @@ export const useGetBillings = (params: GetBillingsRequest) => {
     queryFn: () => GetBillings(params),
     retry: false,
     staleTime: 1000 * 60 * 60,
+    enabled:
+      (params.hoaId && params.hoaId > 0) ||
+      (params.propertyId && params?.propertyId > 0) ||
+      false,
   });
 };

@@ -27,7 +27,7 @@ const ConfirmationModal = ({
       {isLoading ? (
         <Spinner />
       ) : (
-        <>
+        <div className={styles.container}>
           <h3>{header}</h3>
           <div className={styles.content}>{content}</div>
           <div className={styles.modalButtons}>
@@ -38,7 +38,7 @@ const ConfirmationModal = ({
               Anuluj
             </Button>
           </div>
-        </>
+        </div>
       )}
     </Modal>
   );
