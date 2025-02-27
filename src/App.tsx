@@ -16,15 +16,19 @@ import ResolutionDetails from './pages/resolutions/ResolutionDetails';
 import Notifications from './pages/notifications/Notifications';
 import { PropertyTab } from './features/properties/propertiesTypes';
 import Property from './pages/properties/Property';
-import Billing from './pages/billings/Billing';
+import BillingPage from './pages/billings/Billing';
 import Requests from './pages/requests/Requests';
 import ReqeustDetails from './pages/requests/RequestDetails';
 import Users from './pages/users/Users';
 import { UserRole } from './types/types';
 import Charges from './pages/charges/Charges';
 import { Buildings } from './pages/Buildings/Buildings';
+import 'dayjs/locale/pl';
+import dayjs from 'dayjs';
+import AdjustmentPage from './pages/billings/Adjustment';
 
 const App = () => {
+  dayjs.locale('pl');
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
@@ -60,8 +64,12 @@ const App = () => {
             element={<Property currentTab={PropertyTab.billings} />}
           />
           <Route
-            path="/hoa/:communityId/billings/:billingId"
-            element={<Billing />}
+            path="/hoa/:communityId/charges/billings/:billingId"
+            element={<BillingPage />}
+          />
+          <Route
+            path="/hoa/:communityId/charges/adjustments/:adjustmentId"
+            element={<AdjustmentPage />}
           />
           <Route
             path="/hoa/:communityId/resolutions"
@@ -83,9 +91,9 @@ const App = () => {
             path="/hoa/:communityId/requests/:requestId"
             element={<ReqeustDetails key="request" />}
           />
-          <Route path="/hoa/:communityId/charges" element={<Charges />} />
+          <Route path="/hoa/:communityId/charges/" element={<Charges />} />
+          <Route path="/hoa/:communityId/charges/:tab" element={<Charges />} />
           <Route path="/hoa/:communityId/buildings/" element={<Buildings />} />
-          <Route path="/hoa/:communityId/charges" element={<Charges />} />
           <Route path="*" element={<NotFound404 />} />
         </Route>
       </Route>

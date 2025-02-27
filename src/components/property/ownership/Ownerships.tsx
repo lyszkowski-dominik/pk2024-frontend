@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from '../../../pages/properties/Properties.module.scss';
+import modalStyles from '../../../components/ui/modal/Modal.module.css';
 import IconButton from '../../ui/iconButton/IconButton';
 import Modal from '../../ui/modal/Modal';
 import { ModalType } from '../types';
@@ -9,6 +10,7 @@ import { selectRoles } from '../../loginForm/loginFormSlice';
 import OwnershipForm from './OwnershipForm';
 import { UserRole } from '../../../types/types';
 import DeleteOwnershipConfirmation from './DeleteOwnershipConfirmation';
+import NewOwnershipForm from './NewOwnershipForm';
 
 /**
  * @property {number} propertyId - The `propertyId` property represents the id of the property.
@@ -35,21 +37,23 @@ const Ownerships = ({ propertyId }: IProps) => {
     <div className={styles.propertiesContainer}>
       {isModalOn && (
         <>
-          <Modal>
-            {openModal === ModalType.Add && (
-              <OwnershipForm
+          {openModal === ModalType.Add && (
+            <Modal className={modalStyles['wide-modal']}>
+              <NewOwnershipForm
                 onClose={() => setModalOn(false)}
                 propertyId={propertyId}
               />
-            )}
-            {openModal === ModalType.Edit && selectedOwnership && (
+            </Modal>
+          )}
+          {openModal === ModalType.Edit && selectedOwnership && (
+            <Modal>
               <OwnershipForm
                 onClose={() => setModalOn(false)}
                 propertyId={propertyId}
                 ownershipId={selectedOwnership}
               />
-            )}
-          </Modal>
+            </Modal>
+          )}
           {openModal === ModalType.Delete && selectedOwnership && (
             <DeleteOwnershipConfirmation
               id={selectedOwnership}

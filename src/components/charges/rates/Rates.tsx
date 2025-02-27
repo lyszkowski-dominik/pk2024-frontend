@@ -63,7 +63,7 @@ const Rates = () => {
                   <EditableRates
                     onClose={() => setModalOn(false)}
                     id={selectedRecord}
-                    minDate={currentRates?.results[0].start}
+                    minDate={currentRates?.results[0]?.start}
                   />
                 </Modal>
               )}
@@ -91,7 +91,7 @@ const Rates = () => {
               onClick={() => {
                 setOpenModal(ModalType.Add);
                 setModalOn(true);
-                setSelectedRecord(currentRates?.results[0].id);
+                setSelectedRecord(currentRates?.results[0]?.id);
               }}
               disabled={futureRates && futureRates.results.length > 0}
             >

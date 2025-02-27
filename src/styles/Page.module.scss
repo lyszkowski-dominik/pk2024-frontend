@@ -43,6 +43,7 @@
   transition: background-color 0.3s ease;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
+  text-align: center;
 
   &:hover {
     background-color: var(--mint);
@@ -75,4 +76,18 @@
   margin-bottom: 1rem;
   width: 50%;
   gap: 10%;
+}
+
+.monthData {
+  padding: 0.8rem;
+  border-bottom: var(--mint) 1px solid;
+  width: 100%;
+  display: flex;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }

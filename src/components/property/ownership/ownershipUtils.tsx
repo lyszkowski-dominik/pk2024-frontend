@@ -37,3 +37,21 @@ export const validationSchema = Yup.object().shape({
   owners: Yup.array().required('Dodaj właściciela'),
   start: Yup.string().required('Podaj datę nabycia'),
 });
+
+export const changeValidationSchema = Yup.object().shape({
+  owners: Yup.array().required('Dodaj właściciela'),
+  meter_readings: Yup.array()
+    .of(
+      Yup.object().shape({
+        reading_value: Yup.number()
+          .required('Odczyt jest wymagany')
+          .min(0, 'Odczyt musi być większy od zera'),
+        meter: Yup.number().required('Podaj numer licznika'),
+      }),
+    )
+    .required('Dodaj odczyty'),
+  date: Yup.string().required('Podaj datę zmiany właściciela'),
+  inhabitants: Yup.number()
+    .required('Podaj liczbę mieszkańców')
+    .min(1, 'Podaj liczbę mieszkańców'),
+});

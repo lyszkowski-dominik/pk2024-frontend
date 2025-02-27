@@ -23,6 +23,7 @@ export type ApiPaginatedResult<T> = {
 export interface ListRequest {
   page: number;
   pageSize?: number;
+  order_by?: string;
 }
 
 export type ApiFile = {

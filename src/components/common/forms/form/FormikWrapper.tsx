@@ -41,8 +41,13 @@ const FormikWrapper = <T extends object>({
             <fieldset className={styles.fieldset} disabled={disabled}>
               {typeof children === 'function' ? children(formik) : children}
               {formik.errors && (formik.errors as any)['non_field_error'] && (
-                <div className={styles.invalid}>
+                <div className={styles.error}>
                   {(formik.errors as any)['non_field_error']}
+                </div>
+              )}
+              {formik.errors && (formik.errors as any)['non_field_errors'] && (
+                <div className={styles.error}>
+                  {(formik.errors as any)['non_field_errors']}
                 </div>
               )}
               <FormButtons

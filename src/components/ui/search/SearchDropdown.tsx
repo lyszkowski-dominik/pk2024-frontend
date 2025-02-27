@@ -72,7 +72,7 @@ const SearchDropdown: React.FC<SearchDropdownProps> = ({
   };
 
   return (
-    <div className={formStyles.form_control}>
+    <div className={formStyles.form_control_dropdown}>
       <label>{label}</label>
       <Select
         isMulti={multiselect}

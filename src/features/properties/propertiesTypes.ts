@@ -21,6 +21,7 @@ export type Property = {
   building: string;
   number: string;
   floor: number;
+  balance: number;
   total_area: number;
   usable_area: number;
   description?: string;
@@ -83,17 +84,17 @@ export const propertiesQueryKeys = {
 };
 
 export type BuildingsRequest = {
-  id: number
-  address:{
-    id: number
-    city: string
-    street: string
-    number: string
-    postal_code: string
-  },
-  number: string
-  area: string
-  floor_min: number
-  floor_max: number
-  hoa: number
-}
+  id: number;
+  address: {
+    id: number;
+    city: string;
+    street: string;
+    number: string;
+    postal_code: string;
+  };
+  number: string;
+  area: string;
+  floor_min: number;
+  floor_max: number;
+  hoa: number;
+};

@@ -50,7 +50,7 @@ export const getData = (
     ...data,
     results: data.results.map((r) => ({
       ...r,
-      reading_value: `${r.reading_value} ${getUnitDisplay(r.unit)}`,
+      reading_value: `${parseFloat(r.reading_value).toFixed(2)} ${getUnitDisplay(r.unit)}`,
       meter_type: typeMap[r.meter_type] || '-',
       property_number: r.property_number || '-',
       property_building: r.property_building || '-',

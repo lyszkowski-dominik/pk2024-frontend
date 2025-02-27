@@ -1,4 +1,5 @@
 import { ListRequest } from '../../types/types';
+import { MeterReading } from '../meters/metersApiTypes';
 import type { User } from '../users/usersTypes';
 
 export type Ownership = {
@@ -7,6 +8,14 @@ export type Ownership = {
   start: string;
   end: string;
   property: number;
+  balance: number;
+};
+
+export type OwnershipChangeForm = {
+  owners: Partial<User>[];
+  meter_readings: Partial<MeterReading>[];
+  date: string;
+  inhabitants: number;
 };
 
 export const ownershipsQueryKeys = {

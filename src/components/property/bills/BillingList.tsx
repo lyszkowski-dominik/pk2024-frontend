@@ -50,7 +50,7 @@ const BillingList = ({ propertyId }: IProps) => {
           page={page}
           pageSize={pageSize}
           onRowClick={(billing) =>
-            navigate(`/hoa/${hoaId}/billings/${billing.id}`)
+            navigate(`/hoa/${hoaId}/charges/billings/${billing.id}`)
           }
         />
       )}

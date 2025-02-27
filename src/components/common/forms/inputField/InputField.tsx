@@ -35,7 +35,7 @@ export type InputFieldProps = {
   type?: string | undefined;
   name: string;
   value: any;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
   placeholder?: string | undefined;
@@ -84,7 +84,7 @@ const InputField = ({
     if (type === 'date') {
       setRawInput(e.target.value);
     }
-    onChange(e);
+    onChange?.(e);
   };
 
   const formattedValue =

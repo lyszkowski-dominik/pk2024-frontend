@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { PropertyTab } from '../../features/properties/propertiesTypes';
 import { useParams } from 'react-router-dom';
 import Ownerships from '../../components/property/ownership/Ownerships';
-import BillingList from '../../components/property/bills/BillingList';
 import Meters from '../../components/property/meters/Meters';
 import PropertyData from '../../components/property/data/PropertyData';
+import BalanceList from '../../components/property/bills/BalanceList';
 
 /**
  * @property {PropertyTab} currentTab - The `currentTab` property represents the current tab.
@@ -63,7 +63,7 @@ const Property = ({ currentTab = PropertyTab.billings }: IProps) => {
       </TabList>
 
       <TabPanel selectedClassName="react-tabs__tab-panel--selected">
-        <BillingList propertyId={parseInt(propertyId, 10)} />
+        <BalanceList propertyId={parseInt(propertyId, 10)} />
       </TabPanel>
       <TabPanel selectedClassName="react-tabs__tab-panel--selected">
         <PropertyData propertyId={parseInt(propertyId, 10)} />

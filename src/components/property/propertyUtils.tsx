@@ -1,4 +1,3 @@
-import { MeterType } from '../../features/billings/billingTypes';
 import {
   Property,
   PropertyType,
@@ -6,17 +5,6 @@ import {
 import { ApiPaginatedResult } from '../../types/types';
 import { ColumnDef, ColumnType } from '../common/list/List';
 import { PropertyTypeDisplayNames } from './types';
-
-export const getMeterType = (meterType: MeterType) => {
-  switch (meterType) {
-    case MeterType.cold_water:
-      return 'Licznik zimnej wody';
-    case MeterType.hot_water:
-      return 'Licznik ciepłej wody';
-    default:
-      return '';
-  }
-};
 
 export const columns: ColumnDef[] = [
   {
