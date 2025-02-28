@@ -112,7 +112,7 @@ const EditableAdjustmentRatesList = ({ onClose }: { onClose: () => void }) => {
                     <h3>
                       {rateSet.start} - {rateSet.end}
                     </h3>
-                    <FieldArray name={`rateSets.${rsIndex}.rates`}>
+                    <FieldArray name={`rates.${rsIndex}.rates`}>
                       {() => (
                         <div className={tableStyles.tableContainer}>
                           <table className={tableStyles.table}>
@@ -130,10 +130,9 @@ const EditableAdjustmentRatesList = ({ onClose }: { onClose: () => void }) => {
                                   <tr key={rate.id}>
                                     <td
                                       className={
-                                        errors?.rateSets?.[rsIndex]?.rates?.[
-                                          index
-                                        ]?.name &&
-                                        touched?.rateSets?.[rsIndex]?.rates?.[
+                                        errors?.rates?.[rsIndex]?.rates?.[index]
+                                          ?.name &&
+                                        touched?.rates?.[rsIndex]?.rates?.[
                                           index
                                         ]?.name &&
                                         inputStyles.invalid
@@ -141,24 +140,23 @@ const EditableAdjustmentRatesList = ({ onClose }: { onClose: () => void }) => {
                                     >
                                       <InputField
                                         type="text"
-                                        name={`rateSets.${rsIndex}.rates.${index}.name`}
+                                        name={`rates.${rsIndex}.rates.${index}.name`}
                                         value={rate.name}
                                         disabled
                                       />
                                     </td>
                                     <td
                                       className={
-                                        errors?.rateSets?.[rsIndex]?.rates?.[
-                                          index
-                                        ]?.charging_method &&
-                                        touched?.rateSets?.[rsIndex]?.rates?.[
+                                        errors?.rates?.[rsIndex]?.rates?.[index]
+                                          ?.charging_method &&
+                                        touched?.rates?.[rsIndex]?.rates?.[
                                           index
                                         ]?.charging_method &&
                                         inputStyles.invalid
                                       }
                                     >
                                       <InputField
-                                        name={`rateSets.${rsIndex}.rates.${index}.charging_method`}
+                                        name={`rates.${rsIndex}.rates.${index}.charging_method`}
                                         value={
                                           chargingMethodDisplayMap[
                                             rate.charging_method
@@ -169,17 +167,16 @@ const EditableAdjustmentRatesList = ({ onClose }: { onClose: () => void }) => {
                                     </td>
                                     <td
                                       className={
-                                        errors?.rateSets?.[rsIndex]?.rates?.[
-                                          index
-                                        ]?.meter_types &&
-                                        touched?.rateSets?.[rsIndex]?.rates?.[
+                                        errors?.rates?.[rsIndex]?.rates?.[index]
+                                          ?.meter_types &&
+                                        touched?.rates?.[rsIndex]?.rates?.[
                                           index
                                         ]?.meter_types &&
                                         inputStyles.invalid
                                       }
                                     >
                                       <InputField
-                                        name={`rateSets.${rsIndex}.rates.${index}.meter_types`}
+                                        name={`rates.${rsIndex}.rates.${index}.meter_types`}
                                         value={rate.meter_types
                                           .map(
                                             (m) =>
@@ -193,10 +190,9 @@ const EditableAdjustmentRatesList = ({ onClose }: { onClose: () => void }) => {
                                     </td>
                                     <td
                                       className={
-                                        errors?.rateSets?.[rsIndex]?.rates?.[
-                                          index
-                                        ]?.rate_per_unit &&
-                                        touched?.rateSets?.[rsIndex]?.rates?.[
+                                        errors?.rates?.[rsIndex]?.rates?.[index]
+                                          ?.rate_per_unit &&
+                                        touched?.rates?.[rsIndex]?.rates?.[
                                           index
                                         ]?.rate_per_unit &&
                                         inputStyles.invalid
@@ -204,18 +200,18 @@ const EditableAdjustmentRatesList = ({ onClose }: { onClose: () => void }) => {
                                     >
                                       <InputField
                                         type="number"
-                                        name={`rateSets.${rsIndex}.rates.${index}.rate_per_unit`}
+                                        name={`rates.${rsIndex}.rates.${index}.rate_per_unit`}
                                         value={rate.rate_per_unit}
                                         onChange={(e) =>
                                           setFieldValue(
-                                            `rateSets.${rsIndex}.rates.${index}.rate_per_unit`,
+                                            `rates.${rsIndex}.rates.${index}.rate_per_unit`,
                                             e.target.value,
                                           )
                                         }
                                         units="zł"
                                         onBlur={(e) => {
                                           setFieldValue(
-                                            `rateSets.${rsIndex}.rates.${index}.rate_per_unit`,
+                                            `rates.${rsIndex}.rates.${index}.rate_per_unit`,
                                             parseFloat(e.target.value).toFixed(
                                               2,
                                             ),
