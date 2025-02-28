@@ -1,12 +1,16 @@
 import * as Yup from 'yup';
 
 export const validationSchema = Yup.object({
-  start: Yup.string().required('Data jest wymagana'),
+  date: Yup.string().required('Data jest wymagana'),
   rates: Yup.array().of(
     Yup.object().shape({
-      rate_per_unit: Yup.number()
-        .required('Stawka jest wymagana')
-        .positive('Stawka musi być większa od zera'),
+      rates: Yup.array().of(
+        Yup.object().shape({
+          rate_per_unit: Yup.number()
+            .required('Stawka jest wymagana')
+            .positive('Stawka musi być większa od zera'),
+        }),
+      ),
     }),
   ),
 });

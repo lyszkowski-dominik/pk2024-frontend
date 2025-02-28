@@ -55,8 +55,8 @@ const EditableAdjustmentRatesList = ({ onClose }: { onClose: () => void }) => {
     submitLabel: 'Zapisz',
     initialValues: {
       date: dayjs(endDate).format('YYYY-MM'),
-      rateSets: initialRateSets,
-      hoa: hoaId,
+      rates: initialRateSets,
+      hoaId,
     },
     validationSchema,
     onSubmit: (values, { setSubmitting, setErrors }) => {
@@ -104,10 +104,10 @@ const EditableAdjustmentRatesList = ({ onClose }: { onClose: () => void }) => {
               min={data?.last_group_adjustment.start_month || undefined}
             />
           </div>
-          <FieldArray name="rateSets">
+          <FieldArray name="rates">
             {() => (
               <>
-                {values.rateSets?.map((rateSet: RatesSet, rsIndex: number) => (
+                {values.rates?.map((rateSet: RatesSet, rsIndex: number) => (
                   <div key={rateSet.id} className={styles.rateSetContainer}>
                     <h3>
                       {rateSet.start} - {rateSet.end}
